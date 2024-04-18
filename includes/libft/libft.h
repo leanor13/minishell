@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:52:19 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/17 16:10:35 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/18 18:42:16 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,11 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
+int		ft_printf(const char *format, ...);
+int		ft_putcharptr(unsigned long signvalue);
+int		ft_putptr(unsigned long l);
+int		ft_putnbr(long n, int base, char type);
+int		ft_putstr(char *str);
+int		ft_putchar(int c);
 
 #endif
