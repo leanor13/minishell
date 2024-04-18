@@ -18,7 +18,7 @@ OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror -g -lreadline
 
 LIBFT_DIR	= ./includes/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
