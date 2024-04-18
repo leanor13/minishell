@@ -27,8 +27,10 @@ LIBS = $(LIBFT)
 # 	@$(CC) $(CFLAGS) -o $(TEST_NAME) $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 
 
-all: $(NAME) 
-# parsing: 
+all: $(NAME)
+
+#parsing: $(NAME_PARSING)
+
 bonus: $(NAME)
 
 $(OBJS_DIR)/%.o: srcs/%.c
@@ -47,6 +49,9 @@ $(NAME): $(OBJS) $(LIBS)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
+
+$(NAME_PARSING): $(OBJS) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(NAME_PARSING) $(SRC) $(LIBS)
 
 clean:
 	@$(RM) -r $(OBJS_DIR)
