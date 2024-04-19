@@ -6,11 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 12:26:36 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 19:43:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+//TODO handle $variable
 
 static void	process_escape_sequences(char *str)
 {

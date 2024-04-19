@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 12:38:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 18:15:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct command
 	char			*path;
 	char			**args;
 	int				(*built_in_fn)(char **env, char **args, int fd);
+	int				input_file;
+	int				output_file;
 }	t_command;
 
 char		**ft_split_pipex(char *s, char c);
