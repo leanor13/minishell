@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:35:34 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 12:38:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 16:54:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@ bool	check_built_in(t_command *command)
 		return(command->built_in_fn = ft_env, true);
 	else if (ft_strcmp(command->command, "echo") == 0)
 		return(command->built_in_fn = ft_echo, true);
+	else if (ft_strcmp(command->command, "unset") == 0)
+		return(command->built_in_fn = ft_unset, true);
 	return (false);
 }
