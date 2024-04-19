@@ -3,7 +3,7 @@ NAME	= pipex
 SRCS	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
 FILES	= pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_close \
 	pipex/utils_misc pipex/here_doc pipex/free_command_list \
-	build_ins/ft_cd 
+	build_ins/ft_cd build_ins/ft_pwd build_ins/ft_env build_ins/get_current_pwd
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs

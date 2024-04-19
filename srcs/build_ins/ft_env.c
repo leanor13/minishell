@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:15:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/17 16:24:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 10:54:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_env(char **env, char **args, int fd_out)
 	while (env && env[i] != NULL)
 	{
 		if (*env[i] != '\0' && *env[i] != '=' && ft_strchr(env[i], '='))
-			ft_output_nl(env[i], fd_out);
+			ft_putstr_nl(env[i], fd_out);
 		i ++;
 	}
 	return (EXIT_SUCCESS);
