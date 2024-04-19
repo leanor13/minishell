@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 11:17:54 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 12:38:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,6 @@ static char	*find_path(char *command, char **envp)
 	return (ft_putstr_fd("Failed to find command path\n", STDERR_FILENO), NULL);
 }
 
-bool	check_build_in(t_command *command)
-{
-	if (ft_strcmp(command->command, "pwd") == 0)
-		return(command->build_in_fn = ft_pwd, true);
-	else if (ft_strcmp(command->command, "env") == 0)
-		return(command->build_in_fn = ft_env, true);
-	return (false);
-}
-
 static void	new_command(t_command *command, char *av_curr, char **envp)
 {
 	int	i;
@@ -91,7 +82,7 @@ static void	new_command(t_command *command, char *av_curr, char **envp)
 	if (!command->args)
 		return ;
 	command->command = command->args[0];
-	if (check_build_in(command) == true)
+	if (check_built_in(command) == true)
 		return ;
 	command->path = find_path(command->command, envp);
 	if (!command->path)
@@ -105,7 +96,7 @@ static void	new_command(t_command *command, char *av_curr, char **envp)
 		free(command->args);
 		command->args = NULL;
 		command->command = NULL;
-		command->build_in_fn = NULL;
+		command->built_in_fn = NULL;
 		return ;
 	}
 }
@@ -127,7 +118,7 @@ t_command	*build_command_list(int ac, char **av, char **envp)
 			new_command(&command_list[i - 2], av[i], envp);
 		else
 			ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO);
-		if (!command_list[i - 2].args || (!command_list[i - 2].path && !command_list[i-2].build_in_fn))
+		if (!command_list[i - 2].args || (!command_list[i - 2].path && !command_list[i-2].built_in_fn))
 		{
 			free_command_list(command_list, i - 2);
 			return (NULL);

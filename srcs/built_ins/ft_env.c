@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 15:38:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 11:13:01 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/17 16:15:37 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/19 11:56:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_pwd(char **env, char **args, int fd_out)
+int	ft_env(char **env, char **args, int fd_out)
 {
-	char	*cwd;
+	int		i;
 
-	(void)env;
-	(void)args;
-	cwd = get_current_pwd();
-	if (!cwd)
-		return (NEG_ERROR);
-	ft_putstr_nl(cwd, fd_out);
-	free(cwd);
+	i = 0;
+	if (args && args[0] && args[1])
+		return (EXIT_FAILURE);
+	while (env && env[i] != NULL)
+	{
+		if (*env[i] != '\0' && *env[i] != '=' && ft_strchr(env[i], '='))
+			ft_putstr_nl(env[i], fd_out);
+		i ++;
+	}
 	return (EXIT_SUCCESS);
 }

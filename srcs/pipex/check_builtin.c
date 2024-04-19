@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 16:15:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 10:54:39 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/19 12:35:34 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/19 12:38:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_env(char **env, char **args, int fd_out)
+bool	check_built_in(t_command *command)
 {
-	int		i;
-
-	i = 0;
-	if (args && args[0] && args[1])
-		return (NEG_ERROR);
-	while (env && env[i] != NULL)
-	{
-		if (*env[i] != '\0' && *env[i] != '=' && ft_strchr(env[i], '='))
-			ft_putstr_nl(env[i], fd_out);
-		i ++;
-	}
-	return (EXIT_SUCCESS);
+	if (ft_strcmp(command->command, "pwd") == 0)
+		return(command->built_in_fn = ft_pwd, true);
+	else if (ft_strcmp(command->command, "env") == 0)
+		return(command->built_in_fn = ft_env, true);
+	else if (ft_strcmp(command->command, "echo") == 0)
+		return(command->built_in_fn = ft_echo, true);
+	return (false);
 }
