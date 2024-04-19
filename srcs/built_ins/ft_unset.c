@@ -6,11 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 17:01:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 17:58:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+//TODO check it with real minishell
 
 void	remove_arg(char **env, char *arg)
 {
@@ -20,16 +22,16 @@ void	remove_arg(char **env, char *arg)
 	len_arg = ft_strlen(arg);
 	while (*env)
 	{
-		if (ft_strncmp(*env, arg, len_arg) == 0 && *env[len_arg] == "=", 1)
+		if (ft_strncmp(*env, arg, len_arg) == 0 && (*env)[len_arg] == '=')
 		{
 			tmp = env;
-			while (*(env + 1) != NULL)
-			{
-				*env = *(env + 1);
-				env ++;
-			}
-			*env = NULL;
-			return ;
+			while (*(tmp + 1) != NULL)
+            {
+                *tmp = *(tmp + 1);
+                tmp++;
+            }
+            *tmp = NULL;
+            return;
 		}
 		env ++;
 	}
