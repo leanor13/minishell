@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/18 12:59:59 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 12:38:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/pipex.h"
+#include "../../includes/minishell.h"
 
 static char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 {
@@ -82,6 +82,8 @@ static void	new_command(t_command *command, char *av_curr, char **envp)
 	if (!command->args)
 		return ;
 	command->command = command->args[0];
+	if (check_built_in(command) == true)
+		return ;
 	command->path = find_path(command->command, envp);
 	if (!command->path)
 	{
@@ -94,6 +96,7 @@ static void	new_command(t_command *command, char *av_curr, char **envp)
 		free(command->args);
 		command->args = NULL;
 		command->command = NULL;
+		command->built_in_fn = NULL;
 		return ;
 	}
 }
@@ -115,7 +118,7 @@ t_command	*build_command_list(int ac, char **av, char **envp)
 			new_command(&command_list[i - 2], av[i], envp);
 		else
 			ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO);
-		if (!command_list[i - 2].args || !command_list[i - 2].path)
+		if (!command_list[i - 2].args || (!command_list[i - 2].path && !command_list[i-2].built_in_fn))
 		{
 			free_command_list(command_list, i - 2);
 			return (NULL);

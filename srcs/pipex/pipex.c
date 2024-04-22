@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/18 13:00:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/19 19:37:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,15 @@ static int	exec_command(t_command *command, int *fd, char **envp)
 	{
 		dup_close(fd[FD_IN], STDIN_FILENO);
 		dup_close(fd[FD_OUT], STDOUT_FILENO);
-		if (execve(command->path, command->args, envp) == -1)
+		if (command->built_in_fn != NULL)
+		{
+			if (command->built_in_fn(envp, command->args, STDOUT_FILENO) == EXIT_FAILURE)
+			{
+				ft_putstr_nl("Built-in error", STDERR_FILENO);
+				exit (NEG_ERROR);
+			}
+		}
+		else if (execve(command->path, command->args, envp) == -1)
 		{
 			perror("Execve error");
 			exit (NEG_ERROR);

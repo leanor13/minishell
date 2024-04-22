@@ -2,8 +2,9 @@ NAME	= pipex
 
 SRCS	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
 FILES	= pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_close \
-	pipex/utils_misc pipex/here_doc pipex/free_command_list \
-	build_ins/ft_cd 
+	pipex/utils_misc pipex/here_doc pipex/free_command_list pipex/check_builtin \
+	built_ins/ft_cd built_ins/ft_pwd built_ins/ft_env built_ins/get_current_pwd  built_ins/ft_echo \
+	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs
@@ -66,7 +67,7 @@ re: fclean all
 # SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 # S = pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_close \
 # 	pipex/utils_misc pipex/here_doc pipex/free_command_list \
-# 	build_ins/ft_cd 
+# 	built_ins/ft_cd 
 
 # SRCS_PARSING = $(addprefix srcs/,$(addsuffix .c, $(S_PARSING)))
 # S_PARSING = parsing/main_parsing
