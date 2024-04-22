@@ -6,13 +6,66 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 19:43:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/22 18:37:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 //TODO handle $variable
+
+static void handle_quotes_and_special_chars(char *arg, int len_arg, int fd_out) 
+{
+	bool	in_quote;
+	int		i;
+
+	i = 0;
+	in_quote = false;
+	while (i < len_arg)
+	{
+		if (arg[i] == '\'' && !in_quote) 
+			in_quote = true;
+		else if (arg[i] == '\'' && in_quote)
+			in_quote = false;
+		else if (arg[i] == '"' && !in_quote) 
+			in_quote = true;
+		else if (arg[i] == '"' && in_quote) 
+			in_quote = false;
+		if (!in_quote && (arg[i] == '\\' || arg[i] == ';'))
+			continue;
+		ft_putchar_fd(arg[i], fd_out);
+		i ++;
+	}
+}
+
+static void	echo_arg(char *arg, char **env, int fd_out)
+{
+	int	len_arg;
+	int	i;
+
+	len_arg = ft_strlen(arg);
+	if (!arg || !arg[0])
+		return ;
+	if (arg[0] == '$')
+	{
+		while (*env)
+		{
+			i = 0;
+			if (ft_strncmp(*env, arg, len_arg) == 0 && (*env)[len_arg] == '=')
+				{
+					while((*env)[len_arg + i] != '\0')
+					{
+						ft_putchar_fd((*env)[len_arg + i], fd_out);
+						i ++;
+					}
+					return ;
+				}
+			env ++;
+		}
+	}
+	else
+		handle_quotes_and_special_chars(arg, len_arg, fd_out);
+}
 
 static void	process_escape_sequences(char *str)
 {
@@ -64,7 +117,7 @@ int	ft_echo(char **env, char **args, int fd_out)
 	while (args[i] != NULL)
 	{
 		process_escape_sequences(args[i]);
-		ft_putstr_fd(args[i], fd_out);
+		echo_arg(args[i], env, fd_out);
 		i ++;
 		if (args[i] != NULL)
 			ft_putchar_fd(' ', fd_out);
