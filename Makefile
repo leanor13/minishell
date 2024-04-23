@@ -12,14 +12,16 @@ OBJS_DIR	= objs
 NAME_PARSING	= parsing
 
 SRCS_PARSING	= $(addprefix srcs/,$(addsuffix .c, $(FILES_PARSING)))
-FILES_PARSING	= parsing/main_parsing
+FILES_PARSING	= parsing/main_parsing parsing/lexer parsing/lexer_listutils
+# parsing/parser
 
 OBJS_PARSING		= $(addprefix $(OBJS_DIR_PARSING)/,$(SRCS_PARSING:srcs/%.c=%.o))
 OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror -g3
+CFLAGS	= -Wall -Wextra -Werror
+LDFLAGS = -lreadline
 
 LIBFT_DIR	= ./includes/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -44,7 +46,7 @@ $(OBJS_DIR_PARSING)/%.o: srcs/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME_PARSING): $(OBJS_PARSING) $(LIBS)
-	@$(CC) $(CFLAGS) -o $(NAME_PARSING) $(OBJS_PARSING) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(NAME_PARSING) $(OBJS_PARSING) $(LIBS) $(LDFLAGS)
 
 clean:
 	@$(RM) -r $(OBJS_DIR) $(OBJS_DIR_PARSING)
@@ -56,7 +58,13 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all fclean clean re
+# valgrind:
+# 		valgrind --suppressions=valgrind.supp ./parsing
+
+valgrind:
+		valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all ./parsing
+
+.PHONY: all fclean clean re valgrind parsing
 
 # $(TEST_NAME): $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 # 	@$(CC) $(CFLAGS) -o $(TEST_NAME) $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)

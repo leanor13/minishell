@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_minishell.c                                   :+:      :+:    :+:   */
+/*   get_current_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 12:44:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:16:10 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/17 16:13:50 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/17 16:23:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+char	*get_current_pwd(void)
 {
-	//(void)argc;
-	//(void)argv;
-	//ft_prompt();
-	//ft_block_signals();
-	//ft_parsing();
-	//ft_init();
-	//ft_pipex();
-	return (EXIT_SUCCESS);
+	char	*buffer;
+
+	buffer = (char *)calloc(PATH_MAX, sizeof(char));
+	if (buffer != NULL)
+	{
+		if (getcwd(buffer, PATH_MAX) == NULL)
+		{
+			perror("getcwd() error");
+			free(buffer);
+			return (NULL);
+		}
+	}
+	else
+		perror("calloc() error");
+	return (buffer);
 }

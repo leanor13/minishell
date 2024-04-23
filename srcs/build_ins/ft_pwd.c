@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_minishell.c                                   :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 12:44:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:16:10 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/17 15:38:49 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/17 16:14:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_pwd(int fd_out)
 {
-	//(void)argc;
-	//(void)argv;
-	//ft_prompt();
-	//ft_block_signals();
-	//ft_parsing();
-	//ft_init();
-	//ft_pipex();
+	char	*cwd;
+
+	cwd = get_current_pwd();
+	if (!cwd)
+		return (NEG_ERROR);
+	ft_output_nl(cwd, fd_out);
+	free(cwd);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/18 20:41:42 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:16:25 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,33 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	(void)argc;
 	(void)argv;
 	(void)env;
 	char *command = NULL;
-	//char **args;
-	//bool get_command;
-	//get_command = true; //or you can do the opposite false, and it is getting true if there is something
-	//int i = 1;
-	ft_printf("\033[1;36mminishell\033[1;32m$\033[0;0m");
-	//(get_command)
+	t_arg	*lst;
+//	t_arg_pass	*cleared_command;
+	if (argc != 1)
+	{
+		ft_printf("RUN THE CODE WITHOUT ARGUMENTS\n");// YULIA STDERROR
+		exit(0);
+	}
 	while (1)	
 	{
-		//THNK ON THIIIS
-// 		readline, rl_clear_history, rl_on_new_line,
-// rl_replace_line, rl_redisplay, add_history,
-// printf, malloc, free, write, access, open, read,
-// close
-		//command = readline("minishell$");
-		command = readline("");
-		ft_printf("\033[1;36mminishell\033[1;32m$\033[0;0m");
-		ft_printf("%s", command);
-	//args = split_command(command);
-//readline  returns  the  text of the line read.  A blank
-    //    line returns the empty string.  If EOF  is  encountered
-    //    while  reading  a  line, and the line is empty, NULL is
-    //    returned.  If an EOF is read with a non-empty line,  it
-    //    is treated as a newline.
-   // free(command);
-    //free(args);		//if()
-		//get_command = false;
-		//i++;
+		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
+		if (command == NULL)
+		{
+			ft_printf("exit\n");
+				exit(0);//YULIA maybe error, perror, it is just simply quit the program, because it is exit command
+		}
+		add_history(command);
+		lst = ft_lexer(command);
+		lst = ft_parser(&lst);
+		free_stackfinal(&lst);// YULIA FOR YOU TO DEL THE WHOLE LIST
+		//signal at the end for ctrl \ + ctrl C
+	//UPDATE ENV!!
+	//Replace the environment variables into a linked list so you can delete or add
+	//later using export and unset builtins. 
+	//In addition to displaying them using env or export (without arguments) builtins 
+		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
 	}
 }

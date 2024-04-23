@@ -1,25 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_minishell.c                                   :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 12:44:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:16:10 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/17 15:25:54 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/17 15:32:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
-{
-	//(void)argc;
-	//(void)argv;
-	//ft_prompt();
-	//ft_block_signals();
-	//ft_parsing();
-	//ft_init();
-	//ft_pipex();
-	return (EXIT_SUCCESS);
-}
