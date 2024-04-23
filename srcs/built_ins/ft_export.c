@@ -6,11 +6,40 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 12:41:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:56:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+// TODO
+/* 
+while (curr != NULL)
+	{
+		shell->exit_code = 0;
+		if (ft_strcmp(var_name, hidden[i]) == TRUE)
+			;
+		else if (var_content == NULL)
+			printf("declare -x %s\n", var_name);
+		else if (var_content != NULL && var_content[0] == ' '
+			&& ft_strlen(var_content) == 1)
+			printf("declare -x %s=\"\"\n", var_name);
+		else
+			printf("declare -x %s=\"%s\"\n", var_name, var_content);
+		var -> next;
+	}
+ */
+
+/* 
+To hide from env
+SHELL, BASH_VERSION, HISTFILE, HISTSIZE, PWD, OLDPWD, etc. 
+These variables are considered internal to the shell and are not typically displayed when you run env.
+Internal Shell Variables: Variables used internally by the shell for its operation, such as SHLVL (shell level), 
+RANDOM (random number generator seed), LINENO (current line number), PS1 (primary shell prompt), 
+PS2 (secondary shell prompt), IFS (internal field separator), etc. 
+These variables are often not relevant to user programs and are not displayed by default.
+
+ */
 
 int	is_valid_varname(const char *var_name)
 {

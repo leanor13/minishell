@@ -1,3 +1,9 @@
+plan to do:
+1. create a Shell struct to store some values
+2. parse and save **env into that shell struct
+3. create a free_shell function
+
+
 tests:
 
 1. put the << and just press enter,
