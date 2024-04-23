@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 17:58:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/23 12:01:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	remove_arg(char **env, char *arg)
 	int		len_arg;
 	char	**tmp;
 
+	if (ft_getenv(env, arg) == NULL)
+        return ;
 	len_arg = ft_strlen(arg);
 	while (*env)
 	{
