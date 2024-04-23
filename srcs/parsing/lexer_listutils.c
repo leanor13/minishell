@@ -25,7 +25,7 @@ t_arg	*ft_stacklast(t_arg *lst)
 void	free_stackfinal(t_arg **lst)
 {
 	t_arg	*tmp;
-	t_stackt_arg	*current;
+	t_arg	*current;
 
 	current = *lst;
 	while (current)
