@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:35:34 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 11:38:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/23 12:44:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ bool	check_built_in(t_command *command)
 		return(command->built_in_fn = ft_exit, true);
 	else if (ft_strcmp(command->command, "cd") == 0)
 		return(command->built_in_fn = ft_cd, true);
+	else if (ft_strcmp(command->command, "export") == 0)
+		return(command->built_in_fn = ft_export, true);
 	return (false);
 }

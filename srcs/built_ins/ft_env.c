@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:15:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/19 18:11:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/23 12:56:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_env(char **env, char **args, int fd_out)
 
 	i = 0;
 	if (args && args[0] && args[1])
-		return (EXIT_FAILURE);
+		return (ft_putstr_nl("env: No such file or directory", STDERR_FILENO), EXIT_FAILURE);
 	while (env && env[i] != NULL)
 	{
 		if (*env[i] != '\0' && *env[i] != '=' && ft_strchr(env[i], '='))
