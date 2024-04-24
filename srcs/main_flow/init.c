@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 13:16:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 14:43:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 void	init_env(t_shell *shell)
 {
 	// TODO
+	shell->env = NULL;
+	shell->shell_env = NULL;
 	return ;
 }
 
 void	parse_env(t_shell *shell, char **env)
 {
 	// TODO
+	shell->shell_env = NULL;
 	return ;
 }
 
@@ -48,6 +51,9 @@ int	init(t_shell *shell, char **env)
 	shell->std_fds[0] = dup(STDIN_FILENO);
 	shell->std_fds[1] = dup(STDOUT_FILENO);
 	shell->std_fds[2] = dup(STDERR_FILENO);
+	shell->args_list = NULL;
+	shell->here_doc = NULL;
+	shell->exit_status = EXIT_SUCCESS;
 	return (EXIT_SUCCESS);
 }
 

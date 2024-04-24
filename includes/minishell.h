@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 13:38:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 14:38:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ typedef struct s_shell
 
 /* main flow */
 int		init(t_shell *shell, char **env);
-int		run_shell(t_shell *shell);
+//int		run_shell(t_shell *shell);
+
+/* parsing */
+int		main_parsing(t_shell *shell);
+
+/* execution */
+int	main_pipex(int ac, char **av, char **env);
 
 /* built-ins */
 int		ft_pwd(char **env, char **args, int fd_out);
