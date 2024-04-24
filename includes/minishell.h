@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 14:38:56 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 14:50:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		init(t_shell *shell, char **env);
 int		main_parsing(t_shell *shell);
 
 /* execution */
+int	executor_main(t_shell *shell);
 int	main_pipex(int ac, char **av, char **env);
 
 /* built-ins */

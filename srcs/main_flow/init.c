@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 14:43:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 15:40:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_env(t_shell *shell)
 void	parse_env(t_shell *shell, char **env)
 {
 	// TODO
+	(void)env;
 	shell->shell_env = NULL;
 	return ;
 }
@@ -30,6 +31,7 @@ void	parse_env(t_shell *shell, char **env)
 void	empty_user(t_shell *shell)
 {
 	// TODO  - handle case when getenv("USER") == NULL;
+	(void)shell;
 	return ;
 }
 
