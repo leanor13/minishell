@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:18:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 13:16:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	*handle_input(int ac, char **av)
 	return (fd_files);
 }
 
-int	main(int ac, char **av, char **envp)
+int	main_pipex(int ac, char **av, char **env)
 {
 	int			*fd_files;
 	t_command	*command_list;
@@ -134,13 +134,13 @@ int	main(int ac, char **av, char **envp)
 	fd_files = handle_input(ac, av);
 	if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 		av ++;
-	command_list = build_command_list(ac, av, envp);
+	command_list = build_command_list(ac, av, env);
 	if (!command_list)
 	{
 		close_all_protected();
 		return (free(fd_files), EXIT_FAILURE);
 	}
-	status = exec_pipe(command_list, fd_files, ac - 3, envp);
+	status = exec_pipe(command_list, fd_files, ac - 3, env);
 	close_all_protected();
 	free(fd_files);
 	free_command_list(command_list, ac - 3);

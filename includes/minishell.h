@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 12:45:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 13:38:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 #include "lexer.h"
 
 #include <dirent.h>
+
+typedef struct s_env
+{
+	char			*var_name;
+	char			*var_value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_shell
+{
+	bool	no_env;
+	t_env	*shell_env;
+	char	**env;
+	int		std_fds[3];
+	t_arg	*args_list;
+	char	*here_doc;
+	int		exit_status;
+}	t_shell;
+
+
+/* main flow */
+int		init(t_shell *shell, char **env);
+int		run_shell(t_shell *shell);
 
 /* built-ins */
 int		ft_pwd(char **env, char **args, int fd_out);

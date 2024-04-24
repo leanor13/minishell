@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:16:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 13:42:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int	main(int argc, char **argv, char **env)
+//int	main(int argc, char **argv, char **env)
+int	main_parsing(int argc, char **argv, char **env)
 {
 	(void)argv;
 	(void)env;

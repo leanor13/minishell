@@ -4,7 +4,8 @@ SRCS	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
 FILES	= pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_close \
 	pipex/utils_misc pipex/here_doc pipex/free_command_list pipex/check_builtin \
 	built_ins/ft_cd built_ins/ft_pwd built_ins/ft_env built_ins/get_current_pwd  built_ins/ft_echo \
-	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset
+	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset \
+	main_flow/init main_flow/main_minishell
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs

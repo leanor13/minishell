@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:25:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 12:54:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 11:25:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	ft_setenv(char ***env, const char *name, const char *value)
     *env = new_env;
     return (EXIT_SUCCESS);
 }
+
+// add here case for (getenv("USER") == NULL) for Home directory
 
 int	ft_cd(char **env, char **args, int fd_out)
 {
