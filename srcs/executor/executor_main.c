@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_minishell.c                                   :+:      :+:    :+:   */
+/*   executor_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 12:44:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 14:38:42 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/24 15:44:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	executor_main(t_shell *shell)
 {
-	t_shell	shell;
-
-	(void)argv;
-	if (argc > 1)
-		return (ft_putstr_nl("No arguments allowed for minishell", STDERR_FILENO), EXIT_FAILURE);
-	init(&shell, env);
-	main_parsing(&shell);
-	//ft_clean(); - this function will use free_stackfinal as well
+	(void)shell;
 	return (EXIT_SUCCESS);
 }
