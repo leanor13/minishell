@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 15:40:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:19:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init_env(t_shell *shell)
+void	new_env(t_shell *shell)
 {
 	// TODO
 	shell->env = NULL;
@@ -20,11 +20,82 @@ void	init_env(t_shell *shell)
 	return ;
 }
 
-void	parse_env(t_shell *shell, char **env)
+int	add_back_env(t_env **head, char *var_name, char *var_value)
 {
-	// TODO
-	(void)env;
-	shell->shell_env = NULL;
+	t_env	*curr;
+	t_env	*node;
+
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (EXIT_FAILURE);
+	node->var_name = ft_strdup(var_name);
+	if (!node->var_name)
+		return (free(node), EXIT_FAILURE);
+	node->var_value = ft_strdup(var_value);
+	if (!node->var_value)
+	{
+		free(node->var_name);
+		free(node);
+		return (EXIT_FAILURE);
+	}
+	node->next = NULL;
+	if (!(*head))
+	{
+		*head = node;
+		return (EXIT_SUCCESS);
+	}
+	curr = *head;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = node;
+	return (EXIT_SUCCESS);
+}
+
+int	parse_env(t_shell *shell, char **env)
+{
+	int		i;
+	char	*var_name;
+	char	*var_value;
+	char	*equal;
+
+	i = 0;
+	while (env[i])
+	{
+		equal = ft_strchr(env[i], "=");
+		if (equal != NULL)
+		{
+			*equal = '\0';
+			var_value = equal + 1;
+		}
+		else
+			var_value = NULL;
+		var_name = env[i];
+		if (add_back_env(&shell->shell_env, var_name, var_value) != EXIT_SUCCESS)
+		{
+			free_shell(shell);
+			exit(EXIT_FAILURE);
+		}
+		i ++;
+	}
+}
+
+void	handle_env(t_shell *shell, char **env)
+{
+	t_env	first_env;
+
+	if (!env || !*env)
+	{
+		shell->no_env = true;
+		new_env(shell);
+	}
+	else
+	{
+		shell->no_env = false;
+		shell->env = env;
+		parse_env(shell, env);
+	}
+	if (getenv("USER") == NULL)
+		empty_user(shell);
 	return ;
 }
 
@@ -35,21 +106,9 @@ void	empty_user(t_shell *shell)
 	return ;
 }
 
-int	init(t_shell *shell, char **env)
+int	init_shell(t_shell *shell, char **env)
 {
-	if (!env || !*env)
-	{
-		shell->no_env = true;
-		init_env(shell);
-	}
-	else
-	{
-		shell->no_env = false;
-		shell->env = env;
-		parse_env(shell, env);
-	}
-	if (getenv("USER") == NULL)
-		empty_user(shell);
+	handle_env(shell, env);
 	shell->std_fds[0] = dup(STDIN_FILENO);
 	shell->std_fds[1] = dup(STDOUT_FILENO);
 	shell->std_fds[2] = dup(STDERR_FILENO);

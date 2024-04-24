@@ -7,7 +7,8 @@ FILES	= pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_
 	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset \
 	main_flow/init main_flow/main_minishell \
 	parsing/main_parsing_yulia parsing/lexer parsing/lexer_listutils parsing/parser \
-	executor/executor_main
+	executor/executor_main \
+	cleanup/main_cleanup
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs

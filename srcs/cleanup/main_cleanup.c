@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_minishell.c                                   :+:      :+:    :+:   */
+/*   main_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 12:44:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 16:10:16 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/24 17:06:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+void	free_shell(t_shell *shell)
 {
-	t_shell	shell;
-
-	(void)argv;
-	if (argc > 1)
-		return (ft_putstr_nl("No arguments allowed for minishell", STDERR_FILENO), EXIT_FAILURE);
-	init_shell(&shell, env);
-	main_parsing(&shell);
-	//ft_clean(); - this function will use free_stackfinal as well
-	return (EXIT_SUCCESS);
+	// TODO
+	(void)shell;
+	// clean shell_env, including all nodes, + all names and values.
+	return ;
 }
+
+void	free_string_array(char ***str_arr)
+{
+	int	i;
+
+	if (!*str_arr)
+		return ;
+	i = 0;
+	while (*str_arr[i])
+	{
+		free(*str_arr[i]);
+		*str_arr[i] = NULL;
+		i ++;
+	}
+	free(*str_arr);
+	*str_arr = NULL;
+}
+free_envs;
+free_args;

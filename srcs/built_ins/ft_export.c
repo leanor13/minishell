@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 15:56:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/24 16:30:22 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_export(char **env, char **args, int fd_out)
 			var_value = ft_getenv(env, var_name);
 		if (!is_valid_varname(var_name))
 		{
-			ft_putstr_nl("export: not a valid identifier", fd_out);
+			ft_putstr_nl("export: not a valid identifier", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
 		if (ft_setenv(&env, var_name, var_value) != EXIT_SUCCESS)
