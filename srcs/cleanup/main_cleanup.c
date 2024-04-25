@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_shell.c                                        :+:      :+:    :+:   */
+/*   main_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 13:39:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 14:24:41 by yioffe           ###   ########.fr       */
+/*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
+/*   Updated: 2024/04/25 11:28:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		run_shell(t_shell *shell)
+void	free_shell(t_shell *shell)
 {
-	main_parsing(shell);
-
-	//ft_prompt();
-			//ft_block_signals();
-			//ft_parsing();
-			//ft_pipex();
+	// TODO
+	(void)shell;
+	// clean env_shell, including all nodes, + all names and values.
+	return ;
 }
+
+void	free_string_array(char ***str_arr)
+{
+	int	i;
+
+	if (!*str_arr)
+		return ;
+	i = 0;
+	while (*str_arr[i])
+	{
+		free(*str_arr[i]);
+		*str_arr[i] = NULL;
+		i ++;
+	}
+	free(*str_arr);
+	*str_arr = NULL;
+}
+// free_envs;
+// free_args;

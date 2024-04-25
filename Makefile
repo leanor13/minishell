@@ -7,7 +7,8 @@ FILES	= pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_
 	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset \
 	main_flow/init main_flow/main_minishell \
 	parsing/main_parsing_yulia parsing/lexer parsing/lexer_listutils parsing/parser \
-	executor/executor_main
+	executor/executor_main \
+	cleanup/main_cleanup
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs
@@ -23,12 +24,18 @@ OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g3
 LDFLAGS = -lreadline
 
 LIBFT_DIR	= ./includes/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 LIBS		= $(LIBFT)
+
+GREEN = \033[0;32m
+CYAN = \033[0;36m
+PURPLE = \033[0;35m
+YELLOW = \033[0;33m
+NC = \033[0m
 
 all: $(NAME)
 
@@ -37,27 +44,35 @@ $(OBJS_DIR)/%.o: srcs/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBS)
+	@echo "$(CYAN)Creating $(NAME) ..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(LDFLAGS)
+	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
+
 
 parsing: $(NAME_PARSING)
 
 $(OBJS_DIR_PARSING)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "✅ $(GREEN)$@ created $(NC)"
 
 $(NAME_PARSING): $(OBJS_PARSING) $(LIBS)
+	@echo "$(CYAN)Creating $(NAME_PARSING) ..."
 	@$(CC) $(CFLAGS) -o $(NAME_PARSING) $(OBJS_PARSING) $(LIBS) $(LDFLAGS)
+	@echo "✅ $(GREEN)$(NAME_PARSING) created $(NC)"
 
 clean:
 	@$(RM) -r $(OBJS_DIR) $(OBJS_DIR_PARSING)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
+	@echo "✅ $(YELLOW) clean done! $(NC)"
 
 fclean: clean
 	@$(RM) $(NAME) $(NAME_PARSING)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
+	@echo "✅ $(YELLOW) fclean done! $(NC)"
 
 re: fclean all
 
