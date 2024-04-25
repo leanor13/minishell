@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/25 11:28:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/25 12:25:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	print_env(t_env *env)
 	current = env;
 	while (current)
 	{
-		ft_printf("%d: %s = %s", i, current->var_name, current->var_value);
+		// TODO remove printf
+		printf("%d: %s = %s\n", i, current->var_name, current->var_value);
 		i ++;
 		current = current->next;
 	}
@@ -80,6 +81,7 @@ int	parse_env(t_shell *shell, char **env)
 	char	*equal;
 
 	i = 0;
+	shell->env_shell = NULL;
 	while (env[i])
 	{
 		equal = ft_strchr(env[i], '=');

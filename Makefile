@@ -24,7 +24,7 @@ OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g3
 LDFLAGS = -lreadline
 
 LIBFT_DIR	= ./includes/libft
@@ -49,9 +49,7 @@ $(NAME): $(OBJS) $(LIBS)
 	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
 $(LIBFT):
-	@echo "$(CYAN)Creating $(LIBFT) ..."
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
-	@echo "✅ $(GREEN)$(LIBFT) created $(NC)"
 
 
 parsing: $(NAME_PARSING)

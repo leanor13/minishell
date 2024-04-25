@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/25 11:22:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/25 12:02:53 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main_parsing(t_shell *shell)
 			ft_putstr_nl("exit", STDERR_FILENO);
 			exit(EXIT_FAILURE);
 		}
+		else
+			print_env(shell->env_shell);
 		add_history(command); // do we need to remember if command was executed or not?
 		// I think we need to allocate memory for lst somewhere. Maybe I just did not find it yet.
 		//lst = ft_lexer(command);
@@ -36,8 +38,6 @@ int	main_parsing(t_shell *shell)
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
 			executor_main(shell);
-		if (ft_strcmp(command, "1") == 0)
-			print_env(shell->env_shell);
 		//ft_block_signals(); TODO: implement in the end
 		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
 	}
