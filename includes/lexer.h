@@ -10,7 +10,7 @@ typedef struct s_arg
 {
 	char *str; // args
 	int	type;
-	//char *args; // args = echo "Hello" this is me
+	char *args; // args = echo "Hello" this is me
 	char *in_file; // >> out.txt -> out.txt
 	char *out_file; //<< in.txt -> in.txt
 	char *here_doc; //

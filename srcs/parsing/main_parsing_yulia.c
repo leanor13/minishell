@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/25 12:30:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/25 15:44:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@ int	main_parsing(t_shell *shell)
 {
 	char *command = NULL;
 	t_arg	*lst = NULL;
+	t_arg	*lst1;
+	t_arg	*lst1_1;
 
+	lst1->append = false;
+	lst1->here_doc = false;
+	lst1->in_file = STDIN_FILENO;
+	lst1->out_file = STDOUT_FILENO;
+	lst1->next = lst1_1;
+	lst1->args = "ls -l";
 	//moved argc check to main flow
 	while (1)	
 	{
@@ -31,6 +39,8 @@ int	main_parsing(t_shell *shell)
 		}
 		else if (ft_strcmp(command, "test env") == 0)
 			print_env(shell->env_shell);
+		else if (ft_strcmp(command, "pipe 1") == 0)
+			lst = lst1;
 		add_history(command); // do we need to remember if command was executed or not?
 		// I think we need to allocate memory for lst somewhere. Maybe I just did not find it yet.
 		//lst = ft_lexer(command);
