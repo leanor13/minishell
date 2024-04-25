@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 17:19:18 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/25 11:28:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,29 @@
 void	new_env(t_shell *shell)
 {
 	// TODO
-	shell->env = NULL;
-	shell->shell_env = NULL;
+	shell->env_original = NULL;
+	shell->env_shell = NULL;
+	return ;
+}
+
+void	print_env(t_env *env)
+{
+	int		i = 0;
+	t_env	*current;
+
+	current = env;
+	while (current)
+	{
+		ft_printf("%d: %s = %s", i, current->var_name, current->var_value);
+		i ++;
+		current = current->next;
+	}
+}
+
+void	empty_user(t_shell *shell)
+{
+	// TODO  - handle case when getenv("USER") == NULL;
+	(void)shell;
 	return ;
 }
 
@@ -61,7 +82,7 @@ int	parse_env(t_shell *shell, char **env)
 	i = 0;
 	while (env[i])
 	{
-		equal = ft_strchr(env[i], "=");
+		equal = ft_strchr(env[i], '=');
 		if (equal != NULL)
 		{
 			*equal = '\0';
@@ -70,19 +91,18 @@ int	parse_env(t_shell *shell, char **env)
 		else
 			var_value = NULL;
 		var_name = env[i];
-		if (add_back_env(&shell->shell_env, var_name, var_value) != EXIT_SUCCESS)
+		if (add_back_env(&shell->env_shell, var_name, var_value) != EXIT_SUCCESS)
 		{
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}
 		i ++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 void	handle_env(t_shell *shell, char **env)
 {
-	t_env	first_env;
-
 	if (!env || !*env)
 	{
 		shell->no_env = true;
@@ -91,18 +111,15 @@ void	handle_env(t_shell *shell, char **env)
 	else
 	{
 		shell->no_env = false;
-		shell->env = env;
-		parse_env(shell, env);
+		shell->env_original = env;
+		if (parse_env(shell, env) != EXIT_SUCCESS)
+		{
+			free_shell(shell);
+			exit(EXIT_FAILURE);
+		}
 	}
 	if (getenv("USER") == NULL)
 		empty_user(shell);
-	return ;
-}
-
-void	empty_user(t_shell *shell)
-{
-	// TODO  - handle case when getenv("USER") == NULL;
-	(void)shell;
 	return ;
 }
 

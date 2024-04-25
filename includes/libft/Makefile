@@ -6,7 +6,7 @@
 #    By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2024/04/23 10:31:58 by yioffe           ###   ########.fr        #
+#    Updated: 2024/04/25 11:37:57 by yioffe           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,21 +31,27 @@ NAME = libft.a
 LIBC = ar rcs
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror -g3 -O3 -I.
+
+GREEN = \033[0;32m
+CYAN = \033[0;36m
+NC = \033[0m
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(LIBC) $(NAME) $(OBJS)
+	@echo "$(CYAN)Creating $(NAME) ..."
+	@$(LIBC) $(NAME) $(OBJS)
+	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

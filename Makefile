@@ -31,6 +31,12 @@ LIBFT_DIR	= ./includes/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 LIBS		= $(LIBFT)
 
+GREEN = \033[0;32m
+CYAN = \033[0;36m
+PURPLE = \033[0;35m
+YELLOW = \033[0;33m
+NC = \033[0m
+
 all: $(NAME)
 
 $(OBJS_DIR)/%.o: srcs/%.c
@@ -38,27 +44,37 @@ $(OBJS_DIR)/%.o: srcs/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBS)
+	@echo "$(CYAN)Creating $(NAME) ..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(LDFLAGS)
+	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
 $(LIBFT):
+	@echo "$(CYAN)Creating $(LIBFT) ..."
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
+	@echo "✅ $(GREEN)$(LIBFT) created $(NC)"
+
 
 parsing: $(NAME_PARSING)
 
 $(OBJS_DIR_PARSING)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "✅ $(GREEN)$@ created $(NC)"
 
 $(NAME_PARSING): $(OBJS_PARSING) $(LIBS)
+	@echo "$(CYAN)Creating $(NAME_PARSING) ..."
 	@$(CC) $(CFLAGS) -o $(NAME_PARSING) $(OBJS_PARSING) $(LIBS) $(LDFLAGS)
+	@echo "✅ $(GREEN)$(NAME_PARSING) created $(NC)"
 
 clean:
 	@$(RM) -r $(OBJS_DIR) $(OBJS_DIR_PARSING)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
+	@echo "✅ $(YELLOW) clean done! $(NC)"
 
 fclean: clean
 	@$(RM) $(NAME) $(NAME_PARSING)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
+	@echo "✅ $(YELLOW) fclean done! $(NC)"
 
 re: fclean all
 

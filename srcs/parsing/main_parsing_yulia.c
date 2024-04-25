@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 15:49:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/25 11:22:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	main_parsing(t_shell *shell)
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
 			executor_main(shell);
+		if (ft_strcmp(command, "1") == 0)
+			print_env(shell->env_shell);
 		//ft_block_signals(); TODO: implement in the end
 		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
 	}

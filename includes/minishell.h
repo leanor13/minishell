@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 17:05:18 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/25 11:23:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_env
 typedef struct s_shell
 {
 	bool	no_env;
-	t_env	*shell_env;
-	char	**env;
+	t_env	*env_shell;
+	char	**env_original;
 	int		std_fds[3];
 	t_arg	*args_list;
 	char	*here_doc;
@@ -62,3 +62,6 @@ char	*get_current_pwd(void);
 /* cleanup */
 void	free_shell(t_shell *shell);
 void	free_string_array(char ***str_arr);
+
+/* testing */
+void	print_env(t_env *env);
