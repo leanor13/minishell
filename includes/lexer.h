@@ -15,6 +15,10 @@ typedef struct s_arg
 	char *out_file; //<< in.txt -> in.txt
 	char *here_doc; //
 	bool append;
+	char			*command;
+	char			*path;
+	char			**args_parsed;
+	int				(*built_in_fn)(char **env, char **args, int fd);
 	struct s_arg	*next;
 	struct s_arg	*prev;
 }				t_arg;
