@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 13:16:10 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/29 17:34:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex.h"
 
-static int	exec_command(t_command *command, int *fd, char **envp)
+int	exec_command(t_command *command, int *fd, char **envp)
 {
 	pid_t	pid;
 

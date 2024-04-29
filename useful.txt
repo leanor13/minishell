@@ -10,3 +10,46 @@ tests:
 2. https://github.com/MariaAguiar/minitester
 3. check all buildins to make sure 1st argument is taken
 4. 
+
+
+chat gpt for sharing project:
+
+Fork the Repository: Your friend can fork the main repository on GitHub. This creates a copy of the repository under her GitHub account.
+Make Changes and Create Pull Requests: Your friend can then make changes to her forked repository by creating new branches, making commits, and pushing those changes to her fork. When she's ready to merge her changes into the main repository, she can create a pull request from her branch to the main repository.
+Merge Pull Requests: Once the pull request is created, you or other collaborators on the main repository can review the changes and merge the pull request if everything looks good.
+Activity Feed: GitHub will then attribute the contributions made by your friend to her GitHub activity, even though the changes were made in a forked repository. Her contributions will appear in her GitHub profile and activity feed.
+
+To keep her forked repository up to date with the changes in the main repository (often referred to as "syncing" or "fetching" updates), your friend can follow these steps:
+
+1. **Add the Main Repository as a Remote**: In her local clone of the forked repository, she can add the main repository as a remote. This allows her to fetch changes from the main repository into her local clone.
+
+   ```bash
+   git remote add upstream <main_repository_URL>
+   ```
+
+   Replace `<main_repository_URL>` with the URL of the main repository.
+
+2. **Fetch Changes from the Main Repository**: Next, she can fetch the changes from the main repository into her local clone. This fetches the changes from the main repository to her local machine but doesn't apply them yet.
+
+   ```bash
+   git fetch upstream
+   ```
+
+3. **Merge Changes into Her Local Branch**: After fetching the changes, she can merge them into her local branch (usually the `main` or `master` branch) to update it with the changes from the main repository.
+
+   ```bash
+   git checkout main  # or git checkout master
+   git merge upstream/main  # or git merge upstream/master
+   ```
+
+   This command switches to the local `main` (or `master`) branch and merges the changes from the `upstream/main` branch (or `upstream/master`).
+
+4. **Push Changes to Her Forked Repository**: Finally, she can push the updated branch with the merged changes to her forked repository on GitHub.
+
+   ```bash
+   git push origin main  # or git push origin master
+   ```
+
+   This command pushes the changes in her local `main` (or `master`) branch to her forked repository on GitHub, updating it with the changes from the main repository.
+
+By following these steps regularly, your friend can keep her forked repository up to date with the changes in the main repository, ensuring that she's working with the latest codebase.
