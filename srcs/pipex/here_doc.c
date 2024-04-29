@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/18 13:00:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/29 19:45:59 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/pipex.h"
+#include "../../includes/executor.h"
 
 static void	read_input(int fd[2], char *limiter, int fd_files[2])
 {

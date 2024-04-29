@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:18:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/29 20:04:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,21 +101,35 @@ static void	new_command(t_command *command, char *av_curr, char **envp)
 	}
 }
 
-t_command	*build_command_list(int ac, char **av, char **envp)
+int	args_count(t_arg *args_list)
+{
+	int i;
+
+	i = 0;
+	while (args_list != NULL)
+	{
+		i ++;
+		args_list = args_list->next;
+	}
+	return (i);
+}
+
+t_command	*build_command_list(t_shell *shell)
 {
 	int			i;
 	t_command	*command_list;
+	int			command_count;
+	t_arg		*args;
 
-	command_list = calloc((ac - 3), sizeof(t_command));
+	args = shell->args_list;
+	command_count = args_count(args);
+	command_list = calloc(command_count, sizeof(t_command));
 	if (!command_list)
 		return (perror("Could not allocate command list"), NULL);
-	i = 2;
-	if (ft_strcmp(av[1], "here_doc") == 0)
-		i ++;
-	while (i < ac - 1)
+	while (i < command_count)
 	{
-		if (av[i] && av[i][0])
-			new_command(&command_list[i - 2], av[i], envp);
+		if (args->args[i] && args->args[i][0])
+			new_command(&command_list[i - 2], shell);
 		else
 			ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO);
 		if (!command_list[i - 2].args || (!command_list[i - 2].path && !command_list[i-2].built_in_fn))
