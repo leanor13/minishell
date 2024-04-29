@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/26 10:34:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/29 17:31:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main_parsing(t_shell *shell)
 		.in_file = NULL,
 		.out_file = NULL,
 		.next = NULL,
-		.args = "wc"
+		.args = "wc -l"
 	};
 
 	lst1 = &(t_arg)

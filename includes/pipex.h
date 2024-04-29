@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:15:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/29 17:35:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,11 @@ void		dup_close(int fd, int reference);
 void		ft_close(int fd);
 void		validate_params(int ac, char **av);
 void		exit_pipe_error(int fd[2]);
+
+int			exec_command(t_command *command, int *fd, char **envp);
+static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp);
+int			open_file(int ac, char **av, int type);
+int			*handle_input(int ac, char **av);
+int			main_pipex(int ac, char **av, char **env);
 
 #endif
