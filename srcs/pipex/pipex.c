@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/29 19:45:59 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:54:40 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/executor.h"
+#include "../../includes/minishell.h"
 
-int	exec_command(t_command *command, int *fd, char **envp)
+int	exec_command(t_arg *command, int *fd, char **envp)
 {
 	pid_t	pid;
 
@@ -25,13 +25,13 @@ int	exec_command(t_command *command, int *fd, char **envp)
 		dup_close(fd[FD_OUT], STDOUT_FILENO);
 		if (command->built_in_fn != NULL)
 		{
-			if (command->built_in_fn(envp, command->args, STDOUT_FILENO) == EXIT_FAILURE)
+			if (command->built_in_fn(envp, command->args_parsed, STDOUT_FILENO) == EXIT_FAILURE)
 			{
 				ft_putstr_nl("Built-in error", STDERR_FILENO);
 				exit (NEG_ERROR);
 			}
 		}
-		else if (execve(command->path, command->args, envp) == -1)
+		else if (execve(command->path, command->args_parsed, envp) == -1)
 		{
 			perror("Execve error");
 			exit (NEG_ERROR);
@@ -42,36 +42,39 @@ int	exec_command(t_command *command, int *fd, char **envp)
 	return (pid);
 }
 
-static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
+int	exec_pipe(t_arg *c_list, int fd_files[2], char **envp)
 {
 	int	fd_pipe[2];
 	int	fd[2];
-	int	i;
 	int	status;
+	t_arg *current;
+	int	count;
+	int i;
 
-	i = 0;
+	current = c_list;
 	fd[FD_IN] = fd_files[FD_IN];
-	while (i <= len - 1)
+	count = args_count(c_list);
+	while (current)
 	{
 		if (pipe(fd_pipe) == -1)
 		{
 			perror("Error creating pipe");
 			return (close_all_protected(), NEG_ERROR);
 		}
-		if (i == len - 1)
+		if (current->next == NULL)
 			fd[FD_OUT] = fd_files[FD_OUT];
 		else
 			fd[FD_OUT] = fd_pipe[FD_OUT];
-		if (exec_command(&c_list[i], fd, envp) < 0)
+		if (exec_command(current, fd, envp) < 0)
 			return (close_all_protected(), NEG_ERROR);
 		ft_close(fd[FD_IN]);
 		fd[FD_IN] = fd_pipe[FD_IN];
 		ft_close(fd_pipe[FD_OUT]);
-		i ++;
+		current = current->next;
 	}
 	ft_close(fd_pipe[FD_IN]);
 	ft_close(fd[FD_OUT]);
-	for (i = 0; i < len; i ++)
+	for (i = 0; i < count; i ++)
 		waitpid(-1, &status, 0);
 	return (status);
 }
@@ -124,7 +127,7 @@ int	*handle_input(int ac, char **av)
 	return (fd_files);
 }
 
-int	main_pipex(int ac, char **av, char **env)
+/* int	main_pipex(int ac, char **av, char **env)
 {
 	int			*fd_files;
 	t_command	*command_list;
@@ -147,4 +150,4 @@ int	main_pipex(int ac, char **av, char **env)
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		exit (EXIT_FAILURE);
 	exit (EXIT_SUCCESS);
-}
+} */

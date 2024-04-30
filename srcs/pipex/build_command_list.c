@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/29 20:04:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:39:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,35 @@ static char	*find_path(char *command, char **envp)
 	return (ft_putstr_fd("Failed to find command path\n", STDERR_FILENO), NULL);
 }
 
-static void	new_command(t_command *command, char *av_curr, char **envp)
+static int	update_command(t_arg *command, t_shell *shell)
 {
 	int	i;
 
-	command->args = ft_split_pipex(av_curr, ' ');
-	if (!command->args)
-		return ;
-	command->command = command->args[0];
+	// add here error messages
+	command->args_parsed = ft_split_pipex(command->args, ' ');
+	if (!command->args_parsed)
+		return (EXIT_FAILURE);
+	command->command = command->args_parsed[0];
 	if (check_built_in(command) == true)
-		return ;
-	command->path = find_path(command->command, envp);
+		return (EXIT_SUCCESS);
+	command->path = find_path(command->command, shell->env_original);
 	if (!command->path)
 	{
 		i = 0;
-		while (command->args[i])
+		while (command->args_parsed[i])
 		{
-			free(command->args[i]);
+			free(command->args_parsed[i]);
 			i++;
 		}
+		free(command->args_parsed);
+		command->args_parsed = NULL;
 		free(command->args);
 		command->args = NULL;
 		command->command = NULL;
 		command->built_in_fn = NULL;
-		return ;
+		return (EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
 }
 
 int	args_count(t_arg *args_list)
@@ -114,30 +118,28 @@ int	args_count(t_arg *args_list)
 	return (i);
 }
 
-t_command	*build_command_list(t_shell *shell)
+int	build_command_list(t_shell *shell)
 {
 	int			i;
-	t_command	*command_list;
 	int			command_count;
-	t_arg		*args;
+	t_arg		*curr_arg;
 
-	args = shell->args_list;
-	command_count = args_count(args);
-	command_list = calloc(command_count, sizeof(t_command));
-	if (!command_list)
-		return (perror("Could not allocate command list"), NULL);
+	command_count = args_count(shell->args_list);
+	curr_arg = shell->args_list;
+	i = 0;
 	while (i < command_count)
 	{
-		if (args->args[i] && args->args[i][0])
-			new_command(&command_list[i - 2], shell);
-		else
-			ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO);
-		if (!command_list[i - 2].args || (!command_list[i - 2].path && !command_list[i-2].built_in_fn))
+		if (curr_arg->args && curr_arg->args[0])
 		{
-			free_command_list(command_list, i - 2);
-			return (NULL);
+			if (update_command(curr_arg, shell) != EXIT_SUCCESS)
+				{
+					free_command_list(shell->args_list);
+					return (EXIT_FAILURE);
+				}
 		}
+		else
+			return (ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO), EXIT_FAILURE);
 		i++;
 	}
-	return (command_list);
+	return (EXIT_SUCCESS);
 }

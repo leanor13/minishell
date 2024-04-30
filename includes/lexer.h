@@ -15,10 +15,10 @@ typedef struct s_arg
 	char *out_file; //<< in.txt -> in.txt
 	char *here_doc; //
 	bool append;
-	char			*command;
-	char			*path;
-	char			**args_parsed;
-	int				(*built_in_fn)(char **env, char **args, int fd);
+	char			*command; // used in executor
+	char			*path; // used in executor
+	char			**args_parsed; // used in executor
+	int				(*built_in_fn)(char **env, char **args, int fd); // used in executor
 	struct s_arg	*next;
 	struct s_arg	*prev;
 }				t_arg;
