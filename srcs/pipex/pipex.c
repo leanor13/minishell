@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 12:54:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:02:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	exec_command(t_arg *command, int *fd, char **envp)
 	return (pid);
 }
 
-int	exec_pipe(t_arg *c_list, int fd_files[2], char **envp)
+int	exec_pipe(t_arg *c_list, int fd_files[2], char **env)
 {
 	int	fd_pipe[2];
 	int	fd[2];
@@ -65,7 +65,7 @@ int	exec_pipe(t_arg *c_list, int fd_files[2], char **envp)
 			fd[FD_OUT] = fd_files[FD_OUT];
 		else
 			fd[FD_OUT] = fd_pipe[FD_OUT];
-		if (exec_command(current, fd, envp) < 0)
+		if (exec_command(current, fd, env) < 0)
 			return (close_all_protected(), NEG_ERROR);
 		ft_close(fd[FD_IN]);
 		fd[FD_IN] = fd_pipe[FD_IN];

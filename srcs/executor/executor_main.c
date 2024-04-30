@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 13:00:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:03:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ int	executor_main(t_shell *shell)
 	
 	//if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 	//	av ++;
-	printf("env: %s\n", shell->env_original[0]);
-	printf("env: %s\n", shell->env_original[1]);
 	if (build_command_list(shell) != EXIT_SUCCESS)
 	{
 		close_all_protected();
 		return (free(fd_files), EXIT_FAILURE);
 	}
 	// in future - change env to shell->env_shell
+	// 
 	status = exec_pipe(shell->args_list, fd_files, shell->env_original);
 	close_all_protected();
 	//free(fd_files);
