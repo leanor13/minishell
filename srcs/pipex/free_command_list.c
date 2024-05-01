@@ -6,19 +6,19 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:09:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 12:40:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/01 14:05:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_command_list(t_arg *command_list)
+void	free_command_list(t_arg **command_list)
 {
 	int		j;
 	t_arg	*current;
 	t_arg	*next;
 
-	current = command_list;
+	current = *command_list;
 	while (current)
 	{
 		j = 0;
@@ -30,14 +30,16 @@ void	free_command_list(t_arg *command_list)
 		}
 		free(current->args_parsed);
 		current->args_parsed = NULL;
-		free(current->args);
+		//free(current->args);
 		current->args = NULL;
 		free(current->path);
 		current->path = NULL;
 		next = current->next;
-		free(current);
+		//free(current);
+		current = NULL;
 		current = next;
 	}
+	*command_list = NULL;
 	close_all_protected();
 }
 

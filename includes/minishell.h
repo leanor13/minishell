@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 12:49:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:55:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		main_parsing(t_shell *shell);
 
 /* execution */
 int	executor_main(t_shell *shell);
-int	main_pipex(int ac, char **av, char **env);
+//int	main_pipex(int ac, char **av, char **env);
 
 /* built-ins */
 int		ft_pwd(char **env, char **args, int fd_out);
@@ -78,7 +78,7 @@ void		open_files_here_doc(int ac, char **av, int fd_files[2]);
 void		close_all_protected(void);
 void		close_all_unprotected(void);
 
-void		free_command_list(t_arg *command_list);
+void		free_command_list(t_arg **command_list);
 void		close_both_ends(int fd[2], bool pipe_error);
 void		dup_close(int fd, int reference);
 void		ft_close(int fd);
