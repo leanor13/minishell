@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 13:37:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:14:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int	build_command_list(t_shell *shell)
 		else
 			return (ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO), EXIT_FAILURE);
 		i++;
+		curr_arg = curr_arg->next;
 	}
 	return (EXIT_SUCCESS);
 }

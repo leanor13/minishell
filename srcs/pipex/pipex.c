@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 15:02:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:09:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	exec_command(t_arg *command, int *fd, char **envp)
 		else if (execve(command->path, command->args_parsed, envp) == -1)
 		{
 			perror("Execve error");
+			printf("path: %s", command->path);
 			exit (NEG_ERROR);
 		}
 	}

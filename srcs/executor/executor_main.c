@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 15:03:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:03:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	executor_main(t_shell *shell)
 	status = exec_pipe(shell->args_list, fd_files, shell->env_original);
 	close_all_protected();
 	//free(fd_files);
-	free_command_list(shell->args_list);
+	//free_command_list(shell->args_list);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		exit (EXIT_FAILURE);
 	exit (EXIT_SUCCESS);
