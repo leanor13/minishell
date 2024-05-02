@@ -6,11 +6,20 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/01 13:56:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:16:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	open_fds(t_arg *command)
+{
+	while (command)
+	{
+		command->fd_in = open_file(command->in_file, INPUT_FILE);
+		command = command->next;
+	}
+}
 
 int	executor_main(t_shell *shell)
 {
@@ -29,6 +38,8 @@ int	executor_main(t_shell *shell)
 	
 	//if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 	//	av ++;
+	if (open_fds(shell->args_list) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	if (build_command_list(shell) != EXIT_SUCCESS)
 	{
 		close_all_protected();

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:25:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 14:57:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 15:40:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	ft_cd(char **env, char **args, int fd_out)
 	return (EXIT_SUCCESS);
 }
 
+/*
 int main(void)
 {
     char *env[] = {
@@ -141,4 +142,4 @@ int main(void)
     printf("After changing to /tmp, PWD: %s\n", getenv("PWD"));
 
     return EXIT_SUCCESS;
-}
+} */

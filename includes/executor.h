@@ -35,7 +35,8 @@
 # define PRINT_PIPE_ERROR true
 # define HERE_DOC 0
 # define INPUT_FILE 1
-# define OUTPUT_FILE 2
+# define OUTPUT_REWRITE 2
+# define OUTPUT_APPEND 3
 
 # define WRONG_ARG_NUM "Wrong number of arguments. \
 Usage: ./pipex file1 cmd1 cmd2 file2 or \

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/01 13:09:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:15:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,17 @@ int	exec_pipe(t_arg *c_list, int fd_files[2], char **env)
 	return (status);
 }
 
-int	open_file(int ac, char **av, int type)
+int	open_file(char *file_name, int type)
 {
 	int	fd;
 
 	fd = 0;
-	if (type == HERE_DOC)
-		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (type == OUTPUT_FILE)
-		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (type == HERE_DOC || type == OUTPUT_APPEND)
+		fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == OUTPUT_REWRITE)
+		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == INPUT_FILE)
-		fd = open(av[1], O_RDONLY);
+		fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
 		if (type == INPUT_FILE)
@@ -117,7 +117,7 @@ int	*handle_input(int ac, char **av)
 	else
 	{
 		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
-		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_FILE);
+		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_REWRITE);
 	}
 	if (fd_files[FD_OUT] < 0 || fd_files[FD_IN] < 0)
 	{

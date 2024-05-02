@@ -18,6 +18,8 @@ typedef struct s_arg
 	char			*command; // used in executor
 	char			*path; // used in executor
 	char			**args_parsed; // used in executor
+	int	fd_in;
+	int	fd_out;
 	int				(*built_in_fn)(char **env, char **args, int fd); // used in executor
 	struct s_arg	*next;
 	struct s_arg	*prev;
