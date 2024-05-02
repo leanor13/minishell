@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/01 21:41:24 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:20:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	int	i;
 
 	i = 0;
+	if (!str || !*str)
+		return (NULL);
 	// if(!closed_quotes(str))THIS PART LATER
 	// 	return (NULL); //YULIA maybe error for here? instead of return
 	//IT IS NOT GOING TO WORK JUST WITH THIS >> << OR THIS OR IF IT IS AT THE END 
