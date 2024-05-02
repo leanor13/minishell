@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 16:20:53 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:40:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,7 @@ t_arg *ft_parser(t_arg *lst)
 		return (NULL);// thinking on this protection how could you break sent nothing
 	while(lst)
 	{
-		node = NULL;
-		node = malloc(sizeof(t_arg));
+		node = ft_calloc(1, sizeof(t_arg));
 		if (!node)
 			return (NULL);
 		while(lst)
@@ -134,7 +133,11 @@ t_arg *ft_parser(t_arg *lst)
 			// else if(lst->type == ARG)
 			// 	node->args = ft_strdup(lst->str);
 			else if(lst->type == ARG)
+			{
+				printf("lst->str, %s\n", lst->str);
+				printf("node->args, %s\n", node->args);
 			 	node->args = ft_strjoinline(node->args, lst->str);
+			}
 			else if(lst->type == OUTPUT)
 			{
 				lst = lst->next;
