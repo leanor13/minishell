@@ -88,7 +88,7 @@ typedef enum e_type
 	// RPR,      // )
 }t_type;
 
-t_arg	*ft_lexer(char *str);
+t_arg	*ft_lexer(char *str, t_arg *lst);
 void	append_node(t_arg **lst, char *str, int end, int len, int value);
 t_arg	*ft_parser(t_arg *lst);
 void	free_stackfinal(t_arg **lst);
