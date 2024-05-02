@@ -6,7 +6,7 @@ FILES	= pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_
 	built_ins/ft_cd built_ins/ft_pwd built_ins/ft_env built_ins/get_current_pwd  built_ins/ft_echo \
 	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset \
 	main_flow/init main_flow/main_minishell \
-	parsing/main_parsing_yulia parsing/lexer parsing/lexer_listutils parsing/parser \
+	parsing/main_parsing parsing/lexer parsing/lexer_listutils parsing/parser \
 	executor/executor_main \
 	cleanup/main_cleanup
 
