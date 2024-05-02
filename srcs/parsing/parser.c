@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 18:40:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 19:39:09 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// void	setup_struct(t_arg *arg)
-// {
-// 	arg->str = NULL;
-// 	arg->type = 0;
-// 	arg->args = NULL;
-// 	arg->in_file = NULL;
-// 	arg->out_file = NULL;
-// 	arg->here_doc = NULL;
-// 	arg->append = 0;
-// 	arg->command = NULL;
-// 	arg->path = NULL;
-// 	arg->args_parsed = NULL;
-// 	arg->built_in_fn = NULL;
-// 	arg->next = NULL;
-// 	arg->prev = NULL;
-// }
-// CHANGE THE PASSING VALUES
-
-// void	find_heredoc(t_arg *lst)
-// {
-// 	lst->heredoc = 0;
-// 	while(lst)
-// 	{
-// 		if(lst->type == HEREDOC)
-// 		{
-// 			lst->heredoc = 1;
-// 			printf("ITTVAN");
-// 		}
-// 		if(lst->type == PIPE)
-// 			break;
-// 		lst = lst->next;
-// 	}
-// }
 
 void	append_node_parser(t_arg **lst, char *str, int start, int len, int value)
 {
@@ -109,6 +75,26 @@ char	*ft_strjoinline(char *s1, char *s2)
 	return (s3);
 }
 
+char	*ft_strcutspace(char *s1)
+{
+	char	*s2;
+	size_t	j;
+	size_t	i;
+	int	len;
+
+	len = ft_strlen(s1);
+	s2 = (char *)malloc(sizeof(char) * (len));
+	if (!s2)
+		return (NULL);
+	j = 0;
+	i = 0;
+	while (s1 && s1[i] && (len - 1) > j)
+		s2[j++] = s1[i++];
+	s2[j] = '\0';
+	free(s1);
+	return (s2);
+}
+
 t_arg *ft_parser(t_arg *lst)
 {
 	t_arg	*final;
@@ -117,7 +103,7 @@ t_arg *ft_parser(t_arg *lst)
 
 	final = NULL;
 	if (!lst)
-		return (NULL);// thinking on this protection how could you break sent nothing
+		return (NULL);
 	while(lst)
 	{
 		node = ft_calloc(1, sizeof(t_arg));
@@ -133,11 +119,7 @@ t_arg *ft_parser(t_arg *lst)
 			// else if(lst->type == ARG)
 			// 	node->args = ft_strdup(lst->str);
 			else if(lst->type == ARG)
-			{
-				printf("lst->str, %s\n", lst->str);
-				printf("node->args, %s\n", node->args);
 			 	node->args = ft_strjoinline(node->args, lst->str);
-			}
 			else if(lst->type == OUTPUT)
 			{
 				lst = lst->next;
@@ -161,6 +143,7 @@ t_arg *ft_parser(t_arg *lst)
 			}
 			lst = lst->next;
 		}
+		node->args = ft_strcutspace(node->args);
 		if (!(final))
 		{
 			final = node;
@@ -186,98 +169,3 @@ t_arg *ft_parser(t_arg *lst)
 	return(final);
 }
 
-// t_arg *ft_parser(t_arg *lst)
-// {
-// 	t_arg **final;
-// 	t_arg	*node;
-// 	t_arg	*nlast;
-// 	final = NULL;
-// 	while(lst)
-// 	{
-// 		find_heredoc(lst);// node and final first connect the valuses, where you allocate the memory
-// 		node = NULL;
-// 		nlast = NULL;
-// 		node->args = NULL;
-// 		node = malloc(sizeof(t_arg));
-// 		if (!node)
-// 			return (NULL);
-// 		while(lst)
-// 		{
-// 			if(lst->heredoc == 1)
-// 				ft_strcpy(node->here_doc, lst->str);
-// 			else if(lst->type == ARG)
-// 				node->args = ft_strjoinline(node->args, lst->str);
-// 			else if(lst->type == OUTPUT)
-// 			{
-// 				lst = lst->next;
-// 				ft_strcpy(node->out_file, lst->str);
-// 			}
-// 			else if(lst->type == OUTPUT)
-// 			{
-// 				lst = lst->next;
-// 				ft_strcpy(node->in_file, lst->str);
-// 			}
-// 			else if(lst->type == APPEND)
-// 				node->append = true;
-// 			else if(lst->type == PIPE)
-// 				break;
-// 			lst = lst->next;
-// 		}
-// 		if (!(*final))
-// 		{
-// 			*final = node;
-// 			node->prev = NULL;
-// 		}
-// 		else
-// 		{
-// 			nlast = ft_stacklast(*final);
-// 			nlast->next = node;
-// 			node->prev = nlast;
-// 		}
-// 		free_stackfinal(&node);
-// 		free_stackfinal(&nlast);
-// 	}
-// 	//free_stackfinal(&lst);
-// 	//if delone, del the >, <, >>, << split, if pipe
-// 	return(*final);
-// }
-
-// t_arg *ft_parser(t_arg *lst)
-// {
-// 	t_arg *final;
-// 	// final->args = NULL;
-// 	// final->out_file = NULL;
-// 	// final->in_file = NULL;
-// 	// final->here_doc = NULL;
-// 	// final->append = 0;
-	
-// 	final = NULL;
-// 		find_heredoc(lst);
-// 	while(lst)
-// 	{
-// 		if(lst->heredoc == 1)
-// 			ft_strcpy(final->here_doc, lst->str);
-// 		else if(lst->type == ARG)
-// 			final->args = ft_strjoinline(final->args, lst->str);
-// 		else if(lst->type == OUTPUT)
-// 		{
-// 			lst = lst->next;
-// 			ft_strcpy(lst->out_file, lst->str);
-// 		}
-// 		else if(lst->type == OUTPUT)
-// 		{
-// 			lst = lst->next;
-// 			ft_strcpy(lst->in_file, lst->str);
-// 		}
-// 		else if(lst->type == APPEND)
-// 			lst->append = true;
-// 		else if(lst->type == PIPE)
-// 		{
-// 			append_node_parser
-// 		}
-// 		lst = lst->next;
-// 	}
-// 	free_stackfinal(&lst);
-// 	//if delone, del the >, <, >>, << split, if pipe
-// 	return(final);
-// }
