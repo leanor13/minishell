@@ -6,20 +6,20 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 16:16:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:53:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	open_fds(t_arg *command)
+/*int	open_fds(t_arg *command)
 {
 	while (command)
 	{
 		command->fd_in = open_file(command->in_file, INPUT_FILE);
 		command = command->next;
 	}
-}
+}*/
 
 int	executor_main(t_shell *shell)
 {

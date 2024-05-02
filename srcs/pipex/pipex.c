@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 16:15:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:56:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,29 @@ int	exec_pipe(t_arg *c_list, int fd_files[2], char **env)
 	return (status);
 }
 
-int	open_file(char *file_name, int type)
+int	open_file(int ac, char **av, int type)
+{
+	int	fd;
+
+	fd = 0;
+	if (type == HERE_DOC)
+		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == OUTPUT_REWRITE)
+		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == INPUT_FILE)
+		fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+	{
+		if (type == INPUT_FILE)
+			perror("Failed opening input file");
+		else
+			perror("Failed opening output file");
+		return (NEG_ERROR);
+	}
+	return (fd);
+}
+/*
+int			open_file(int ac, char **av, int type)
 {
 	int	fd;
 
@@ -101,6 +123,7 @@ int	open_file(char *file_name, int type)
 	}
 	return (fd);
 }
+*/
 
 int	*handle_input(int ac, char **av)
 {
