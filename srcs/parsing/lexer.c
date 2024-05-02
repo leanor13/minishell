@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/22 19:28:58 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/01 21:41:24 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,19 @@ bool	closed_quotes(char *str)
 int	skip_space(char *str, int i)
 {
 	int	nospace;
+	int j;
 
+	j = 0;
 	nospace = i;
-	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
+	//while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
+	while(str[i] == ' ')
+	{
 			i++;
+			j++;
+	}
 	if (nospace == i)
 		return(0);
-	return(i);
+	return(j);
 }
 
 int shellcommand_scan(t_arg **lst, char *str, int i)
@@ -113,8 +119,12 @@ int arg_scan(t_arg **lst, char *str, int i)
 	// }
 	// else
 	// {
+	if(str[i] == '\0')
+		return(j);
 	while(str[i])
 	{
+		// if(str[i] != '<' || str[i] != '>') some protection if it is only > <
+		// 	return(j);
 		if(skip_space(str, i))
 			break ;
 		i++;
@@ -125,21 +135,31 @@ int arg_scan(t_arg **lst, char *str, int i)
 	return (j);
 }
 
-t_arg	*ft_lexer(char *str)
+t_arg	*ft_lexer(char *str, t_arg *lst)
 {
-	t_arg *lst;
 	int	i;
-	
-	lst = NULL;
+
 	i = 0;
 	// if(!closed_quotes(str))THIS PART LATER
 	// 	return (NULL); //YULIA maybe error for here? instead of return
+	//IT IS NOT GOING TO WORK JUST WITH THIS >> << OR THIS OR IF IT IS AT THE END 
 	while(str[i])
 	{
 		i += skip_space(str, i);// everytime when it is a space
 		i += shellcommand_scan(&lst, str, i);
+		i += skip_space(str, i);
 		i += arg_scan(&lst, str, i);
 		i++;
 	}
 	return(lst);
 }
+
+// minishell$< > < >
+// <
+// 1
+// >
+// 5
+// <
+// 1
+// >
+// 5 this case i snot working
