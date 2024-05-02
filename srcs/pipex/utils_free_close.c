@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/29 19:45:59 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:35:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/executor.h"
+#include "../../includes/minishell.h"
 
 void	ft_close(int fd)
 {

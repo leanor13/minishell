@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/29 19:45:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:15:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		main_parsing(t_shell *shell);
 
 /* execution */
 int	executor_main(t_shell *shell);
-int	main_pipex(int ac, char **av, char **env);
+//int	main_pipex(int ac, char **av, char **env);
 
 /* built-ins */
 int		ft_pwd(char **env, char **args, int fd_out);
@@ -65,3 +65,27 @@ void	free_string_array(char ***str_arr);
 
 /* testing */
 void	print_env(t_env *env);
+
+char		**ft_split_pipex(char *s, char c);
+int			is_quote(char c);
+int			build_command_list(t_shell *shell);
+bool		check_built_in(t_arg *command);
+int			dir_len_count(char *dir_start);
+char		*absolute_path(char *command);
+void		here_doc(char *limiter, int *fd_files);
+int			open_file(char *file_name, int type);
+void		open_files_here_doc(int ac, char **av, int fd_files[2]);
+void		close_all_protected(void);
+void		close_all_unprotected(void);
+
+void		free_command_list(t_arg **command_list);
+void		close_both_ends(int fd[2], bool pipe_error);
+void		dup_close(int fd, int reference);
+void		ft_close(int fd);
+void		validate_params(int ac, char **av);
+void		exit_pipe_error(int fd[2]);
+
+int			exec_command(t_arg *command, int *fd, char **envp);
+int			exec_pipe(t_arg *c_list, int fd_files[2], char **envp);
+int			*handle_input(int ac, char **av);
+int			args_count(t_arg *args_list);

@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/29 19:45:59 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:35:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/executor.h"
+#include "../../includes/minishell.h"
 
 static void	read_input(int fd[2], char *limiter, int fd_files[2])
 {

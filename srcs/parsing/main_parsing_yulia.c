@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing_yulia.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 21:44:05 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:35:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int	main_parsing(t_shell *shell)
 		.in_file = NULL,
 		.out_file = NULL,
 		.next = NULL,
-		.args = "wc -l"
+		.args = "ls"
 	};
+	//(void)lst1_1;
 
 	lst1 = &(t_arg)
 	{
@@ -38,13 +39,13 @@ int	main_parsing(t_shell *shell)
 		.in_file = NULL,
 		.out_file = NULL,
 		.next = lst1_1,
-		.args = "ls -l"
+		.args = "cd srcs/"
 	};
 
 	//moved argc check to main flow
 	while (1)	
 	{
-		free_stackfinal(&shell->args_list); // I moved this to clean before next run. If run is final we will clean separately
+		//free_stackfinal(&shell->args_list); // I moved this to clean before next run. If run is final we will clean separately
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
@@ -55,9 +56,10 @@ int	main_parsing(t_shell *shell)
 			print_env(shell->env_shell);
 		else if (ft_strcmp(command, "pipe 1") == 0)
 			lst = lst1;
+		else
+			lst = NULL;
 		add_history(command); // do we need to remember if command was executed or not?
 		
-		// I think we need to allocate memory for lst somewhere. Maybe I just did not find it yet.
 		//lst = ft_lexer(command);
 		//lst = ft_parser(lst);
 		shell->args_list = lst;
