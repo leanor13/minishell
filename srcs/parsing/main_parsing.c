@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_parsing.c                                     :+:      :+:    :+:   */
+/*   main_parsing_yulia.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/01 21:51:16 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:47:43 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,56 +14,60 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// void	setup_struct(t_arg *arg)
-// {
-// 	arg->str = NULL;
-// 	arg->type = 0;
-// 	arg->args = NULL;
-// 	arg->in_file = NULL;
-// 	arg->out_file = NULL;
-// 	arg->here_doc = NULL;
-// 	arg->append = 0;
-// 	arg->command = NULL;
-// 	arg->path = NULL;
-// 	arg->args_parsed = NULL;
-// 	arg->built_in_fn = NULL;
-// 	arg->next = NULL;
-// 	arg->prev = NULL;
-// }
-
-int	main(int argc, char **argv, char **env)
+int	main_parsing(t_shell *shell)
 {
-	(void)argv;
-	(void)env;
-	char *command = NULL;
-	t_arg	*lst;
+	char	*command = NULL;
+	t_arg	*lst = NULL;
+	t_arg	*lst1 = NULL;
+	t_arg	*lst1_1 = NULL;
 
-	lst = NULL;
-	//setup_struct(lst);
-	//	t_arg_pass	*cleared_command;
-	if (argc != 1)
+	lst1_1 = &(t_arg)
 	{
-		ft_printf("RUN THE CODE WITHOUT ARGUMENTS\n");// YULIA STDERROR
-		exit(0);
-	}
+		.append = false,
+		.here_doc = false,
+		.in_file = NULL,
+		.out_file = NULL,
+		.next = NULL,
+		.args = "ls"
+	};
+	//(void)lst1_1;
+
+	lst1 = &(t_arg)
+	{
+		.append = false,
+		.here_doc = false,
+		.in_file = NULL,
+		.out_file = NULL,
+		.next = lst1_1,
+		.args = "cd srcs/"
+	};
+
+	//moved argc check to main flow
 	while (1)	
 	{
-		lst = NULL;
+		//free_stackfinal(&shell->args_list); // I moved this to clean before next run. If run is final we will clean separately
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
-			ft_printf("exit\n");
-				exit(0);//YULIA maybe error, perror, it is just simply quit the program, because it is exit command
+			ft_putstr_nl("exit", STDERR_FILENO);
+			exit(EXIT_FAILURE);
 		}
-		add_history(command);
+		else if (ft_strcmp(command, "test env") == 0)
+			print_env(shell->env_shell);
+		else if (ft_strcmp(command, "pipe 1") == 0)
+			lst = lst1;
+		else
+			lst = NULL;
+		add_history(command); // do we need to remember if command was executed or not?
+		
 		lst = ft_lexer(command, lst);
 		lst = ft_parser(lst);
-		free_stackfinal(&lst);// YULIA FOR YOU TO DEL THE WHOLE LIST
-	//signal at the end for ctrl \ + ctrl C
-	//UPDATE ENV!!
-	//Replace the environment variables into a linked list so you can delete or add
-	//later using export and unset builtins. 
-	//In addition to displaying them using env or export (without arguments) builtins 
+		//free_stackfinal(&lst);
+		shell->args_list = lst;
+		if (shell->args_list != NULL)
+			executor_main(shell);
+		//ft_block_signals(); TODO: implement in the end
 		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
 	}
+	return (EXIT_SUCCESS);
 }
