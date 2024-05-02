@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 17:34:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 19:45:36 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	main_parsing(t_shell *shell)
 		lst = ft_lexer(command, lst);
 		lst = ft_parser(lst);
 		(void)shell;
-		// if (ft_strcmp(command, "test env") == 0)
-		// 	print_env(shell->env_shell);
-		// else if (ft_strcmp(command, "pipe 1") == 0)
-		// 	lst = lst1;
-		//free_stackfinal(&lst);
-		//shell->args_list = lst;
-		//if (shell->args_list != NULL)
-		//	executor_main(shell);
+		if (ft_strcmp(command, "test env") == 0)
+			print_env(shell->env_shell);
+		else if (ft_strcmp(command, "pipe 1") == 0)
+			lst = lst1;
+		shell->args_list = lst;
+		free_stackfinal(&lst);
+		if (shell->args_list != NULL)
+			executor_main(shell);
 		//ft_block_signals(); TODO: implement in the end
 		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
 	}
