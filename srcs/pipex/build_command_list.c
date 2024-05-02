@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/01 13:14:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 10:39:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	build_command_list(t_shell *shell)
 		{
 			if (update_command(curr_arg, shell) != EXIT_SUCCESS)
 				{
-					free_command_list(shell->args_list);
+					free_command_list(&shell->args_list);
 					return (EXIT_FAILURE);
 				}
 		}

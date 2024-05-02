@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:25:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 11:25:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 14:57:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,50 +30,54 @@ char	*ft_getenv(char **env, const char *name)
 
 int	ft_setenv(char ***env, const char *name, const char *value)
 {
-    int		i = 0;
-    char	*new_entry;
-    char	**new_env;
-    int		j;
+	int		i = 0;
+	char	*new_entry;
+	char	**new_env;
+	int		j;
+	char    *temp;
 
-    new_entry = ft_strjoin(name, "=");
-    new_entry = ft_strjoin(new_entry, value);
-    if (ft_getenv(*env, name) != NULL)
-    {
-        i = 0;
-        while ((*env)[i])
-        {
-            if (ft_strncmp((*env)[i], name, ft_strlen(name)) == 0 && (*env)[i][ft_strlen(name)] == '=')
-            {
-                free((*env)[i]);
-                (*env)[i] = new_entry;
-                return (EXIT_SUCCESS);
-            }
-            i++;
-        }
-    }
-    new_env = (char **)malloc((i + 2) * sizeof(char *));
-    j = 0;
-    while ((*env)[j])
-    {
-        new_env[j] = (*env)[j];
-        j++;
-    }
-    new_env[i] = new_entry;
-    new_env[i + 1] = NULL;
-    free(*env);
-    *env = new_env;
-    return (EXIT_SUCCESS);
+	temp = ft_strjoin(name, "=");
+	new_entry = ft_strjoin(temp, value);
+	free(temp); // Free the memory from the first ft_strjoin
+
+	while ((*env)[i])
+	{
+		if (ft_strncmp((*env)[i], name, ft_strlen(name)) == 0 && (*env)[i][ft_strlen(name)] == '=')
+		{
+			//free((*env)[i]);
+			(*env)[i] = new_entry;
+			return (EXIT_SUCCESS);
+		}
+		i++;
+	}
+
+	new_env = (char **)malloc((i + 2) * sizeof(char *));
+	if (!new_env) // Check if malloc succeeded
+		return (EXIT_FAILURE);
+
+	j = 0;
+	while ((*env)[j])
+	{
+		new_env[j] = (*env)[j];
+		j++;
+	}
+	new_env[i] = new_entry;
+	new_env[i + 1] = NULL;
+	//free(*env);
+	*env = new_env;
+	return (EXIT_SUCCESS);
 }
-
-// add here case for (getenv("USER") == NULL) for Home directory
 
 int	ft_cd(char **env, char **args, int fd_out)
 {
 	char	*pwd;
 	char	*path;
 	char	*new_pwd;
+	char    *old_pwd;
 
 	pwd = ft_getenv(env, "PWD");
+	old_pwd = pwd ? ft_strdup(pwd) : NULL; // Make a copy of the pwd string
+
 	(void)fd_out;
 	if (pwd == NULL)
 		return (ft_putstr_nl("cd: failed to get current directory", STDERR_FILENO),
@@ -90,8 +94,9 @@ int	ft_cd(char **env, char **args, int fd_out)
 		path = args[1];
 	if (chdir(path) == -1)
 		return (perror("cd path"), EXIT_FAILURE);
-	if (ft_setenv(&env, "OLDPWD", pwd) != EXIT_SUCCESS)
+	if (ft_setenv(&env, "OLDPWD", old_pwd) != EXIT_SUCCESS)
 		return (ft_putstr_nl("cd: failed to set OLDPWD", STDERR_FILENO), EXIT_FAILURE);
+	free(old_pwd); // Free the old_pwd string
 	new_pwd = get_current_pwd();
 	if (new_pwd == NULL)
 		return (ft_putstr_nl("cd: failed to get new directory", STDERR_FILENO),
@@ -99,4 +104,41 @@ int	ft_cd(char **env, char **args, int fd_out)
 	if (ft_setenv(&env, "PWD", new_pwd) != EXIT_SUCCESS)
 		return (ft_putstr_nl("cd: failed to set PWD", STDERR_FILENO), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+int main(void)
+{
+    char *env[] = {
+        "PWD=/",
+        "HOME=/home",
+        NULL
+    };
+    char *args1[] = {
+        "cd",
+        NULL
+    };
+    char *args2[] = {
+        "cd",
+        "/tmp",
+        NULL
+    };
+
+    printf("Initial PWD: %s\n", getenv("PWD"));
+    printf("Initial HOME: %s\n", getenv("HOME"));
+
+    if (ft_cd(env, args1, 1) != EXIT_SUCCESS) {
+        fprintf(stderr, "Failed to change directory to HOME\n");
+        return EXIT_FAILURE;
+    }
+
+    printf("After changing to HOME, PWD: %s\n", getenv("PWD"));
+
+    if (ft_cd(env, args2, 1) != EXIT_SUCCESS) {
+        fprintf(stderr, "Failed to change directory to /tmp\n");
+        return EXIT_FAILURE;
+    }
+
+    printf("After changing to /tmp, PWD: %s\n", getenv("PWD"));
+
+    return EXIT_SUCCESS;
 }

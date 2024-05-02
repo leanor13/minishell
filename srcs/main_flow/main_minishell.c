@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:44:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 16:10:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/02 14:57:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+/* int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 
@@ -23,4 +23,4 @@ int	main(int argc, char **argv, char **env)
 	main_parsing(&shell);
 	//ft_clean(); - this function will use free_stackfinal as well
 	return (EXIT_SUCCESS);
-}
+} */
