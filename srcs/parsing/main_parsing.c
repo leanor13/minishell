@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 14:02:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:07:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	main_parsing(t_shell *shell)
 		add_history(command); // do we need to remember if command was executed or not?	
 		lst = ft_lexer(command, lst);
 		lst = ft_parser(lst);
-		(void)shell;
 		if (ft_strcmp(command, "test env") == 0)
 			print_env(shell->env_shell);
 		else if (ft_strcmp(command, "pipe 1") == 0)

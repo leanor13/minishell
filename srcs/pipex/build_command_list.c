@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 10:39:45 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:16:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int	build_command_list(t_shell *shell)
 	{
 		if (curr_arg->args && curr_arg->args[0])
 		{
+			// TODO in case of empty/failed update we can clean cmd, and proceed to next ones
 			if (update_command(curr_arg, shell) != EXIT_SUCCESS)
 				{
 					free_command_list(&shell->args_list);

@@ -6,20 +6,45 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 17:16:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:13:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*int	open_fds(t_arg *command)
+int	ft_min(int a, int b)
 {
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+
+int	open_fds(t_arg *command)
+{
+	// here_doc: add here here_doc case
 	while (command)
 	{
-		command->fd_in = open_file(command->in_file, INPUT_FILE);
+		if (command->in_file)
+			command->fd_in = open_file(command->in_file, INPUT_FILE);
+		if (command->out_file)
+		{
+			if (command->append)
+				command->fd_out= open_file(command->out_file, OUTPUT_APPEND);
+			else
+			{
+				command->fd_out= open_file(command->out_file, OUTPUT_REWRITE);
+			}
+		}
+		if (ft_min(command->fd_in, command->fd_out) < 0)
+		{
+			command->command = NULL;
+			return (EXIT_FAILURE);
+		}
 		command = command->next;
 	}
-}*/
+	return (EXIT_SUCCESS);
+}
 
 int	executor_main(t_shell *shell)
 {
@@ -28,9 +53,6 @@ int	executor_main(t_shell *shell)
 
 	if (!shell->args_list)
 		return (EXIT_SUCCESS);
-	fd_files = malloc(2*sizeof(int));
-	fd_files[0] = STDIN_FILENO;
-	fd_files[1] = STDOUT_FILENO;
 	//validate_params(ac, av);
 	//fd_files = handle_input(ac, av);
 	// here: go through all args and try to open input and output files. 
@@ -38,16 +60,15 @@ int	executor_main(t_shell *shell)
 	
 	//if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 	//	av ++;
-	//if (open_fds(shell->args_list) != EXIT_SUCCESS)
-	//	return (EXIT_FAILURE);
+	open_fds(shell->args_list);
 	if (build_command_list(shell) != EXIT_SUCCESS)
 	{
 		close_all_protected();
-		return (free(fd_files), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	// in future - change env to shell->env_shell
 	// 
-	status = exec_pipe(shell->args_list, fd_files, shell->env_original);
+	status = exec_pipe(shell->args_list, shell->env_original);
 	close_all_protected();
 	//free(fd_files);
 	free_command_list(&shell->args_list);
