@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 13:11:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:16:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ static int	update_command(t_arg *command, t_shell *shell)
 	int	i;
 
 	// add here error messages
-	command->fd_in = STDIN_FILENO;
-	command->fd_out = STDOUT_FILENO;
 	command->args_parsed = ft_split_pipex(command->args, ' ');
 	if (!command->args_parsed)
 		return (EXIT_FAILURE);

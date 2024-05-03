@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 13:10:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:13:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int	open_fds(t_arg *command)
 			if (command->append)
 				command->fd_out= open_file(command->out_file, OUTPUT_APPEND);
 			else
+			{
 				command->fd_out= open_file(command->out_file, OUTPUT_REWRITE);
+			}
 		}
 		if (ft_min(command->fd_in, command->fd_out) < 0)
 		{
@@ -58,8 +60,7 @@ int	executor_main(t_shell *shell)
 	
 	//if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 	//	av ++;
-	//if (open_fds(shell->args_list) != EXIT_SUCCESS)
-	//	return (EXIT_FAILURE);
+	open_fds(shell->args_list);
 	if (build_command_list(shell) != EXIT_SUCCESS)
 	{
 		close_all_protected();

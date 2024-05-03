@@ -1,0 +1,12 @@
+Makefile
+heredoc
+includes
+minishell
+objs
+out
+out.txt
+out2
+srcs
+test.txt
+useful.txt
+valgrind.supp

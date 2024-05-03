@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 13:06:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:14:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	exec_pipe(t_arg *c_list, char **env)
 					current->fd_out = STDOUT_FILENO;
 			else if (!current->out_file)
 				current->fd_out = fd_pipe[FD_OUT];
+			printf("fd_out: %d\n", current->fd_out);
 			if (exec_command(current, env) < 0)
 			{
 				ft_close(fd_pipe[FD_OUT]);
