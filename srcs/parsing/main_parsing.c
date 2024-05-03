@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 19:45:36 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:17:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,12 @@ int	main_parsing(t_shell *shell)
 		add_history(command); // do we need to remember if command was executed or not?	
 		lst = ft_lexer(command, lst);
 		lst = ft_parser(lst);
-		(void)shell;
 		if (ft_strcmp(command, "test env") == 0)
 			print_env(shell->env_shell);
 		else if (ft_strcmp(command, "pipe 1") == 0)
 			lst = lst1;
 		shell->args_list = lst;
-		free_stackfinal(&lst);
+		//free_stackfinal(&lst);
 		if (shell->args_list != NULL)
 			executor_main(shell);
 		//ft_block_signals(); TODO: implement in the end
