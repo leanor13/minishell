@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 19:45:36 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:02:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	main_parsing(t_shell *shell)
 		else if (ft_strcmp(command, "pipe 1") == 0)
 			lst = lst1;
 		shell->args_list = lst;
-		free_stackfinal(&lst);
 		if (shell->args_list != NULL)
 			executor_main(shell);
+		free_stackfinal(&lst);
 		//ft_block_signals(); TODO: implement in the end
 		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
 	}
