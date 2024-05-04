@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 14:13:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/04 13:03:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	open_fds(t_arg *command)
 
 int	executor_main(t_shell *shell)
 {
-	int		*fd_files;
 	int		status;
 
 	if (!shell->args_list)

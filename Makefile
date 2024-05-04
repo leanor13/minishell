@@ -24,7 +24,7 @@ OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -g3
+CFLAGS	= -Wall -Wextra -Werror -g3
 LDFLAGS = -lreadline
 
 LIBFT_DIR	= ./includes/libft

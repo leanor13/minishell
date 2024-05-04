@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 14:14:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/04 13:03:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	exec_command(t_arg *command, char **envp)
 				ft_putstr_nl("Built-in error", STDERR_FILENO);
 				exit (NEG_ERROR);
 			}
+			else
+				exit (EXIT_SUCCESS);
 		}
 		else if (execve(command->path, command->args_parsed, envp) == -1)
 		{
@@ -118,6 +120,7 @@ int			open_file(char *file, int type)
 
 	if (!file)
 		return (0);
+	fd = 0;
 	if (type == HERE_DOC || type == OUTPUT_APPEND)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (type == OUTPUT_REWRITE)
