@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/07 12:28:36 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:26:26 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,15 @@ void	free_string_array(char ***str_arr)
 	if (!*str_arr)
 		return ;
 	i = 0;
-	while (*str_arr[i])
+	while ((*str_arr)[i])
 	{
-		free(*str_arr[i]);
-		*str_arr[i] = NULL;
+		free((*str_arr)[i]);
+		(*str_arr)[i] = NULL;
 		i ++;
 	}
 	free(*str_arr);
 	*str_arr = NULL;
 }
 
-free_string_array(char ***str)
-{
-	int	i;
-
-	i = 0;
-	if (!*str)
-		return ;
-	while ((*str)[i])
-	{
-		free((*str)[i]);
-		(*str)[i] = NULL;
-		i ++;
-	}
-	free(*str);
-	*str = NULL;
-}
 // free_envs;
 // free_args;

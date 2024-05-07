@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 19:39:09 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:28:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*ft_strcutspace(char *s1)
 		return (NULL);
 	j = 0;
 	i = 0;
-	while (s1 && s1[i] && (len - 1) > j)
+	while (s1 && s1[i] && (len - 1) > (int) j)
 		s2[j++] = s1[i++];
 	s2[j] = '\0';
 	free(s1);
