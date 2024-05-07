@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 14:16:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 11:33:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	update_command(t_arg *command, t_shell *shell)
 	command->command = command->args_parsed[0];
 	if (check_built_in(command) == true)
 		return (EXIT_SUCCESS);
-	command->path = find_path(command->command, shell->env_original);
+	command->path = find_path(command->command, shell->env_2d);
 	if (!command->path)
 	{
 		i = 0;

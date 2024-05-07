@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 12:43:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:28:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_env
 typedef struct s_shell
 {
 	bool	no_env;
-	t_env	*env_shell;
-	char	**env_original;
+	t_env	*env_list;
+	char	**env_2d;
 	int		std_fds[3];
 	t_arg	*args_list;
 	char	*here_doc;

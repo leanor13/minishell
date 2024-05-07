@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:49:09 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/07 12:02:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:29:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	*empty_arg(char const *dest, char const *src)
 		return (ft_strdup(src));
 	else if (!src)
 		return (ft_strdup(dest));
+	else
+		return (NULL);
 }
 
 char	*ft_strjoin(char const *dest, char const *src)

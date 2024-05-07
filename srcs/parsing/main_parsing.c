@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 14:07:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 11:33:53 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main_parsing(t_shell *shell)
 		lst = ft_lexer(command, lst);
 		lst = ft_parser(lst);
 		if (ft_strcmp(command, "test env") == 0)
-			print_env(shell->env_shell);
+			print_env(shell->env_list);
 		else if (ft_strcmp(command, "pipe 1") == 0)
 			lst = lst1;
 		shell->args_list = lst;
