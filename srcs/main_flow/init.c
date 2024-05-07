@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/01 13:02:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:27:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	save_2d_string(char **arr, char ***dest)
+int	save_2d_env(char **arr, char ***dest)
 {
 	int		len_arr;
 	int		i;
@@ -48,8 +48,8 @@ int	save_2d_string(char **arr, char ***dest)
 void	new_env(t_shell *shell)
 {
 	// TODO
-	shell->env_original = NULL;
-	shell->env_shell = NULL;
+	shell->env_2d = NULL;
+	shell->env_list = NULL;
 	return ;
 }
 
@@ -114,7 +114,7 @@ int	parse_env(t_shell *shell, char **env)
 	char	*equal;
 
 	i = 0;
-	shell->env_shell = NULL;
+	shell->env_list = NULL;
 	while (env[i])
 	{
 		equal = ft_strchr(env[i], '=');
@@ -126,7 +126,7 @@ int	parse_env(t_shell *shell, char **env)
 		else
 			var_value = NULL;
 		var_name = env[i];
-		if (add_back_env(&shell->env_shell, var_name, var_value) != EXIT_SUCCESS)
+		if (add_back_env(&shell->env_list, var_name, var_value) != EXIT_SUCCESS)
 		{
 			free_shell(shell);
 			exit(EXIT_FAILURE);
@@ -146,7 +146,7 @@ void	handle_env(t_shell *shell, char **env)
 	else
 	{
 		shell->no_env = false;
-		if (save_2d_string(env, &shell->env_original) != EXIT_SUCCESS)
+		if (save_2d_env(env, &shell->env_2d) != EXIT_SUCCESS)
 		{
 			free_shell(shell);
 			exit(EXIT_FAILURE);

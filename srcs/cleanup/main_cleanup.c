@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/25 11:28:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:28:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_shell(t_shell *shell)
 {
 	// TODO
 	(void)shell;
-	// clean env_shell, including all nodes, + all names and values.
+	// clean env_list, including all nodes, + all names and values.
 	return ;
 }
 
@@ -35,6 +35,23 @@ void	free_string_array(char ***str_arr)
 	}
 	free(*str_arr);
 	*str_arr = NULL;
+}
+
+free_string_array(char ***str)
+{
+	int	i;
+
+	i = 0;
+	if (!*str)
+		return ;
+	while ((*str)[i])
+	{
+		free((*str)[i]);
+		(*str)[i] = NULL;
+		i ++;
+	}
+	free(*str);
+	*str = NULL;
 }
 // free_envs;
 // free_args;
