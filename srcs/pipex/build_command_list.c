@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/02 10:39:45 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 11:33:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	update_command(t_arg *command, t_shell *shell)
 	command->command = command->args_parsed[0];
 	if (check_built_in(command) == true)
 		return (EXIT_SUCCESS);
-	command->path = find_path(command->command, shell->env_original);
+	command->path = find_path(command->command, shell->env_2d);
 	if (!command->path)
 	{
 		i = 0;
@@ -131,6 +131,7 @@ int	build_command_list(t_shell *shell)
 	{
 		if (curr_arg->args && curr_arg->args[0])
 		{
+			// TODO in case of empty/failed update we can clean cmd, and proceed to next ones
 			if (update_command(curr_arg, shell) != EXIT_SUCCESS)
 				{
 					free_command_list(&shell->args_list);

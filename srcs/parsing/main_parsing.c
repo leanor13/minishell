@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 20:54:35 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:57:29 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,8 @@ int	main_parsing(t_shell *shell)
 		add_history(command); // it is not in the right space because we have to go back more times in exit
 		lst = ft_lexer(command, lst);
 		lst = ft_parser(lst);
-		(void)shell;
 		if (ft_strcmp(command, "test env") == 0)
-			print_env(shell->env_shell);
+			print_env(shell->env_list);
 		else if (ft_strcmp(command, "pipe 1") == 0)
 			lst = lst1;
 		shell->args_list = lst;

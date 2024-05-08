@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:13:50 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/17 16:23:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 11:51:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_current_pwd(void)
 {
 	char	*buffer;
 
-	buffer = (char *)calloc(PATH_MAX, sizeof(char));
+	buffer = (char *)ft_calloc(PATH_MAX, sizeof(char));
 	if (buffer != NULL)
 	{
 		if (getcwd(buffer, PATH_MAX) == NULL)
@@ -27,6 +27,6 @@ char	*get_current_pwd(void)
 		}
 	}
 	else
-		perror("calloc() error");
+		perror("ft_calloc() error");
 	return (buffer);
 }

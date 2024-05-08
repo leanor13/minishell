@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 12:35:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:27:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	read_input(int fd[2], char *limiter, int fd_files[2])
+/* static void	read_input(int fd[2], char *limiter, int fd_files[2])
 {
 	char	*line;
 
@@ -43,9 +43,9 @@ static void	ft_error_forking(void)
 {
 	perror("Error forking");
 	exit (EXIT_FAILURE);
-}
+} */
 
-void	here_doc(char *limiter, int *fd_files)
+/* void	here_doc(char *limiter, int *fd_files)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -84,4 +84,4 @@ void	open_files_here_doc(int ac, char **av, int *fd_files)
 	}
 	here_doc(av[2], fd_files);
 	fd_files[FD_IN] = STDIN_FILENO;
-}
+} */

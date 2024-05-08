@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:39:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 11:38:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:23:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ int	ft_exit(char **env, char **args, int fd_out)
 		if (exit_status > 255)
 			exit_status = 255;
 	}
-    exit(exit_status);
-    return 0;
+    return (exit_status);
 }
