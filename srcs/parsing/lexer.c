@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 23:15:47 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:48:25 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,8 @@ int arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 		return(j);
 	while(str[i])
 	{
-		// if(str[i] != '<' || str[i] != '>') some protection if it is only > <
-		// 	return(j);
+		// if(str[i] != '<' || str[i] != '>')// some protection if it is only > <
+		//  	return(j);
 		if((*quote)->quote_type == 0)
 		{
 			if(skip_space(str, i))

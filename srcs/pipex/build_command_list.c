@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/07 11:33:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 19:45:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ static int	update_command(t_arg *command, t_shell *shell)
 	int	i;
 
 	// add here error messages
-	command->args_parsed = ft_split_pipex(command->args, ' ');
+	//command->args_parsed = ft_split_pipex(command->args, ' ');
+	save_2d_env(command->args_doublechar, &command->args_parsed);
 	if (!command->args_parsed)
 		return (EXIT_FAILURE);
 	command->command = command->args_parsed[0];
@@ -96,8 +97,8 @@ static int	update_command(t_arg *command, t_shell *shell)
 		}
 		free(command->args_parsed);
 		command->args_parsed = NULL;
-		free(command->args);
-		command->args = NULL;
+		//free(command->old_args_old);
+		//command->old_args_old = NULL;
 		command->command = NULL;
 		command->built_in_fn = NULL;
 		return (EXIT_FAILURE);
@@ -129,7 +130,7 @@ int	build_command_list(t_shell *shell)
 	i = 0;
 	while (i < command_count)
 	{
-		if (curr_arg->args && curr_arg->args[0])
+		if (curr_arg->args_doublechar && curr_arg->args_doublechar[0])
 		{
 			// TODO in case of empty/failed update we can clean cmd, and proceed to next ones
 			if (update_command(curr_arg, shell) != EXIT_SUCCESS)

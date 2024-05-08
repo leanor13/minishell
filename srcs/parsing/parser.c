@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 19:08:47 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:43:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,7 @@ t_arg *ft_parser(t_arg *lst)
 			}
 			else if(lst->type == INPUT)
 			{
+				printf("input enter\n");
 				lst = lst->next;
 				node->in_file = ft_strdup(lst->str);
 			}
@@ -306,6 +307,7 @@ t_arg *ft_parser(t_arg *lst)
 			node->prev = nlast;
 		}
 	}
+
  	t_arg *current = final;
     while (current)
     {	
