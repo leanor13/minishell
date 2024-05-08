@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 19:43:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 20:17:33 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ char	**ft_strjoinline_splitversion(t_arg *lst, int i)
 	int count = 0;
 	while (count < i)
 	{
-		if(lst->type == ARG)
+		if(lst->type == GOING_ARG)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("BELEP\n");
@@ -250,12 +250,13 @@ t_arg *ft_parser(t_arg *lst)
 	final = NULL;
 	if (!lst)
 		return (NULL);
-	head = lst;
 	while(lst)
 	{
+		head = lst;
 		node = ft_calloc(1, sizeof(t_arg));
 		if (!node)
 			return (NULL);
+		i = 0;
 		while(lst)
 		{
 			if(lst->type == HEREDOC)
@@ -267,8 +268,15 @@ t_arg *ft_parser(t_arg *lst)
 			// 	node->args = ft_strdup(lst->str);
 			// else if(lst->type == ARG)
 			//  	node->args = ft_strjoinline(node->args, lst->str);
+			else if(lst->type == GOING_ARG)
+			{
+				lst->type = DELETE_ARG;
+			}
 			else if(lst->type == ARG)
+			{
 				i++;
+				lst->type = GOING_ARG;
+			}
 			else if(lst->type == OUTPUT)
 			{
 				lst = lst->next;

@@ -95,6 +95,8 @@ typedef enum e_type
 	APPEND,   //.../ >>
 	PIPE,     // |
 	ARG,      // string //EXACT COMMANS? LIKE ECHO STB, AND FLAGS TOO ASK YULIA
+	GOING_ARG,
+	DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
 	// RPR,      // )
