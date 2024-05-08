@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 11:45:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:53:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 	char	*var_value;
 	char 	**env = shell->env_2d;
 	char 	**args = command->args_parsed; 
-	int 	fd_out = command->fd_out;
+	int 	fd_out = STDOUT_FILENO;
 
 	if (args[i] == NULL)
 	{

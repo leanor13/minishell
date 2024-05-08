@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:25:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 11:44:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:53:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_cd(t_shell *shell, t_arg *command)
 	char    *old_pwd;
 	char 	**env = shell->env_2d;
 	char 	**args = command->args_parsed; 
-	int 	fd_out = command->fd_out;
+	int 	fd_out = STDOUT_FILENO;
 
 
 	pwd = ft_getenv(env, "PWD");
