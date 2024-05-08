@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 12:01:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:46:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,17 @@ void	remove_arg(char **env, char *arg)
 	}
 }
 
-int	ft_unset(char **env, char **args, int fd_out)
+int	ft_unset(t_shell *shell, t_arg *command)
 {
-	 if (*env == NULL || *args == NULL || **args == '\0')
+	char 	**env = shell->env_2d;
+	char 	**args = command->args_parsed; 
+	
+	if (*env == NULL || *args == NULL || **args == '\0')
         return (EXIT_SUCCESS);
 	while (*args != NULL)
 	{
 		remove_arg(env, *args);
 		args ++;
 	}
-	(void)fd_out;
 	return (EXIT_SUCCESS);
 }

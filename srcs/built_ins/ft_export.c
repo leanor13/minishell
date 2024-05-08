@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/24 16:30:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:45:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ int	is_valid_varname(const char *var_name)
 	return (1);
 }
 
-int	ft_export(char **env, char **args, int fd_out)
+int	ft_export(t_shell *shell, t_arg *command)
 {
 	int		i = 1;
 	char	*equal;
 	char	*var_name;
 	char	*var_value;
+	char 	**env = shell->env_2d;
+	char 	**args = command->args_parsed; 
+	int 	fd_out = command->fd_out;
 
 	if (args[i] == NULL)
 	{

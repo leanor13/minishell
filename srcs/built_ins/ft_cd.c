@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:25:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/04 13:01:56 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:44:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,16 @@ int	ft_setenv(char ***env, const char *name, const char *value)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(char **env, char **args, int fd_out)
+int	ft_cd(t_shell *shell, t_arg *command)
 {
 	char	*pwd;
 	char	*path;
 	char	*new_pwd;
 	char    *old_pwd;
+	char 	**env = shell->env_2d;
+	char 	**args = command->args_parsed; 
+	int 	fd_out = command->fd_out;
+
 
 	pwd = ft_getenv(env, "PWD");
 	old_pwd = pwd ? ft_strdup(pwd) : NULL; // Make a copy of the pwd string

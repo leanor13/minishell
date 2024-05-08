@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/07 11:33:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:29:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	executor_main(t_shell *shell)
 	}
 	// in future - change env to shell->env_list
 	// 
-	status = exec_pipe(shell->args_list, shell->env_2d);
+	status = exec_pipe(shell);
 	close_all_protected();
 	//free(fd_files);
 	free_command_list(&shell->args_list);

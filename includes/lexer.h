@@ -6,6 +6,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef struct s_shell t_shell;
+
 typedef struct s_arg
 {
 	char *str; // args
@@ -20,7 +22,7 @@ typedef struct s_arg
 	char			**args_parsed; // used in executor
 	int	fd_in;
 	int	fd_out;
-	int				(*built_in_fn)(char **env, char **args, int fd); // used in executor
+	int				(*built_in_fn)(t_shell *shell, struct s_arg *command); // used in executor
 	struct s_arg	*next;
 	struct s_arg	*prev;
 }				t_arg;

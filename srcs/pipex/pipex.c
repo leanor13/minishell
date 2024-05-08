@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/04 13:03:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:32:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	exec_command(t_arg *command, char **envp)
+int	exec_command(t_arg *command, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -27,7 +27,7 @@ int	exec_command(t_arg *command, char **envp)
 		dup_close(command->fd_out, STDOUT_FILENO);
 		if (command->built_in_fn != NULL)
 		{
-			if (command->built_in_fn(envp, command->args_parsed, STDOUT_FILENO) == EXIT_FAILURE)
+			if (command->built_in_fn(shell, command) == EXIT_FAILURE)
 			{
 				ft_putstr_nl("Built-in error", STDERR_FILENO);
 				exit (NEG_ERROR);
@@ -35,7 +35,7 @@ int	exec_command(t_arg *command, char **envp)
 			else
 				exit (EXIT_SUCCESS);
 		}
-		else if (execve(command->path, command->args_parsed, envp) == -1)
+		else if (execve(command->path, command->args_parsed, shell->env_2d) == -1)
 		{
 			perror("Execve error");
 			printf("path: %s", command->path);
@@ -45,13 +45,14 @@ int	exec_command(t_arg *command, char **envp)
 	return (pid);
 }
 
-int	exec_pipe(t_arg *c_list, char **env)
+int	exec_pipe(t_shell *shell)
 {
-	int	fd_pipe[2];
-	int	status;
-	t_arg *current;
-	int	count;
-	int i;
+	int		fd_pipe[2];
+	int		status;
+	t_arg 	*current;
+	int		count;
+	int 	i;
+	t_arg 	*c_list = shell->args_list;
 
 	if (!c_list)
 		return (NEG_ERROR);
@@ -71,7 +72,7 @@ int	exec_pipe(t_arg *c_list, char **env)
 			else if (!current->out_file)
 				current->fd_out = fd_pipe[FD_OUT];
 			printf("fd_out: %d\n", current->fd_out);
-			if (exec_command(current, env) < 0)
+			if (exec_command(current, shell) < 0)
 			{
 				ft_close(fd_pipe[FD_OUT]);
 				if (current->next == NULL)

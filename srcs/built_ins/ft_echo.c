@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/22 18:37:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:44:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,13 @@ static void	process_escape_sequences(char *str)
 }
 // TODO - handle quotes if needed? or check if it's part of parser
 
-int	ft_echo(char **env, char **args, int fd_out)
+int	ft_echo(t_shell *shell, t_arg *command)
 {
 	bool	new_line;
 	int		i;
+	char 	**env = shell->env_2d;
+	char 	**args = command->args_parsed; 
+	int 	fd_out = command->fd_out;
 
 	(void)env;
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
