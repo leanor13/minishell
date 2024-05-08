@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 18:57:43 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:08:47 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ char	*ft_strjoinline(char *s1, char *s2)
 	return (s3);
 }
 
-static void	free_res(char **result, int i)
-{
-	while (i > 0)
-		free(result[--i]);
-	free(result);
-}
+// static void	free_res(char **result, int i)
+// {
+// 	while (i > 0)
+// 		free(result[--i]);
+// 	free(result);
+// }
 
 static char	*put_word(char *s)
 {
