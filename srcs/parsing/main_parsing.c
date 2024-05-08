@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/03 14:02:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 20:54:35 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ int	main_parsing(t_shell *shell)
 	{
 		//free_stackfinal(&shell->args_list); // I moved this to clean before next run. If run is final we will clean separately
 		lst = NULL;
+		command = NULL;
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
-			ft_putstr_nl("exit", STDERR_FILENO);
-			exit(EXIT_FAILURE);
+			ft_putstr_nl("exit", STDERR_FILENO);// IT IS NOT EXITING FOR THE FIRST TIME??
+			exit(0);
 		}
-		add_history(command); // do we need to remember if command was executed or not?	
+		add_history(command); // it is not in the right space because we have to go back more times in exit
 		lst = ft_lexer(command, lst);
 		lst = ft_parser(lst);
 		(void)shell;
@@ -66,6 +67,7 @@ int	main_parsing(t_shell *shell)
 		if (shell->args_list != NULL)
 			executor_main(shell);
 		free_stackfinal(&lst);
+		free(command);
 		//ft_block_signals(); TODO: implement in the end
 		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
 	}

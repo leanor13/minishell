@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"*.cpp": "cpp",
+		"*.hpp": "cpp",
+		"stdbool.h": "c",
+		"readline.h": "c"
+	}
+}
