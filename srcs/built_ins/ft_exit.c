@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:39:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/07 15:23:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:47:53 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 //TODO check with valgrind what happens if this is in the middle of the pipe
 
-int	ft_exit(char **env, char **args, int fd_out)
+int	ft_exit(t_shell *shell, t_arg *command)
 {
 	int exit_status;
 	int i;
+	char 	**args = command->args_parsed; 
 	
-	(void)env;
-	(void)fd_out;
 	exit_status = EXIT_SUCCESS;
     if (args[1] && args[2]) 
 	{
@@ -46,5 +45,6 @@ int	ft_exit(char **env, char **args, int fd_out)
 		if (exit_status > 255)
 			exit_status = 255;
 	}
+	shell->exit_status = exit_status;
     return (exit_status);
 }

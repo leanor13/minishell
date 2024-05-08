@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   env_helper_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 15:17:46 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 19:35:14 by yioffe           ###   ########.fr       */
+/*   Created: 2024/05/08 10:55:54 by yioffe            #+#    #+#             */
+/*   Updated: 2024/05/08 10:59:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
+t_env	*env_find_var(t_env *env_lst, char *var_name)
 {
-	if (!s1 || !s2)
+	if (!env_lst)
+		return (NULL);
+	while (env_lst)
 	{
-		ft_putstr_nl("one of strings in strcmp is empty", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		if (ft_strcmp(env_lst->var_name, var_name) == 0)
+			return (env_lst);
+		env_lst = env_lst->next;
 	}
-	if (n == 0)
-		return (0);
-	while (*s1 == *s2 && *s1 != '\0' && n > 1)
-	{
-		s1 ++;
-		s2 ++;
-		n --;
-	}
-	return ((unsigned char)(*s1) - (unsigned char)(*s2));
+	return (NULL);
 }

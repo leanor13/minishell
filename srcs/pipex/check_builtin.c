@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:35:34 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 11:38:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 19:36:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 bool	check_built_in(t_arg *command)
 {
+	printf("this is comm->comm: %s\n", command->command);
 	if (ft_strcmp(command->command, "pwd") == 0)
 		return(command->built_in_fn = ft_pwd, true);
 	else if (ft_strcmp(command->command, "env") == 0)

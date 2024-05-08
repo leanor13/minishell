@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:15:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/07 15:22:38 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:53:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 //TODO: clean fd_out every time we run command with it
 
-int	ft_env(char **env, char **args, int fd_out)
+int	ft_env(t_shell *shell, t_arg *command)
 {
 	int		i;
+	char 	**env = shell->env_2d;
+	char 	**args = command->args_parsed; 
+	int 	fd_out = STDOUT_FILENO;
 
 	i = 0;
 	if (args && args[0] && args[1])

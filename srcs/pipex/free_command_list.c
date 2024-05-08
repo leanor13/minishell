@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:09:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/01 14:05:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 19:31:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_command_list(t_arg **command_list)
 		free(current->args_parsed);
 		current->args_parsed = NULL;
 		//free(current->args);
-		current->args = NULL;
+		//current->old_args_old = NULL;
 		free(current->path);
 		current->path = NULL;
 		next = current->next;
@@ -47,7 +47,8 @@ void	dup_close(int fd, int reference)
 {
 	if (fd != reference)
 	{
-		dup2(fd, reference);
+		if (dup2(fd, reference) == -1)
+            perror("dup_close failure");
 		ft_close(fd);
 	}
 }

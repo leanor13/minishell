@@ -1,0 +1,1 @@
+/home/thuy-ngu/minishell

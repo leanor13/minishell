@@ -6,11 +6,14 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef struct s_shell t_shell;
+
 typedef struct s_arg
 {
 	char *str; // args
 	int	type;
-	char *args; // args = echo "Hello" this is me
+	char *old_args_old; // args = echo "Hello" this is me
+	char **args_doublechar;
 	char *in_file; // >> out.txt -> out.txt
 	char *out_file; //<< in.txt -> in.txt
 	char *here_doc; //
@@ -20,11 +23,20 @@ typedef struct s_arg
 	char			**args_parsed; // used in executor
 	int	fd_in;
 	int	fd_out;
-	int				(*built_in_fn)(char **env, char **args, int fd); // used in executor
+	int				(*built_in_fn)(t_shell *shell, struct s_arg *command); // used in executor
 	struct s_arg	*next;
 	struct s_arg	*prev;
 }				t_arg;
 
+typedef struct s_sign
+{
+	int quote_type;
+}				t_sign;
+
+# define DOUBLE_QUOTE 1
+# define SINGLE_QUOTE 2
+# define DOUBLE_QUOTE_DIRECT 3
+# define SINGLE_QUOTE_DIRECT 4
 // typedef struct s_arg_pass
 // {
 // 	char *args; // args = echo "Hello" this is me
@@ -83,6 +95,8 @@ typedef enum e_type
 	APPEND,   //.../ >>
 	PIPE,     // |
 	ARG,      // string //EXACT COMMANS? LIKE ECHO STB, AND FLAGS TOO ASK YULIA
+	GOING_ARG,
+	DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
 	// RPR,      // )
