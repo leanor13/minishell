@@ -27,6 +27,7 @@ RM		= rm -f
 CFLAGS	= -Wall -Wextra -Werror -g3
 LDFLAGS = -lreadline
 
+INCL	= ./includes/executor.h ./includes/lexer.h ./includes/minishell.h
 LIBFT_DIR	= ./includes/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 LIBS		= $(LIBFT)
@@ -43,7 +44,7 @@ $(OBJS_DIR)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBS)
+$(NAME): $(OBJS) $(LIBS) $(INCL)
 	@echo "$(CYAN)Creating $(NAME) ..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(LDFLAGS)
 	@echo "✅ $(GREEN)$(NAME) created $(NC)"

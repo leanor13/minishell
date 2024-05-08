@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 19:45:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 20:44:42 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main_parsing(t_shell *shell)
 		.in_file = NULL,
 		.out_file = NULL,
 		.next = NULL,
-		.old_args_old = "ls"
 	};
 	//(void)lst1_1;
 
@@ -40,7 +39,6 @@ int	main_parsing(t_shell *shell)
 		.in_file = NULL,
 		.out_file = NULL,
 		.next = lst1_1,
-		.old_args_old = "cd srcs/"
 	};
 
 	//moved argc check to main flow
