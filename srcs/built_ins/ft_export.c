@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 11:53:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 14:21:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,9 @@ while (curr != NULL)
 	}
  */
 
-/* 
-To hide from env
-SHELL, BASH_VERSION, HISTFILE, HISTSIZE, PWD, OLDPWD, etc. 
-These variables are considered internal to the shell and are not typically displayed when you run env.
-Internal Shell Variables: Variables used internally by the shell for its operation, such as SHLVL (shell level), 
-RANDOM (random number generator seed), LINENO (current line number), PS1 (primary shell prompt), 
-PS2 (secondary shell prompt), IFS (internal field separator), etc. 
-These variables are often not relevant to user programs and are not displayed by default.
 
- */
+// add "" for var_value
+// don't print = if no var_value
 
 int	is_valid_varname(const char *var_name)
 {
@@ -62,16 +55,25 @@ int	ft_export(t_shell *shell, t_arg *command)
 	char	*var_value;
 	char 	**env = shell->env_2d;
 	char 	**args = command->args_parsed; 
-	int 	fd_out = STDOUT_FILENO;
+	//int 	fd_out = STDOUT_FILENO;
+	t_env	*env_lst = shell->env_list;
 
 	if (args[i] == NULL)
 	{
 		i = 0;
-		while (env[i] != NULL)
+		while (env_lst)
 		{
-			if (*env[i] != '\0' && *env[i] != '=' && ft_strchr(env[i], '='))
-				ft_putstr_nl(env[i], fd_out);
-			i++;
+			if (!env_lst->var_value)
+				// TODO: this is not working - check why
+				ft_printf("declare -x %s\n", env_lst->var_name);
+			else if (ft_strcmp(env_lst->var_value, " ") == 0)
+				ft_printf("declare -x %s=\"\"\n", env_lst->var_name);
+			else
+			{
+				ft_printf("declare -x %s=\"", env_lst->var_name);
+				ft_printf("%s\"\n", env_lst->var_value);
+			}
+			env_lst = env_lst->next;
 		}
 		return (EXIT_SUCCESS);
 	}

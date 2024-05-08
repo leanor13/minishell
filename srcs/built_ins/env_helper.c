@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:31:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 10:52:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/08 14:17:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,25 @@ int convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 	*env_2d = ft_calloc((env_len_count(env_lst) + 1), sizeof(char *));
 	while (env_lst)
 	{
-		temp = ft_strjoin(env_lst->var_name, "=");
-		if (!temp)
+		if (!env_lst->var_name || !env_lst->var_value)
 		{
-			free_string_array(env_2d);
-			return (perror("malloc error"), EXIT_FAILURE);
+			(*env_2d)[i] = NULL;
+			temp = NULL;
 		}
-		(*env_2d)[i] = ft_strjoin(temp, env_lst->var_value);
-		if (!**env_2d )
+		else
 		{
-			free_string_array(env_2d);
-			return (perror("malloc error"), EXIT_FAILURE);
+			temp = ft_strjoin(env_lst->var_name, "=");
+			if (!temp)
+			{
+				free_string_array(env_2d);
+				return (perror("malloc error"), EXIT_FAILURE);
+			}
+			(*env_2d)[i] = ft_strjoin(temp, env_lst->var_value);
+			if (!**env_2d )
+			{
+				free_string_array(env_2d);
+				return (perror("malloc error"), EXIT_FAILURE);
+			}
 		}
 		i ++;
 		free(temp);
@@ -72,13 +80,18 @@ int	add_back_env(t_env **head, char *var_name, char *var_value)
 	node->var_name = ft_strdup(var_name);
 	if (!node->var_name)
 		return (free(node), EXIT_FAILURE);
-	node->var_value = ft_strdup(var_value);
-	if (!node->var_value)
+	if (var_value)
 	{
-		free(node->var_name);
-		free(node);
-		return (EXIT_FAILURE);
+		node->var_value = ft_strdup(var_value);
+		if (!node->var_value)
+		{
+			free(node->var_name);
+			free(node);
+			return (EXIT_FAILURE);
+		}
 	}
+	else
+		node->var_value = NULL;
 	node->next = NULL;
 	if (!(*head))
 	{
