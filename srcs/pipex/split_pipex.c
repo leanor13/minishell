@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 12:35:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/03 20:07:30 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,28 @@ char	*skip_word(char *s, char c)
 {
 	char	q;
 
-	while (*s == c)
-		s++;
-	if (is_quote(*s))
-	{
-		q = *s;
-		s++;
-		while (*s && *s != q)
-		{
-			if (is_quote(*s))
-				return (ft_putstr_fd(ERR_NESTED_QUOTES, STDERR_FILENO),
-					(char *) NEG_ERROR);
-			s ++;
-		}
-		if (*s == q)
-			s++;
-		else
-			return (ft_putstr_fd(ERR_SINGLE_QUOTE, STDERR_FILENO),
-				(char *) NEG_ERROR);
-	}
-	else
+	// if (*s == c)
+	// 	s++;
+		// while (*s == c)
+		// s++;
+	// if (is_quote(*s))
+	// {
+	// 	q = *s;
+	// 	s++;
+	// 	while (*s && *s != q)
+	// 	{
+	// 		if (is_quote(*s))
+	// 			return (ft_putstr_fd(ERR_NESTED_QUOTES, STDERR_FILENO),
+	// 				(char *) NEG_ERROR);
+	// 		s ++;
+	// 	}
+	// 	if (*s == q)
+	// 		s++;
+	// 	else
+	// 		return (ft_putstr_fd(ERR_SINGLE_QUOTE, STDERR_FILENO),
+	// 			(char *) NEG_ERROR);
+	// }
+	//else
 		while (*s && *s != c)
 			s++;
 	return (s);
@@ -48,8 +50,10 @@ static int	ft_count_words(char *s, char c)
 	res = 0;
 	while (*s)
 	{
-		while (*s == c)
+		if (*s == c)
 			s++;
+		// while (*s == c)
+		// 	s++;
 		if (*s)
 		{
 			res++;
@@ -68,16 +72,18 @@ static char	*allocate_word(char *s, char c)
 	char	q;
 
 	len = 0;
-	if (is_quote(s[len]))
-	{
-		q = *s;
-		s++;
-		while (s[len] && s[len] != q)
+	// if (is_quote(s[len]))
+	// {
+	// 	q = *s;
+	// 	s++;
+	// 	while (s[len] && s[len] != q)
+	// 		len++;
+	// }
+	// else
+	while (s[len] && (s[len] != c))
 			len++;
-	}
-	else
-		while (s[len] && (s[len] != c))
-			len++;
+		// while (s[len] && (s[len] != c))
+		// 	len++;
 	word = ft_substr(s, 0, len);
 	if (!word)
 	{
@@ -110,8 +116,10 @@ char	**ft_split_pipex(char *s, char c)
 	i = 0;
 	while (i < count)
 	{
-		while (*s == c)
+		if (*s == c)
 			s++;
+		// while (*s == c)
+		// 	s++;
 		result[i] = allocate_word(s, c);
 		if (!result[i])
 			return (free_res(result, i), NULL);

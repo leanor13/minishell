@@ -13,6 +13,7 @@ typedef struct s_arg
 	char *str; // args
 	int	type;
 	char *args; // args = echo "Hello" this is me
+	char **args_doublechar;
 	char *in_file; // >> out.txt -> out.txt
 	char *out_file; //<< in.txt -> in.txt
 	char *here_doc; //
@@ -27,6 +28,15 @@ typedef struct s_arg
 	struct s_arg	*prev;
 }				t_arg;
 
+typedef struct s_sign
+{
+	int quote_type;
+}				t_sign;
+
+# define DOUBLE_QUOTE 1
+# define SINGLE_QUOTE 2
+# define DOUBLE_QUOTE_DIRECT 3
+# define SINGLE_QUOTE_DIRECT 4
 // typedef struct s_arg_pass
 // {
 // 	char *args; // args = echo "Hello" this is me
