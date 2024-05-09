@@ -16,7 +16,7 @@ testers help:
 2. https://github.com/MariaAguiar/minitester
 3. check all buildins to make sure 1st argument is taken
 4. https://docs.google.com/spreadsheets/d/17linwSWODYO4O9Db0FohJYr_8shMTGvyo0MjToPrcAI/edit#gid=1305472556
-5. 
+5. check empty and corrupted env
 
 
 chat gpt for sharing project:
