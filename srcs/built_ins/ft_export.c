@@ -6,31 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 14:21:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:54:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // TODO
-/* 
-while (curr != NULL)
-	{
-		shell->exit_code = 0;
-		if (ft_strcmp(var_name, hidden[i]) == TRUE)
-			;
-		else if (var_content == NULL)
-			printf("declare -x %s\n", var_name);
-		else if (var_content != NULL && var_content[0] == ' '
-			&& ft_strlen(var_content) == 1)
-			printf("declare -x %s=\"\"\n", var_name);
-		else
-			printf("declare -x %s=\"%s\"\n", var_name, var_content);
-		var -> next;
-	}
- */
-
-
 // add "" for var_value
 // don't print = if no var_value
 
@@ -54,8 +36,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 	char	*var_name;
 	char	*var_value;
 	char 	**env = shell->env_2d;
-	char 	**args = command->args_parsed; 
-	//int 	fd_out = STDOUT_FILENO;
+	char 	**args = command->arguments; 
 	t_env	*env_lst = shell->env_list;
 
 	if (args[i] == NULL)

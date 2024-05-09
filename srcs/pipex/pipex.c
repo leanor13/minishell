@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 11:32:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	exec_command(t_arg *command, t_shell *shell)
 	{
 		dup_close(command->fd_in, STDIN_FILENO);
 		dup_close(command->fd_out, STDOUT_FILENO);
+		printf("command: %s, fd_in:%d, fd_out: %d\n", \
+			command->command, command->fd_in, command->fd_out);
 		if (command->built_in_fn != NULL)
 		{
 			if (command->built_in_fn(shell, command) == EXIT_FAILURE)
@@ -35,7 +37,7 @@ int	exec_command(t_arg *command, t_shell *shell)
 			else
 				exit (EXIT_SUCCESS);
 		}
-		else if (execve(command->path, command->args_parsed, shell->env_2d) == -1)
+		else if (execve(command->path, command->arguments, shell->env_2d) == -1)
 		{
 			perror("Execve error");
 			printf("path: %s", command->path);
@@ -45,14 +47,15 @@ int	exec_command(t_arg *command, t_shell *shell)
 	return (pid);
 }
 
-int	exec_pipe(t_shell *shell)
+int exec_pipe(t_shell *shell)
 {
-	int		fd_pipe[2];
-	int		status;
-	t_arg 	*current;
-	int		count;
-	int 	i;
-	t_arg 	*c_list = shell->args_list;
+	int fd_pipe[2];
+	int status;
+	t_arg *current;
+	int count;
+	int i;
+	t_arg *c_list = shell->args_list;
+	int fd_in = 0;
 
 	if (!c_list)
 		return (NEG_ERROR);
@@ -62,33 +65,37 @@ int	exec_pipe(t_shell *shell)
 	{
 		if (current->command)
 		{
+			if (!current->in_file)
+				current->fd_in = fd_in;
+			printf("current->command: %s\n", current->command);
 			if (pipe(fd_pipe) == -1)
 			{
 				perror("Error creating pipe");
 				return (close_all_protected(), NEG_ERROR);
 			}
 			if (current->next == NULL && !current->out_file)
-					current->fd_out = STDOUT_FILENO;
+				current->fd_out = STDOUT_FILENO;
 			else if (!current->out_file)
 				current->fd_out = fd_pipe[FD_OUT];
-			printf("fd_out: %d\n", current->fd_out);
+			printf("command %s: fd_out: %d\n", current->command, current->fd_out);
 			if (exec_command(current, shell) < 0)
 			{
 				ft_close(fd_pipe[FD_OUT]);
-				if (current->next == NULL)
-					ft_close(fd_pipe[FD_IN]);
-				return (close_all_protected(), NEG_ERROR);
+				if (current->next != NULL)
+					ft_close(fd_in);
+				current = current->next;
+				break;
 			}
-			if (!current->in_file)
-				current->fd_in = fd_pipe[FD_IN];
+			if (!current->out_file)
+			{
+				fd_in = fd_pipe[FD_IN];
+			}
 			ft_close(fd_pipe[FD_OUT]);
-			if (current->next == NULL)
-				ft_close(fd_pipe[FD_IN]);
 		}
 		current = current->next;
 	}
-	ft_close(fd_pipe[FD_IN]);
-	for (i = 0; i < count; i ++)
+	ft_close(fd_in);
+	for (i = 0; i < count; i++)
 		waitpid(-1, &status, 0);
 	return (status);
 }

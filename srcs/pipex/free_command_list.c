@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:09:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 19:31:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	free_command_list(t_arg **command_list)
 	while (current)
 	{
 		j = 0;
-		while (current->args_parsed && current->args_parsed[j])
+		while (current->arguments && current->arguments[j])
 		{
-			free(current->args_parsed[j]);
-			current->args_parsed[j] = NULL;
+			free(current->arguments[j]);
+			current->arguments[j] = NULL;
 			j++;
 		}
-		free(current->args_parsed);
-		current->args_parsed = NULL;
+		free(current->arguments);
+		current->arguments = NULL;
 		//free(current->args);
 		//current->old_args_old = NULL;
 		free(current->path);
