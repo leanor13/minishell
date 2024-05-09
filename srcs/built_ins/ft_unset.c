@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 15:24:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	remove_arg(char **env, char *arg)
 int	ft_unset(t_shell *shell, t_arg *command)
 {
 	char 	**env = shell->env_2d;
-	char 	**args = command->args_doublechar; 
+	char 	**args = command->arguments; 
 	
 	if (*env == NULL || *args == NULL || **args == '\0')
         return (EXIT_SUCCESS);

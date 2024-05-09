@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 15:02:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,7 +301,7 @@ t_arg *ft_parser(t_arg *lst)
 			}
 			lst = lst->next;
 		}
-		node->args_doublechar = ft_strjoinline_splitversion(head, i);
+		node->arguments = ft_strjoinline_splitversion(head, i);
 		//node->args = ft_strcutspace(node->args);
 		if (!(final))
 		{

@@ -6,9 +6,13 @@ plan to do:
 
 tests:
 
-0. ls -l | ls > out6 | wc -l - now not working
-1. touch "Hello" should remove quotes
-1. put the << and just press enter,
+1. ls -l | ls > out6 | wc -l - now not working
+2. touch "Hello" should remove quotes
+3. put the << and just press enter
+4. ls | awk '{print $1}'
+5. 
+
+testers help:
 2. https://github.com/MariaAguiar/minitester
 3. check all buildins to make sure 1st argument is taken
 4. https://docs.google.com/spreadsheets/d/17linwSWODYO4O9Db0FohJYr_8shMTGvyo0MjToPrcAI/edit#gid=1305472556

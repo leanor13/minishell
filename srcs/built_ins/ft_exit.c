@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:39:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 15:24:46 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_exit(t_shell *shell, t_arg *command)
 {
 	int exit_status;
 	int i;
-	char 	**args = command->args_doublechar; 
+	char 	**args = command->arguments; 
 	
 	exit_status = EXIT_SUCCESS;
     if (args[1] && args[2]) 

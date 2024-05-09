@@ -10,19 +10,17 @@ typedef struct s_shell t_shell;
 
 typedef struct s_arg
 {
-	char *str; // args
-	int	type;
-	//char *old_args_old; // args = echo "Hello" this is me
-	char **args_doublechar;
-	char *in_file; // >> out.txt -> out.txt
-	char *out_file; //<< in.txt -> in.txt
-	char *here_doc; //
-	bool append;
+	char			*str; // args
+	int				type;
+	char 			**arguments;
+	char 			*in_file; // >> out.txt -> out.txt
+	char 			*out_file; //<< in.txt -> in.txt
+	char 			*here_doc; //
+	bool 			append;
 	char			*command; // used in executor
 	char			*path; // used in executor
-	char			**args_parsed; // used in executor
-	int	fd_in;
-	int	fd_out;
+	int				fd_in;
+	int				fd_out;
 	int				(*built_in_fn)(t_shell *shell, struct s_arg *command); // used in executor
 	struct s_arg	*next;
 	struct s_arg	*prev;

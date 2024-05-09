@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 15:24:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	ft_echo(t_shell *shell, t_arg *command)
 {
 	bool	new_line;
 	int		i;
-	char 	**args = command->args_doublechar; 
+	char 	**args = command->arguments; 
 	int 	fd_out = STDOUT_FILENO;
 
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
