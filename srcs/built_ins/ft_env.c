@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:15:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 11:53:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:24:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_env(t_shell *shell, t_arg *command)
 {
 	int		i;
 	char 	**env = shell->env_2d;
-	char 	**args = command->args_parsed; 
+	char 	**args = command->args_doublechar; 
 	int 	fd_out = STDOUT_FILENO;
 
 	i = 0;

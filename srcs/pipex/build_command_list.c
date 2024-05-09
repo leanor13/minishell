@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 19:45:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:26:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,23 @@ static int	update_command(t_arg *command, t_shell *shell)
 
 	// add here error messages
 	//command->args_parsed = ft_split_pipex(command->args, ' ');
-	save_2d_env(command->args_doublechar, &command->args_parsed);
-	if (!command->args_parsed)
+	//save_2d_env(command->args_doublechar, &command->args_parsed);
+	if (!command->args_doublechar)
 		return (EXIT_FAILURE);
-	command->command = command->args_parsed[0];
+	command->command = command->args_doublechar[0];
 	if (check_built_in(command) == true)
 		return (EXIT_SUCCESS);
 	command->path = find_path(command->command, shell->env_2d);
 	if (!command->path)
 	{
 		i = 0;
-		while (command->args_parsed[i])
+		while (command->args_doublechar[i])
 		{
-			free(command->args_parsed[i]);
+			free(command->args_doublechar[i]);
 			i++;
 		}
-		free(command->args_parsed);
-		command->args_parsed = NULL;
+		free(command->args_doublechar);
+		command->args_doublechar = NULL;
 		//free(command->old_args_old);
 		//command->old_args_old = NULL;
 		command->command = NULL;

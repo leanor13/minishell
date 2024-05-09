@@ -1,0 +1,14 @@
+command: ls, fd_in:0, fd_out: 3
+Makefile
+includes
+minishell
+objs
+oke
+out
+out1
+out2
+something
+srcs
+test.txt
+useful.txt
+valgrind.supp

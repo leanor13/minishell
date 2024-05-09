@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 11:32:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:38:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	exec_command(t_arg *command, t_shell *shell)
 	{
 		dup_close(command->fd_in, STDIN_FILENO);
 		dup_close(command->fd_out, STDOUT_FILENO);
+		printf("command: %s, fd_in:%d, fd_out: %d\n", 
+		command->command, command->fd_in, command->fd_out);
 		if (command->built_in_fn != NULL)
 		{
 			if (command->built_in_fn(shell, command) == EXIT_FAILURE)
@@ -35,7 +37,7 @@ int	exec_command(t_arg *command, t_shell *shell)
 			else
 				exit (EXIT_SUCCESS);
 		}
-		else if (execve(command->path, command->args_parsed, shell->env_2d) == -1)
+		else if (execve(command->path, command->args_doublechar, shell->env_2d) == -1)
 		{
 			perror("Execve error");
 			printf("path: %s", command->path);
@@ -88,8 +90,10 @@ int	exec_pipe(t_shell *shell)
 		current = current->next;
 	}
 	ft_close(fd_pipe[FD_IN]);
+	printf("here\n");
 	for (i = 0; i < count; i ++)
 		waitpid(-1, &status, 0);
+	printf("here2\n");
 	return (status);
 }
 

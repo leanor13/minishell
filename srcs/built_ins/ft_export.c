@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 14:21:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:24:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 	char	*var_name;
 	char	*var_value;
 	char 	**env = shell->env_2d;
-	char 	**args = command->args_parsed; 
+	char 	**args = command->args_doublechar; 
 	//int 	fd_out = STDOUT_FILENO;
 	t_env	*env_lst = shell->env_list;
 
