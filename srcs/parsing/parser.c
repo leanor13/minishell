@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 20:17:33 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:02:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,12 @@ void print_string(const char *str) {
 
 char	**ft_strjoinline_splitversion(t_arg *lst, int i)
 {
-	size_t	j;
-	size_t	k;
+	//size_t	j;
+	//size_t	k;
 	char **s1;
 
-	j = 0;
-	k = 0;
+	//j = 0;
+	//k = 0;
 	s1 = (char **)malloc((i + 1) * sizeof(char *));
 	if (!s1)
 		return (NULL);
