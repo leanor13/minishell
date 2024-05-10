@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:56:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:52:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ static char	*find_path(char *command, char **envp)
 		if (!is_end)
 			dir_start = ft_strchr(dir_start, ':') + 1;
 	}
-	return (ft_putstr_fd("Failed to find command path\n", STDERR_FILENO), NULL);
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_nl(": command not found", STDERR_FILENO);
+	return (NULL);
 }
 
 static int	update_command(t_arg *command, t_shell *shell)
@@ -127,16 +129,9 @@ int	build_command_list(t_shell *shell)
 	while (i < command_count)
 	{
 		if (curr_arg->arguments && curr_arg->arguments[0])
-		{
-			// TODO in case of empty/failed update we can clean cmd, and proceed to next ones
-			if (update_command(curr_arg, shell) != EXIT_SUCCESS)
-				{
-					free_command_list(&shell->args_list);
-					return (EXIT_FAILURE);
-				}
-		}
+			update_command(curr_arg, shell);
 		else
-			return (ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO), EXIT_FAILURE);
+			ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO);
 		i++;
 		curr_arg = curr_arg->next;
 	}
