@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 11:29:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/10 18:09:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,13 @@ int	open_fds(t_arg *command)
 	// here_doc: add here here_doc case
 	while (command)
 	{
-		if (command->in_file)
+		if (command->here_doc != NULL)
+		{
+			here_doc(command);
+			command->in_file = "here_doc";
+			command->fd_in = STDIN_FILENO;
+		}
+		else if (command->in_file)
 			command->fd_in = open_file(command->in_file, INPUT_FILE);
 		if (command->out_file)
 		{
@@ -52,8 +58,6 @@ int	executor_main(t_shell *shell)
 
 	if (!shell->args_list)
 		return (EXIT_SUCCESS);
-	//validate_params(ac, av);
-	//fd_files = handle_input(ac, av);
 	// here: go through all args and try to open input and output files. 
 	//Check in what order. Check >> or > etc
 	

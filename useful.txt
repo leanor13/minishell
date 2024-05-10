@@ -6,11 +6,34 @@ plan to do:
 
 tests:
 
-1. ls -l | ls > out6 | wc -l - now not working
-2. touch "Hello" should remove quotes
-3. put the << and just press enter
-4. ls | awk '{print $1}'
-5. 
+1. ls -l | ls > out6 | wc -l - now not working (we need to investigate)
+2. touch "Hello" should remove quotes (now - it creates file with quotes)
+3. put the << and just press enter (now - seg fault)
+4. ls | awk '{print $1}' (now - unexpected character ''')
+5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
+6. check case when both here_doc and input file (can it be?). Maybe parser can write here_doc to input when it's the case?
+
+executor failures:0
+1. 
+
+
+parser failures:
+1. touch "Hello" should remove quotes (now - it creates file with quotes)
+3. put the << and just press enter (now - seg fault)
+4. ls | awk '{print NL}' (now - unexpected character ''', expected: cmd2->args=[awk, {print NL}])
+5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
+
+build-in failures:
+1. cd - not functioning
+2. export - works only with no arguments
+3. 
+
+init failures:
+1. init with empty env
+2. init with no user (we'll check if we need that)
+3. 
+
+
 
 testers help:
 2. https://github.com/MariaAguiar/minitester

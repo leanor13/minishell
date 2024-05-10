@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 19:19:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:20:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			build_command_list(t_shell *shell);
 bool		check_built_in(t_arg *command);
 int			dir_len_count(char *dir_start);
 char		*absolute_path(char *command);
-void		here_doc(char *limiter, int *fd_files);
+int			here_doc(t_arg *command);
 int			open_file(char *file, int type);
 void		open_files_here_doc(int ac, char **av, int fd_files[2]);
 void		close_all_protected(void);

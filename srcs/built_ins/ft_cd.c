@@ -6,11 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:25:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:48:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+// hint: don't implement "cd /". It's not required and can cause many leaks etc 
 
 char	*ft_getenv(char **env, const char *name)
 {

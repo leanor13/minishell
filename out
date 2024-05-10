@@ -1,0 +1,2 @@
+command: echo, fd_in:0, fd_out: 3
+

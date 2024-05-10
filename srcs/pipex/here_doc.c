@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/07 15:27:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:23:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* static void	read_input(int fd[2], char *limiter, int fd_files[2])
+static void	read_input(int fd[2], char *limiter)
 {
 	char	*line;
 
@@ -22,7 +22,7 @@
 		line = get_next_line(STDIN_FILENO);
 		if (line == NULL)
 		{
-			free(fd_files);
+			// free something
 			close_all_unprotected();
 			perror("Error reading from standard input");
 			exit(EXIT_FAILURE);
@@ -43,13 +43,14 @@ static void	ft_error_forking(void)
 {
 	perror("Error forking");
 	exit (EXIT_FAILURE);
-} */
+}
 
-/* void	here_doc(char *limiter, int *fd_files)
+int	here_doc(t_arg *command)
 {
 	pid_t	pid;
 	int		fd[2];
 	int		status;
+	char	*limiter = command->here_doc;
 
 	exit_pipe_error(fd);
 	pid = fork();
@@ -57,9 +58,8 @@ static void	ft_error_forking(void)
 		ft_error_forking();
 	else if (pid == 0)
 	{
-		read_input(fd, limiter, fd_files);
+		read_input(fd, limiter);
 		close_all_unprotected();
-		free(fd_files);
 		exit(EXIT_SUCCESS);
 	}
 	dup2(fd[0], STDIN_FILENO);
@@ -67,13 +67,14 @@ static void	ft_error_forking(void)
 	wait(&status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 	{
-		free(fd_files);
+		// free if needed
 		close_all_protected();
-		exit(EXIT_FAILURE);
+		return(EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
 }
 
-void	open_files_here_doc(int ac, char **av, int *fd_files)
+/* void	open_files_here_doc(int ac, char **av, int *fd_files)
 {
 	fd_files[FD_OUT] = open_file(ac, av, HERE_DOC);
 	if (fd_files[FD_OUT] == -1)
