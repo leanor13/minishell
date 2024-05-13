@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 23:29:27 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:33:31 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,43 +89,43 @@ int shellcommand_scan(t_arg **lst, char *str, int i)
 		return(0);
 }
 
-int arg_scan(t_arg **lst, char *str, int i)
+int	find_quote(t_sign **lst, char *str, int i)
 {
-	int j;
-	int type;
-	int start;
-
-	start = i;
-	j = 0;
-	type = ARG;
-	if(str[i] == '\0')
-		return(j);
-	if(str[i] == '|' || str[i] == '<' || str[i] == '>')
-		return(shellcommand_scan(lst, str, i));
-	while(str[i])
+	if ((*lst)->quote_type == DOUBLE_QUOTE)
 	{
-		// if(str[i] != '<' || str[i] != '>') some protection if it is only > <
-		// 	return(j);
-		if(str[i] == '|' || str[i] == '<' || str[i] == '>')
-			break;
-		if(skip_space(str, i))
-			break ;
-		if((*quote)->quote_type == 0)
-		{
-			if(skip_space(str, i))
-				break ;
-		}
-		if(find_quote(quote, str, i))
-		 	break;
-		
-		if((quote->quote_type = DOUBLE_QUOTE_DIRECT) || (quote->quote_type = DOUBLE_QUOTE_DIRECT))
-			break;
-		i++;
-		j++;
+		if (str[i] == 34)
+			return(1);
+		else
+			return(0);
 	}
-	//}
-	append_node(lst, str, start, j, type);
-	return (j);
+	else if ((*lst)->quote_type == SINGLE_QUOTE)
+	{
+		if (str[i] == 39)
+			return(1);
+		else
+			return(0);
+	}
+	else if ((*lst)->quote_type == 0)
+	{
+		if (str[i] == 34)
+		{
+			(*lst)->quote_type = DOUBLE_QUOTE_DIRECT;
+			return(1);
+		}
+		else
+			return(0);
+	}
+	else if ((*lst)->quote_type == 0)
+	{
+		if (str[i] == 39)
+		{
+			(*lst)->quote_type = SINGLE_QUOTE_DIRECT;
+			return(1);
+		}
+		else
+			return(0);
+	}
+	return(0);
 }
 
 int	handle_quotestring(t_sign **lst, char *str, int i)
@@ -171,45 +171,44 @@ int	handle_quotestring(t_sign **lst, char *str, int i)
 	return(0);
 }
 
-int	find_quote(t_sign **lst, char *str, int i)
+int arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 {
-	if ((*lst)->quote_type == DOUBLE_QUOTE)
-	{
-		if (str[i] == 34)
-			return(1);
-		else
-			return(0);
-	}
-	else if ((*lst)->quote_type == SINGLE_QUOTE)
-	{
-		if (str[i] == 39)
-			return(1);
-		else
-			return(0);
-	}
-	else if ((*lst)->quote_type == 0)
-	{
-		if (str[i] == 34)
-		{
-			(*lst)->quote_type = DOUBLE_QUOTE_DIRECT;
-			return(1);
-		}
-		else
-			return(0);
-	}
-	else if ((*lst)->quote_type == 0)
-	{
-		if (str[i] == 39)
-		{
-			(*lst)->quote_type = SINGLE_QUOTE_DIRECT;
-			return(1);
-		}
-		else
-			return(0);
-	}
-	return(0);
-}
+	int j;
+	int type;
+	int start;
 
+	start = i;
+	j = 0;
+	type = ARG;
+	if(str[i] == '\0')
+		return(j);
+	if(str[i] == '|' || str[i] == '<' || str[i] == '>')
+		return(shellcommand_scan(lst, str, i));
+	while(str[i])
+	{
+		// if(str[i] != '<' || str[i] != '>') some protection if it is only > <
+		// 	return(j);
+		if(str[i] == '|' || str[i] == '<' || str[i] == '>')
+			break;
+		if(skip_space(str, i))
+			break ;
+		if((*quote)->quote_type == 0)
+		{
+			if(skip_space(str, i))
+				break ;
+		}
+		if(find_quote(quote, str, i))
+		 	break;
+		
+		if(((*quote)->quote_type = DOUBLE_QUOTE_DIRECT) || ((*quote)->quote_type = DOUBLE_QUOTE_DIRECT))
+			break;
+		i++;
+		j++;
+	}
+	//}
+	append_node(lst, str, start, j, type);
+	return (j);
+}
 
 t_arg	*ft_lexer(char *str, t_arg *lst)
 {
@@ -229,8 +228,9 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 		i += skip_space(str, i);// everytime when it is a space
 		i += handle_quotestring(&quote, str, i);
 		i += shellcommand_scan(&lst, str, i);
-		i += skip_space(str, i);
-		i += arg_scan(&lst, str, i);
+		if(quote->quote_type == 0)
+			i += skip_space(str, i);
+		i += arg_scan(&lst, str, i, &quote);
 		//i++;
 	}
 	return(lst);
