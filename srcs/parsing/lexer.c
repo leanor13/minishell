@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 23:22:04 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:23:21 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,49 @@ int arg_scan(t_arg **lst, char *str, int i)
 	//}
 	append_node(lst, str, start, j, type);
 	return (j);
+}
+
+int	handle_quotestring(t_sign **lst, char *str, int i)
+{
+	if ((*lst)->quote_type == DOUBLE_QUOTE_DIRECT)
+	{
+		if ((str[i - 1] == 34 && str[i] == 34) || (str[i - 1] == 39 && str[i] == 39))
+		{
+			(*lst)->quote_type = 0;
+			return(1);
+		}
+		(*lst)->quote_type = DOUBLE_QUOTE;
+		return(0);
+	}
+	else if ((*lst)->quote_type == SINGLE_QUOTE_DIRECT)
+	{
+		if ((str[i - 1] == 34 && str[i] == 34) || (str[i - 1] == 39 && str[i] == 39))
+		{
+			(*lst)->quote_type = 0;
+			return(1);
+		}
+		(*lst)->quote_type = SINGLE_QUOTE;
+		return(0);
+	}
+	(*lst) = ft_calloc(1, sizeof(t_sign));
+	// if ((str[i] == 34 && str[i + 1] == 34) || (str[i] == 39 && str[i + 1] == 39))
+	// {
+	// 	lst->quote_type = 0;
+	// 	return(2);
+	// }
+	if (str[i] == 34)
+	{
+		(*lst)->quote_type = DOUBLE_QUOTE;
+		return(1);
+	}
+	else if (str[i] == 39)
+	{
+		(*lst)->quote_type = SINGLE_QUOTE;
+		return(1);
+	}
+	else
+		(*lst) = ft_calloc(1, sizeof(t_sign));
+	return(0);
 }
 
 t_arg	*ft_lexer(char *str, t_arg *lst)
