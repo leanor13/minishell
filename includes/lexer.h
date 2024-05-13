@@ -10,13 +10,14 @@ typedef struct s_shell t_shell;
 
 typedef struct s_arg
 {
-	char			*str; // args
-	int				type;
+	char			*str; // args in the lexer
+	int				type; //assign type in the lexer
 	char 			**arguments;
-	char 			*in_file; // >> out.txt -> out.txt
-	char 			*out_file; //<< in.txt -> in.txt
-	char 			*here_doc; //
-	bool 			append;
+	char 			*in_file; // >>  > out.txt -> out.txt
+	char 			**out_file; //< in.txt -> in.txt
+	char 			**in_file_open; //< in.txt -> in.txt
+	char 			**here_doc; // << first one is going ot be an argument so it nice in this way
+	bool 			append; // it is only a bool if the last on is append other thatn that they are outputfiles 
 	char			*command; // used in executor
 	char			*path; // used in executor
 	int				fd_in;
@@ -94,7 +95,10 @@ typedef enum e_type
 	PIPE,     // |
 	ARG,      // string //EXACT COMMANS? LIKE ECHO STB, AND FLAGS TOO ASK YULIA
 	GOING_ARG,
-	DELETE_ARG,
+	GOING_HEREDOC,
+	GOING_INPUT,
+	GOING_OUTPUT,
+	//DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
 	// RPR,      // )

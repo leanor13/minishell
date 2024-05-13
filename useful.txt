@@ -10,7 +10,7 @@ tests:
 2. touch "Hello" should remove quotes
 3. put the << and just press enter
 4. ls | awk '{print $1}'
-5. 
+5. heredoc << okay somethign << cat
 
 testers help:
 2. https://github.com/MariaAguiar/minitester

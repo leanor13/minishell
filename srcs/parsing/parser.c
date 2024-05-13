@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/13 22:47:33 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,6 @@ size_t	ft_strjoinlen(char *s)
 	return (len);
 }
 
-// char	*ft_strjoinline(char *s1, char *s2)
-// {
-// 	char	*s3;
-// 	size_t	i;
-// 	size_t	j;
-
-// 	s3 = (char *)malloc(sizeof(char) * (ft_strjoinlen(s1) + ft_strjoinlen(s2) + 2));
-// 	if (!s3)
-// 		return (NULL);
-// 	i = 0;
-// 	j = 0;
-// 	while (s1 && s1[i])
-// 		s3[j++] = s1[i++];
-// 	i = 0;
-// 	while (s2[i])
-// 	{
-// 		s3[j++] = s2[i];
-// 		i++;
-// 	}
-// 	s3[j++] = ' ';
-// 	s3[j] = '\0';
-// 	free(s1);
-// 	return (s3);
-// }
-
 char	*ft_strjoinline(char *s1, char *s2)
 {
 	char	*s3;
@@ -100,31 +75,14 @@ char	*ft_strjoinline(char *s1, char *s2)
 	return (s3);
 }
 
-// static void	free_res(char **result, int i)
-// {
-// 	while (i > 0)
-// 		free(result[--i]);
-// 	free(result);
-// }
-
 static char	*put_word(char *s)
 {
 	char	*word;
 	int		len;
 
 	len = 0;
-	// if (is_quote(s[len]))
-	// {
-	// 	q = *s;
-	// 	s++;
-	// 	while (s[len] && s[len] != q)
-	// 		len++;
-	// }
-	// else
 	while (s[len])
 		len++;
-		// while (s[len] && (s[len] != c))
-		// 	len++;
 	word = ft_substr(s, 0, len);
 	if (!word)
 	{
@@ -141,25 +99,21 @@ void print_string(const char *str) {
     printf("\n");
 }
 
-char	**ft_strjoinline_splitversion(t_arg *lst, int i)
+char	**ft_strjoinline_args(t_arg *lst, int i)
 {
-	//size_t	j;
-	//size_t	k;
 	char **s1;
 
-	//j = 0;
-	//k = 0;
 	s1 = (char **)malloc((i + 1) * sizeof(char *));
 	if (!s1)
 		return (NULL);
 	int count = 0;
-	while (count < i)
+	while (lst && count < i)
 	{
 		if(lst->type == GOING_ARG)
 		{
 			s1[count] = put_word(lst->str);
-			//printf("BELEP\n");
-			printf("Content of s1[%d]: ", count);
+			//printf("ENTER STRJOINLINE ARGS\n");
+			printf("Content of args s1[%d]: ", count);
             print_string(s1[count]);
 			count++;
 		}
@@ -167,37 +121,6 @@ char	**ft_strjoinline_splitversion(t_arg *lst, int i)
 		// 	return (free_res(s1, count), NULL);
 		lst = lst->next;
 	}
-	// while (lst)
-	// {
-	// 	if(lst->type == ARG)
-	// 	{
-	// 		s1[count] = put_word(lst->str);
-	// 		printf("BELEP\n");
-	// 		printf("Content of s1[%d\n]: ", count);
-    //         print_string(s1[count]);
-	// 		count++;
-	// 	}
-	// 	// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
-	// 	// 	return (free_res(s1, count), NULL);
-	// 	lst = lst->next;
-	// }
-	// while (lst)//maybe just s2[i]
-	// {
-	// 	if(lst->type == ARG)
-	// 	{
-	// 		arg_str = ft_strdup(lst->str);
-	// 		k = 0;
-	// 		j = 0;
-	// 		while(arg_str[k])
-	// 		{
-	// 			s1[l][j++] = arg_str[k++];
-	// 			printf("%cMOST\n", s1[l][j]);
-	// 		}
-	// 		free(arg_str);
-	// 		l++;
-	// 	}
-	// 	lst = lst->next;
-	// }
 	s1[count] = NULL;
 	// char **arg_str;
  	// t_arg *current = final;
@@ -217,26 +140,128 @@ char	**ft_strjoinline_splitversion(t_arg *lst, int i)
 	return(s1);
 }
 
+char	**ft_strjoinline_heredoc(t_arg *lst, int i)
+{
+	char **s1;
 
-// char	*ft_strcutspace(char *s1)
-// {
-// 	char	*s2;
-// 	size_t	j;
-// 	size_t	i;
-// 	int	len;
+	s1 = (char **)malloc((i + 1) * sizeof(char *));
+	if (!s1)
+		return (NULL);
+	int count = 0;
+	while (lst && count < i)
+	{
+		if(lst->type == GOING_HEREDOC)
+		{
+			s1[count] = put_word(lst->str);
+			//printf("ENTER STRJOINLINE ARGS\n");
+			printf("Content of heredoc s1[%d]: ", count);
+			print_string(s1[count]);
+			count++;
+		}
+		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
+		// 	return (free_res(s1, count), NULL);
+		lst = lst->next;
+	}
+	s1[count] = NULL;
+	// char **arg_str;
+ 	// t_arg *current = final;
+	// arg_str = current->args_doublechar;
+	// int y = 0;
+	// int x = 0;
+	// while (arg_str[y] != NULL)
+	// {
+	// 	x = 0;
+	// 	 while (arg_str[y][x] != '\0')
+	// 	{
+	// 		printf("%c\n", arg_str[y][x]);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+	return(s1);
+}
 
-// 	len = ft_strlen(s1);
-// 	s2 = (char *)malloc(sizeof(char) * (len));
-// 	if (!s2)
-// 		return (NULL);
-// 	j = 0;
-// 	i = 0;
-// 	while (s1 && s1[i] && (len - 1) > j)
-// 		s2[j++] = s1[i++];
-// 	s2[j] = '\0';
-// 	free(s1);
-// 	return (s2);
-// }
+char	**ft_strjoinline_output(t_arg *lst, int i)
+{
+	char **s1;
+
+	s1 = (char **)malloc((i + 1) * sizeof(char *));
+	if (!s1)
+		return (NULL);
+	int count = 0;
+	while (lst && count < i)
+	{
+		if(lst->type == GOING_OUTPUT)
+		{
+			s1[count] = put_word(lst->str);
+			//printf("ENTER STRJOINLINE ARGS\n");
+			printf("Content of output s1[%d]: ", count);
+            print_string(s1[count]);
+			count++;
+		}
+		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
+		// 	return (free_res(s1, count), NULL);
+		lst = lst->next;
+	}
+	s1[count] = NULL;
+	// char **arg_str;
+ 	// t_arg *current = final;
+	// arg_str = current->args_doublechar;
+	// int y = 0;
+	// int x = 0;
+	// while (arg_str[y] != NULL)
+	// {
+	// 	x = 0;
+	// 	 while (arg_str[y][x] != '\0')
+	// 	{
+	// 		printf("%c\n", arg_str[y][x]);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+	return(s1);
+}
+
+char	**ft_strjoinline_input(t_arg *lst, int i)
+{
+	char **s1;
+
+	s1 = (char **)malloc((i + 1) * sizeof(char *));
+	if (!s1)
+		return (NULL);
+	int count = 0;
+	while (lst && count < i)
+	{
+		if(lst->type == GOING_INPUT)
+		{
+			s1[count] = put_word(lst->str);
+			//printf("ENTER STRJOINLINE ARGS\n");
+			printf("Content of input s1[%d]: ", count);
+            print_string(s1[count]);
+			count++;
+		}
+		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
+		// 	return (free_res(s1, count), NULL);
+		lst = lst->next;
+	}
+	s1[count] = NULL;
+	// char **arg_str;
+ 	// t_arg *current = final;
+	// arg_str = current->args_doublechar;
+	// int y = 0;
+	// int x = 0;
+	// while (arg_str[y] != NULL)
+	// {
+	// 	x = 0;
+	// 	 while (arg_str[y][x] != '\0')
+	// 	{
+	// 		printf("%c\n", arg_str[y][x]);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+	return(s1);
+}
 
 t_arg *ft_parser(t_arg *lst)
 {
@@ -244,55 +269,82 @@ t_arg *ft_parser(t_arg *lst)
 	t_arg	*node;
 	t_arg	*nlast;
 	int		i;
-	t_arg	*head;
+	int		j;
+	int		k;
+	int		l;
+	t_arg	*head_arg;
+	t_arg	*head_heredoc;
+	t_arg	*head_output;
+	t_arg	*head_input;
 
-	i = 0;
 	final = NULL;
 	if (!lst)
 		return (NULL);
 	while(lst)
 	{
-		head = lst;
+		head_arg = lst;
+		head_heredoc = lst;
+		head_output = lst;
+		head_input = lst;
 		node = ft_calloc(1, sizeof(t_arg));
 		if (!node)
 			return (NULL);
 		i = 0;
+		j = 0;
+		k = 0;
+		l = 0;
 		while(lst)
 		{
 			if(lst->type == HEREDOC)
 			{
+				if(lst->next == NULL)
+				{
+					lst = lst->next;
+					break;
+				}
+				node->in_file = ft_strdup("here_doc");
 				lst = lst->next;
-				node->here_doc = ft_strdup(lst->str);
-			}
-			// else if(lst->type == ARG)
-			// 	node->args = ft_strdup(lst->str);
-			// else if(lst->type == ARG)
-			//  	node->args = ft_strjoinline(node->args, lst->str);
-			else if(lst->type == GOING_ARG)
-			{
-				lst->type = DELETE_ARG;
+				i++;
+				lst->type = GOING_HEREDOC;
 			}
 			else if(lst->type == ARG)
 			{
-				i++;
+				j++;
 				lst->type = GOING_ARG;
 			}
 			else if(lst->type == OUTPUT)
 			{
+				if(lst->next == NULL)
+				{
+					lst = lst->next;
+					break;
+				}
 				lst = lst->next;
-				node->out_file = ft_strdup(lst->str); //+ ' '
+				k++;
+				lst->type = GOING_OUTPUT;
 			}
 			else if(lst->type == INPUT)
 			{
-				printf("input enter\n");
+				if(lst->next == NULL)
+				{
+					lst = lst->next;
+					break;
+				}
 				lst = lst->next;
-				node->in_file = ft_strdup(lst->str);
+				l++;
+				lst->type = GOING_INPUT;
 			}
 			else if(lst->type == APPEND)
 			{
+				if(lst->next == NULL)
+				{
+					lst = lst->next;
+					break;
+				}
 				node->append = true;
 				lst = lst->next;
-				node->out_file = ft_strdup(lst->str);
+				k++;
+				lst->type = GOING_OUTPUT;
 			}
 			else if(lst->type == PIPE)
 			{
@@ -301,8 +353,15 @@ t_arg *ft_parser(t_arg *lst)
 			}
 			lst = lst->next;
 		}
-		node->arguments = ft_strjoinline_splitversion(head, i);
-		//node->args = ft_strcutspace(node->args);
+		if(i != 0)
+			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
+		if(j != 0)
+			node->arguments = ft_strjoinline_args(head_arg, j);
+		if(k != 0)
+			node->out_file = ft_strjoinline_output(head_output, k);
+		if(l != 0)
+			node->in_file_open = ft_strjoinline_input(head_input, l);
+		//MAYBE CHANGE HEREDOC
 		if (!(final))
 		{
 			final = node;
@@ -319,8 +378,8 @@ t_arg *ft_parser(t_arg *lst)
  	t_arg *current = final;
     while (current)
     {	
-        printf("%sOUTPUT\n", current->out_file);
-        printf("%sHEREDOC\n", current->here_doc);
+		// printf("%sOUTPUT\n", current->out_file);
+		// printf("%sHEREDOC\n", current->here_doc);
         printf("%sINPUT\n", current->in_file);
         printf("%iAPPEND\n", current->append);
         current = current->next;
