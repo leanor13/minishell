@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 23:18:17 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:22:04 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	while(str[i])
 	{
 		i += skip_space(str, i);// everytime when it is a space
+		i += handle_quotestring(&quote, str, i);
 		i += shellcommand_scan(&lst, str, i);
 		i += skip_space(str, i);
 		i += arg_scan(&lst, str, i);
