@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 23:27:58 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:29:27 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,16 @@ int arg_scan(t_arg **lst, char *str, int i)
 			break;
 		if(skip_space(str, i))
 			break ;
+		if((*quote)->quote_type == 0)
+		{
+			if(skip_space(str, i))
+				break ;
+		}
+		if(find_quote(quote, str, i))
+		 	break;
+		
+		if((quote->quote_type = DOUBLE_QUOTE_DIRECT) || (quote->quote_type = DOUBLE_QUOTE_DIRECT))
+			break;
 		i++;
 		j++;
 	}
