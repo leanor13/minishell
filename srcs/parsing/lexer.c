@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 23:23:21 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:26:23 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,12 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	int	i;
 
 	i = 0;
-	// if(!closed_quotes(str))THIS PART LATER
+	t_sign	*quote;
+	if (!str || !*str)
+		return (NULL);
+	// if(!closed_quotes(str))// IT IS MORE COMPLEX THAN JUST THIS
+	// 	return (NULL);
+	quote = ft_calloc(1, sizeof(t_sign));
 	// 	return (NULL); //YULIA maybe error for here? instead of return
 	//IT IS NOT GOING TO WORK JUST WITH THIS >> << OR THIS OR IF IT IS AT THE END 
 	while(str[i])
