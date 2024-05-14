@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/10 18:09:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:24:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_min(int a, int b)
+static int	ft_min(int a, int b)
 {
 	if (a < b)
 		return (a);
@@ -20,14 +20,14 @@ int	ft_min(int a, int b)
 		return (b);
 }
 
-int	open_fds(t_arg *command)
+static int	open_fds(t_arg *command, t_shell *shell)
 {
 	// here_doc: add here here_doc case
 	while (command)
 	{
 		if (command->here_doc != NULL)
 		{
-			here_doc(command);
+			here_doc(command, shell);
 			command->in_file = "here_doc";
 			command->fd_in = STDIN_FILENO;
 		}
@@ -63,16 +63,17 @@ int	executor_main(t_shell *shell)
 	
 	//if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 	//	av ++;
-	open_fds(shell->args_list);
+	open_fds(shell->args_list, shell);
 	if (build_command_list(shell) != EXIT_SUCCESS)
 	{
+		printf("build list failed\n");
 		close_all_protected();
 		return (EXIT_FAILURE);
 	}
 	// in future - change env to shell->env_list
 	// 
 	status = exec_pipe(shell);
-	close_all_protected();
+	//close_all_protected();
 	//free(fd_files);
 	free_command_list(&shell->args_list);
 	//free(shell->args_list);

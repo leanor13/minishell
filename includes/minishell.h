@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/10 17:20:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:54:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_shell
 	char	**env_2d;
 	int		std_fds[3];
 	t_arg	*args_list;
-	char	*here_doc;
+	bool	here_doc;
 	int		exit_status;
 }	t_shell;
 
@@ -80,7 +80,7 @@ int			build_command_list(t_shell *shell);
 bool		check_built_in(t_arg *command);
 int			dir_len_count(char *dir_start);
 char		*absolute_path(char *command);
-int			here_doc(t_arg *command);
+int			here_doc(t_arg *command, t_shell *shell);
 int			open_file(char *file, int type);
 void		open_files_here_doc(int ac, char **av, int fd_files[2]);
 void		close_all_protected(void);

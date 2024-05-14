@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:09:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:26:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_command_list(t_arg **command_list)
 		current = next;
 	}
 	*command_list = NULL;
-	close_all_protected();
+	//close_all_protected();
 }
 
 void	dup_close(int fd, int reference)
@@ -49,7 +49,8 @@ void	dup_close(int fd, int reference)
 	{
 		if (dup2(fd, reference) == -1)
             perror("dup_close failure");
-		ft_close(fd);
+		printf("closing fd: %d\n", fd);
+		close(fd);
 	}
 }
 
