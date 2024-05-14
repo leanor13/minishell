@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 20:44:42 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:47:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,14 @@ int	main_parsing(t_shell *shell)
 	t_arg	*lst1_1 = NULL;
 
 	lst = NULL;
-	lst1_1 = &(t_arg)
-	{
-		.append = false,
-		.here_doc = false,
-		.in_file = NULL,
-		.out_file = NULL,
-		.next = NULL,
-	};
-	//(void)lst1_1;
-
-	lst1 = &(t_arg)
-	{
-		.append = false,
-		.here_doc = false,
-		.in_file = NULL,
-		.out_file = NULL,
-		.next = lst1_1,
-	};
-
-	//moved argc check to main flow
 	while (1)	
 	{
-		//free_stackfinal(&shell->args_list); // I moved this to clean before next run. If run is final we will clean separately
 		lst = NULL;
 		command = NULL;
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
-			ft_putstr_nl("exit", STDERR_FILENO);// IT IS NOT EXITING FOR THE FIRST TIME??
+			ft_putstr_nl("exit", STDERR_FILENO);
 			exit(0);
 		}
 		add_history(command); // it is not in the right space because we have to go back more times in exit
