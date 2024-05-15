@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/15 19:06:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/15 19:13:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ int main_parsing(t_shell *shell)
 		}
 		lst = NULL;
 		command = NULL;
+		/* Do we need something like ??
+		if (isatty(STDIN_FILENO))
+				command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
+			else
+			{
+				char *line = get_next_line(STDIN_FILENO);
+				if (line == NULL)
+					end_of_input = true;
+				command = ft_strtrim(line, "\n");
+				free(line);
+			}
+		 */
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
@@ -53,9 +65,6 @@ int main_parsing(t_shell *shell)
    		}
 		lst = ft_parser(lst);
 		shell->args_list = lst;
-		//printf("out_2: %s\n", shell->args_list->out_file[0]);
-		//printf("out_1: %s\n", shell->args_list->out_file[1]);
-		//printf("out_1: %s\n", shell->args_list->out_file[2]);
 		if (shell->args_list != NULL)
 			executor_main(shell);
 		free_stackfinal(&lst);
