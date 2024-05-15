@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/14 16:53:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/14 17:31:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void read_input(int fd[2], char *limiter)
 	}
 	close(fd[1]); // Close the write end of the pipe in the child process
 }
-
 
 static void	ft_error_forking(void)
 {
