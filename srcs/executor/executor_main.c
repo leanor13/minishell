@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/14 16:24:38 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/15 19:05:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	ft_min(int a, int b)
 
 static int	open_fds(t_arg *command, t_shell *shell)
 {
+	int	i;
 	// here_doc: add here here_doc case
 	while (command)
 	{
@@ -31,15 +32,29 @@ static int	open_fds(t_arg *command, t_shell *shell)
 			command->in_file = "here_doc";
 			command->fd_in = STDIN_FILENO;
 		}
-		else if (command->in_file)
-			command->fd_in = open_file(command->in_file, INPUT_FILE);
-		if (command->out_file)
+		else if (command->in_file_open && command->in_file_open[0]) 
 		{
-			if (command->append)
-				command->fd_out= open_file(command->out_file, OUTPUT_APPEND);
-			else
+			i = 0;
+			while (command->in_file_open[i])
 			{
-				command->fd_out= open_file(command->out_file, OUTPUT_REWRITE);
+				command->fd_in = open_file(command->in_file_open[i], INPUT_FILE);
+				if (command->fd_in == -1)
+					perror("open input file");
+				i++;
+			}
+		}
+		if (command->out_file && command->out_file[0])
+		{
+			i = 0;
+			while (command->out_file[i])
+			{
+				if (command->append)
+					command->fd_out= open_file(command->out_file[i], OUTPUT_APPEND);
+				else
+					command->fd_out= open_file(command->out_file[i], OUTPUT_REWRITE);
+				if (command->fd_out == -1)
+					perror("open output file");
+				i ++;
 			}
 		}
 		if (ft_min(command->fd_in, command->fd_out) < 0)

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/14 17:31:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/15 18:21:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int here_doc(t_arg *command, t_shell *shell)
 	pid_t pid;
 	int fd[2];
 	int status;
-	char *limiter = command->here_doc;
+	char *limiter = command->here_doc[0];
 
 	shell->here_doc = true;
 	if (pipe(fd) == -1) // Create a pipe

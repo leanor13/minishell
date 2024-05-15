@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/14 17:12:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:58:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ int exec_pipe(t_shell *shell)
 				printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
 				ft_close(fd_pipe[FD_OUT]);
 				if (current->next != NULL)
+				{
 					printf("closing fd_in: %d\n", fd_in);
 					ft_close(fd_in);
+				}
 				current = current->next;
 				continue;
 			}

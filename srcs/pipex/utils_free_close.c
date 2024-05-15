@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/14 16:22:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:58:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	ft_close(int fd)
 {
 	if (fd != -1 && fd != STDERR_FILENO 
 		&& fd != STDIN_FILENO && fd != STDOUT_FILENO)
+	{
 		printf("closing fd: %d\n", fd);
 		close(fd);
+	}
 }
 
 void	close_all_protected(void)

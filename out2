@@ -1,3 +1,6 @@
+closing fd: 7
+command: cat, fd_in:0, fd_out: 7
+child finish
 NAME	= minishell
 
 SRCS	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))

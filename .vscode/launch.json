@@ -52,7 +52,106 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb"
-        }
+        },
+        {
+            "name": "GCC & Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/minishell",
+            "args": [],
+            "stopAtEntry": true,            //optional, if true debugger always stop at first instruction
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            //"preLaunchTask": "gcc build",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        // this launch option runs the executable but before executes "Makefile": "gcc build" (see tasks.json)
+        {
+            "name": "Makefile & Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            // "console": "internalConsole",
+            "program": "${workspaceFolder}/minishell",
+            // "args": ["in.txt", "ls", "wc -l", "vsout" ],
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            //"preLaunchTask": "Makefile",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "In this mode GDB will be attached to both processes after a call to fork() or vfork().",
+                    "text": "-gdb-set detach-on-fork off",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "The new process is debugged after a fork. The parent process runs unimpeded.",
+                    "text": "-gdb-set follow-fork-mode child",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        // this launch option just executes the program
+        {
+            "name": "Launch (no build)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/minishell",
+            "args": [],
+            // "args": [""],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "In this mode GDB will be attached to both processes after a call to fork() or vfork().",
+                    "text": "-gdb-set detach-on-fork off",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "The new process is debugged after a fork. The parent process runs unimpeded.",
+                    "text": "-gdb-set follow-fork-mode child",
+                    "ignoreFailures": true
+                }
+            ]
+        },
 	]
 }
 

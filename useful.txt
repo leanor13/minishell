@@ -6,6 +6,7 @@ plan to do:
 
 tests:
 
+<<<<<<< HEAD
 1. ls -l | ls > out6 | wc -l - now not working (we need to investigate)
 2. touch "Hello" should remove quotes (now - it creates file with quotes)
 3. put the << and just press enter (now - seg fault)
@@ -34,6 +35,13 @@ init failures:
 3. 
 
 
+=======
+1. ls -l | ls > out6 | wc -l - now not working
+2. touch "Hello" should remove quotes
+3. put the << and just press enter
+4. ls | awk '{print $1}'
+5. heredoc << okay somethign << cat
+>>>>>>> parsingmay13
 
 testers help:
 2. https://github.com/MariaAguiar/minitester
