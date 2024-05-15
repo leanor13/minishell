@@ -32,10 +32,10 @@ typedef struct s_sign
 	int quote_type;
 }				t_sign;
 
-# define DOUBLE_QUOTE 1
-# define SINGLE_QUOTE 2
-# define DOUBLE_QUOTE_DIRECT 3
-# define SINGLE_QUOTE_DIRECT 4
+# define FIRST_DOUBLE_QUOTE 11
+# define FIRST_SINGLE_QUOTE 22
+# define SECOND_DOUBLE_QUOTE 33
+# define SECOND_SINGLE_QUOTE 44
 // typedef struct s_arg_pass
 // {
 // 	char *args; // args = echo "Hello" this is me

@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 22:38:02 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:01:36 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ int	main_parsing(t_shell *shell)
 		add_history(command); // it is not in the right space because we have to go back more times in exit
 		lst = ft_lexer(command, lst);
 		t_arg *current = lst;
+		int	lst_num = 0;
    	 	while (current)
     	{	
 		// printf("%sOUTPUT\n", current->out_file);
 		// printf("%sHEREDOC\n", current->here_doc);
-        	printf("string before parser: %s\n", current->str);
+			lst_num++;
+			printf("---NODE%i before parser---\n", lst_num);
+        	printf(" %s,", current->str);
         	printf("type %i\n", current->type);
         	current = current->next;
    		}

@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 22:47:33 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:54:45 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,6 +277,7 @@ t_arg *ft_parser(t_arg *lst)
 	t_arg	*head_output;
 	t_arg	*head_input;
 
+	int node_num = 0;//delete later
 	final = NULL;
 	if (!lst)
 		return (NULL);
@@ -353,6 +354,8 @@ t_arg *ft_parser(t_arg *lst)
 			}
 			lst = lst->next;
 		}
+		node_num++;
+		printf("---NODE%i---\n", node_num);
 		if(i != 0)
 			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
 		if(j != 0)
@@ -374,12 +377,14 @@ t_arg *ft_parser(t_arg *lst)
 			node->prev = nlast;
 		}
 	}
-
+	node_num = 0;
  	t_arg *current = final;
     while (current)
     {	
 		// printf("%sOUTPUT\n", current->out_file);
 		// printf("%sHEREDOC\n", current->here_doc);
+		node_num++;
+		printf("---NODE%i---\n", node_num);
         printf("%sINPUT\n", current->in_file);
         printf("%iAPPEND\n", current->append);
         current = current->next;
