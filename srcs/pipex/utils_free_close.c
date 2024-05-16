@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/15 17:58:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:23:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_close(int fd)
 	if (fd != -1 && fd != STDERR_FILENO 
 		&& fd != STDIN_FILENO && fd != STDOUT_FILENO)
 	{
-		printf("closing fd: %d\n", fd);
+		//printf("closing fd: %d\n", fd);
 		close(fd);
 	}
 }
@@ -27,7 +27,7 @@ void	close_all_protected(void)
 	int	i;
 
 	i = 3;
-	printf("closing all protected\n");
+	//printf("closing all protected\n");
 	while (i < 1024)
 	{
 		close(i);
@@ -40,7 +40,7 @@ void	close_all_unprotected(void)
 	int	i;
 
 	i = 0;
-	printf("closing all not protected\n");
+	//printf("closing all not protected\n");
 	while (i < 1024)
 	{
 		close(i);

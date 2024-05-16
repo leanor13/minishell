@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/16 15:19:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:35:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int exec_pipe(t_shell *shell)
 	{
 		if (current->command)
 		{
-			if (!current->in_file)
+			if (!current->in_file_open || !current->in_file_open[0])
 			// && !(current->prev && current->prev->here_doc))
 				current->fd_in = fd_in;
 			//else if (!current->in_file && current->prev && current->prev->here_doc)
@@ -81,9 +81,9 @@ int exec_pipe(t_shell *shell)
 				perror("Error creating pipe");
 				return (close_all_protected(), NEG_ERROR);
 			}
-			if (current->next == NULL && !current->out_file)
+			if (current->next == NULL && (!current->out_file || !current->out_file[0]))
 				current->fd_out = STDOUT_FILENO;
-			else if (!current->out_file)
+			else if (!current->out_file || !current->out_file[0])
 				current->fd_out = fd_pipe[FD_OUT];
 			//printf("command %s: fd_out: %d\n", current->command, current->fd_out);
 			if (exec_command(current, shell) < 0)
@@ -98,7 +98,7 @@ int exec_pipe(t_shell *shell)
 				current = current->next;
 				continue;
 			}
-			if (!current->out_file)
+			if (!current->out_file || !current->out_file[0])
 			{
 				fd_in = fd_pipe[FD_IN];
 			}

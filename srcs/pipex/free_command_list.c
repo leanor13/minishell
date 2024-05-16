@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:09:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/14 16:26:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:23:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	dup_close(int fd, int reference)
 	{
 		if (dup2(fd, reference) == -1)
             perror("dup_close failure");
-		printf("closing fd: %d\n", fd);
+		//printf("closing fd: %d\n", fd);
 		close(fd);
 	}
 }
