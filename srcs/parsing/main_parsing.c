@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/15 19:13:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 12:32:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int main_parsing(t_shell *shell)
 
 		// Reset STDIN_FILENO to the original terminal input after command processing
 	}
-	ft_close(saved_stdin); // Close the saved STDIN_FILENO descriptor
+	//ft_close(saved_stdin); // Close the saved STDIN_FILENO descriptor
 	return (EXIT_SUCCESS);
 }

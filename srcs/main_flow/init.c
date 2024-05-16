@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/14 16:53:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 12:41:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	init_shell(t_shell *shell, char **env)
 	shell->std_fds[0] = dup(STDIN_FILENO);
     shell->std_fds[1] = dup(STDOUT_FILENO);
     shell->std_fds[2] = dup(STDERR_FILENO);
+	shell->here_doc_fd = 0;
 	shell->args_list = NULL;
 	shell->here_doc = false;
 	shell->exit_status = EXIT_SUCCESS;
