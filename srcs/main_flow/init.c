@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 10:51:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 12:41:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,12 @@ void	handle_env(t_shell *shell, char **env)
 int	init_shell(t_shell *shell, char **env)
 {
 	handle_env(shell, env);
-	shell->std_fds[0] = dup2(STDIN_FILENO, 0);
-	shell->std_fds[1] = dup2(STDOUT_FILENO, 1);
-	shell->std_fds[2] = dup2(STDERR_FILENO, 2);
+	shell->std_fds[0] = dup(STDIN_FILENO);
+    shell->std_fds[1] = dup(STDOUT_FILENO);
+    shell->std_fds[2] = dup(STDERR_FILENO);
+	shell->here_doc_fd = 0;
 	shell->args_list = NULL;
-	shell->here_doc = NULL;
+	shell->here_doc = false;
 	shell->exit_status = EXIT_SUCCESS;
 	return (EXIT_SUCCESS);
 }

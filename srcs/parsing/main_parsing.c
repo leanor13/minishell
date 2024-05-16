@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 20:44:42 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/16 12:32:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,59 +14,64 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int	main_parsing(t_shell *shell)
+int main_parsing(t_shell *shell)
 {
-	char	*command = NULL;
-	t_arg	*lst;
-	t_arg	*lst1 = NULL;
-	t_arg	*lst1_1 = NULL;
+	char *command = NULL;
+	t_arg *lst;
+	int saved_stdin = shell->std_fds[0]; // Save the original STDIN_FILENO
 
 	lst = NULL;
-	lst1_1 = &(t_arg)
+	while (1)
 	{
-		.append = false,
-		.here_doc = false,
-		.in_file = NULL,
-		.out_file = NULL,
-		.next = NULL,
-	};
-	//(void)lst1_1;
-
-	lst1 = &(t_arg)
-	{
-		.append = false,
-		.here_doc = false,
-		.in_file = NULL,
-		.out_file = NULL,
-		.next = lst1_1,
-	};
-
-	//moved argc check to main flow
-	while (1)	
-	{
-		//free_stackfinal(&shell->args_list); // I moved this to clean before next run. If run is final we will clean separately
+		printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);
+		if (dup2(saved_stdin, STDIN_FILENO) == -1) // Reset STDIN_FILENO
+		{
+			perror("dup2");
+			return (EXIT_FAILURE);
+		}
 		lst = NULL;
 		command = NULL;
+		/* Do we need something like ??
+		if (isatty(STDIN_FILENO))
+				command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
+			else
+			{
+				char *line = get_next_line(STDIN_FILENO);
+				if (line == NULL)
+					end_of_input = true;
+				command = ft_strtrim(line, "\n");
+				free(line);
+			}
+		 */
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
-			ft_putstr_nl("exit", STDERR_FILENO);// IT IS NOT EXITING FOR THE FIRST TIME??
+			ft_putstr_nl("exit", STDERR_FILENO);
 			exit(0);
 		}
-		add_history(command); // it is not in the right space because we have to go back more times in exit
+		add_history(command);
 		lst = ft_lexer(command, lst);
+		t_arg *current = lst;
+		int	lst_num = 0;
+   	 	while (current)
+    	{	
+		// printf("%sOUTPUT\n", current->out_file);
+		// printf("%sHEREDOC\n", current->here_doc);
+			lst_num++;
+			printf("---NODE%i before parser---\n", lst_num);
+        	printf(" %s,", current->str);
+        	printf("type %i\n", current->type);
+        	current = current->next;
+   		}
 		lst = ft_parser(lst);
-		if (ft_strcmp(command, "test env") == 0)
-			print_env(shell->env_list);
-		else if (ft_strcmp(command, "pipe 1") == 0)
-			lst = lst1;
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
 			executor_main(shell);
 		free_stackfinal(&lst);
 		free(command);
-		//ft_block_signals(); TODO: implement in the end
-		//free(command); YOU DO NOT HAVE TO FREE IT READLINE FREEING EVERYTIME IT ONLY QUITS IF IT IS NULL
+
+		// Reset STDIN_FILENO to the original terminal input after command processing
 	}
+	//ft_close(saved_stdin); // Close the saved STDIN_FILENO descriptor
 	return (EXIT_SUCCESS);
 }

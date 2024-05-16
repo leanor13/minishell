@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/10 13:41:35 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:35:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ int	exec_command(t_arg *command, t_shell *shell)
 	pid = fork();
 	if (pid < 0)
 		return (perror("Error forking"), NEG_ERROR);
-	else if (pid == 0)
+	if (pid == 0)
 	{
+		//printf("child start\n");
 		dup_close(command->fd_in, STDIN_FILENO);
 		dup_close(command->fd_out, STDOUT_FILENO);
-		printf("command: %s, fd_in:%d, fd_out: %d\n", \
-			command->command, command->fd_in, command->fd_out);
+		//printf("command: %s, fd_in:%d, fd_out: %d\n", 
+		//	command->command, command->fd_in, command->fd_out);
+		//printf("child finish\n");
 		if (command->built_in_fn != NULL)
 		{
 			if (command->built_in_fn(shell, command) == EXIT_FAILURE)
@@ -40,7 +42,7 @@ int	exec_command(t_arg *command, t_shell *shell)
 		else if (execve(command->path, command->arguments, shell->env_2d) == -1)
 		{
 			perror("Execve error");
-			printf("path: %s", command->path);
+			//printf("path: %s", command->path);
 			exit (NEG_ERROR);
 		}
 	}
@@ -50,7 +52,7 @@ int	exec_command(t_arg *command, t_shell *shell)
 int exec_pipe(t_shell *shell)
 {
 	int fd_pipe[2];
-	int status;
+	int status = EXIT_SUCCESS;
 	t_arg *current;
 	int count;
 	int i;
@@ -65,38 +67,55 @@ int exec_pipe(t_shell *shell)
 	{
 		if (current->command)
 		{
-			if (!current->in_file)
+			if (!current->in_file_open || !current->in_file_open[0])
+			// && !(current->prev && current->prev->here_doc))
 				current->fd_in = fd_in;
-			printf("current->command: %s\n", current->command);
+			//else if (!current->in_file && current->prev && current->prev->here_doc)
+			//{
+			//	current->fd_in = STDIN_FILENO;
+			//	//printf("current heredoc\n");
+			//}
+			//printf("current->command: %s\n", current->command);
 			if (pipe(fd_pipe) == -1)
 			{
 				perror("Error creating pipe");
 				return (close_all_protected(), NEG_ERROR);
 			}
-			if (current->next == NULL && !current->out_file)
+			if (current->next == NULL && (!current->out_file || !current->out_file[0]))
 				current->fd_out = STDOUT_FILENO;
-			else if (!current->out_file)
+			else if (!current->out_file || !current->out_file[0])
 				current->fd_out = fd_pipe[FD_OUT];
-			printf("command %s: fd_out: %d\n", current->command, current->fd_out);
+			//printf("command %s: fd_out: %d\n", current->command, current->fd_out);
 			if (exec_command(current, shell) < 0)
 			{
+				//printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
 				ft_close(fd_pipe[FD_OUT]);
 				if (current->next != NULL)
+				{
+					//printf("closing fd_in: %d\n", fd_in);
 					ft_close(fd_in);
+				}
 				current = current->next;
 				continue;
 			}
-			if (!current->out_file)
+			if (!current->out_file || !current->out_file[0])
 			{
 				fd_in = fd_pipe[FD_IN];
 			}
+			//printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
 			ft_close(fd_pipe[FD_OUT]);
 		}
 		current = current->next;
 	}
+	//printf("closing fd_in: %d\n", fd_in);
 	ft_close(fd_in);
 	for (i = 0; i < count; i++)
-		waitpid(-1, &status, 0);
+    {
+        int child_status;
+        waitpid(-1, &child_status, 0);
+        if (WIFEXITED(child_status) && WEXITSTATUS(child_status) != EXIT_SUCCESS)
+            status = EXIT_FAILURE; // Added comment: Update status if any child process failed
+    }
 	return (status);
 }
 
@@ -146,54 +165,3 @@ int			open_file(char *file, int type)
 	return (fd);
 }
 
-/* 
-int	*handle_input(int ac, char **av)
-{
-	int	*fd_files;
-
-	fd_files = malloc(sizeof(int) * 2);
-	if (!fd_files)
-	{
-		perror("Failed to allocate memory for fd_files");
-		exit (EXIT_FAILURE);
-	}
-	if (ft_strcmp(av[1], "here_doc") == 0)
-		open_files_here_doc(ac, av, fd_files);
-	else
-	{
-		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
-		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_REWRITE);
-	}
-	if (fd_files[FD_OUT] < 0 || fd_files[FD_IN] < 0)
-	{
-		close_all_protected();
-		free(fd_files);
-		exit (EXIT_FAILURE);
-	}
-	return (fd_files);
-} */
-
-/* int	main_pipex(int ac, char **av, char **env)
-{
-	int			*fd_files;
-	t_command	*command_list;
-	int			status;
-
-	validate_params(ac, av);
-	fd_files = handle_input(ac, av);
-	if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
-		av ++;
-	command_list = build_command_list(ac, av, env);
-	if (!command_list)
-	{
-		close_all_protected();
-		return (free(fd_files), EXIT_FAILURE);
-	}
-	status = exec_pipe(command_list, fd_files, ac - 3, env);
-	close_all_protected();
-	free(fd_files);
-	free_command_list(command_list, ac - 3);
-	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
-		exit (EXIT_FAILURE);
-	exit (EXIT_SUCCESS);
-} */

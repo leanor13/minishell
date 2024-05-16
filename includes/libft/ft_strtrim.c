@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 18:00:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/26 12:19:17 by leanor           ###   ########.fr       */
+/*   Updated: 2024/05/14 15:46:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	char_in_str(const char *str, char c)
 {
+	if (!str)
+		return (0);
 	while (*str)
 	{
 		if (*str == c)
@@ -30,6 +32,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	res_len;
 	char	*res;
 
+	if (!s1 || !set)
+		return (NULL);
 	begin = 0;
 	end = ft_strlen(s1) - 1;
 	while (s1[begin] && char_in_str(set, s1[begin]))
