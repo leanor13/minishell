@@ -4,5 +4,6 @@
 		"*.hpp": "cpp",
 		"stdbool.h": "c",
 		"readline.h": "c"
-	}
+	},
+	"cmake.configureOnOpen": false
 }

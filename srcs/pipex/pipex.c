@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/16 13:48:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:19:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	exec_command(t_arg *command, t_shell *shell)
 		return (perror("Error forking"), NEG_ERROR);
 	if (pid == 0)
 	{
-		printf("child start\n");
+		//printf("child start\n");
 		dup_close(command->fd_in, STDIN_FILENO);
 		dup_close(command->fd_out, STDOUT_FILENO);
-		printf("command: %s, fd_in:%d, fd_out: %d\n", \
-			command->command, command->fd_in, command->fd_out);
-		printf("child finish\n");
+		//printf("command: %s, fd_in:%d, fd_out: %d\n", 
+		//	command->command, command->fd_in, command->fd_out);
+		//printf("child finish\n");
 		if (command->built_in_fn != NULL)
 		{
 			if (command->built_in_fn(shell, command) == EXIT_FAILURE)
@@ -42,7 +42,7 @@ int	exec_command(t_arg *command, t_shell *shell)
 		else if (execve(command->path, command->arguments, shell->env_2d) == -1)
 		{
 			perror("Execve error");
-			printf("path: %s", command->path);
+			//printf("path: %s", command->path);
 			exit (NEG_ERROR);
 		}
 	}
@@ -67,14 +67,15 @@ int exec_pipe(t_shell *shell)
 	{
 		if (current->command)
 		{
-			if (!current->in_file && !shell->here_doc)
+			if (!current->in_file)
+			// && !(current->prev && current->prev->here_doc))
 				current->fd_in = fd_in;
-			else if (!current->in_file && current->prev->here_doc)
-			{
-				current->fd_in = STDIN_FILENO;
-				printf("current heredoc\n");
-			}
-			printf("current->command: %s\n", current->command);
+			//else if (!current->in_file && current->prev && current->prev->here_doc)
+			//{
+			//	current->fd_in = STDIN_FILENO;
+			//	//printf("current heredoc\n");
+			//}
+			//printf("current->command: %s\n", current->command);
 			if (pipe(fd_pipe) == -1)
 			{
 				perror("Error creating pipe");
@@ -84,14 +85,14 @@ int exec_pipe(t_shell *shell)
 				current->fd_out = STDOUT_FILENO;
 			else if (!current->out_file)
 				current->fd_out = fd_pipe[FD_OUT];
-			printf("command %s: fd_out: %d\n", current->command, current->fd_out);
+			//printf("command %s: fd_out: %d\n", current->command, current->fd_out);
 			if (exec_command(current, shell) < 0)
 			{
-				printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
+				//printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
 				ft_close(fd_pipe[FD_OUT]);
 				if (current->next != NULL)
 				{
-					printf("closing fd_in: %d\n", fd_in);
+					//printf("closing fd_in: %d\n", fd_in);
 					ft_close(fd_in);
 				}
 				current = current->next;
@@ -101,12 +102,12 @@ int exec_pipe(t_shell *shell)
 			{
 				fd_in = fd_pipe[FD_IN];
 			}
-			printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
+			//printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
 			ft_close(fd_pipe[FD_OUT]);
 		}
 		current = current->next;
 	}
-	printf("closing fd_in: %d\n", fd_in);
+	//printf("closing fd_in: %d\n", fd_in);
 	ft_close(fd_in);
 	for (i = 0; i < count; i++)
     {
