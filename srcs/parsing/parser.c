@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/17 22:18:32 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/17 23:02:05 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,6 +384,16 @@ t_arg *ft_parser(t_arg *lst)
 				k++;
 				lst->type = GOING_OUTPUT;
 			}
+			else if(lst->type == DOLLAR_SIGN)
+			{
+				j++;
+				lst->type = GOING_ARG;
+			}
+			else if(lst->type == DOUBLE_PIPE)
+			{
+				ft_printsyntaxerror(&lst);
+				return(NULL);
+			}
 			else if(lst->type == PIPE)
 			{
 				if(lst->next == NULL)
@@ -398,11 +408,6 @@ t_arg *ft_parser(t_arg *lst)
 				}
 				lst = lst->next;
 				//break;
-			}
-			else if(lst->type == DOUBLE_PIPE)
-			{
-				ft_printsyntaxerror(&lst);
-				return(NULL);
 			}
 			lst = lst->next;
 		}

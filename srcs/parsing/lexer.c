@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/17 22:23:36 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/17 23:37:33 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,54 +31,6 @@ int	skip_space(char *str, int i)
 		return(0);
 	return(j);
 }
-
-int shellcommand_scan(t_arg **lst, char *str, int i)
-{
-	int j;
-	int type;
-
-	j = 0;
-	if(str[i] == '\0')
-		return(j);
-	if(str[i] == '>' && str[i + 1] != '>')
-	{
-		j = 1;
-		type = OUTPUT;
-	}
-	else if(str[i] == '<' && str[i + 1] != '<')
-	{
-		j = 1;
-		type = INPUT;
-	}
-	else if(str[i] == '|' && str[i + 1] != '|')
-	{
-		j = 1;
-		type = PIPE;
-	}
-	else if(str[i] == '|' && str[i + 1] == '|')
-	{
-		j = 2;
-		type = DOUBLE_PIPE;
-	}
-	else if(str[i] == '<' && str[i + 1] == '<')
-	{
-		j = 2;
-		type = HEREDOC;
-	}
-	else if(str[i] == '>' && str[i + 1] == '>')
-	{
-		j = 2;
-		type = APPEND;
-	}
-	if(j == 1 || j == 2)	
-	{
-		append_node(lst, str, i, j, type);
-		return (j);
-	}
-	else
-		return(0);
-}
-
 int	find_quote(t_sign **lst, char *str, int i)
 {
 	if ((*lst)->quote_type == FIRST_DOUBLE_QUOTE)
@@ -165,6 +117,66 @@ int	handle_quotestring(t_arg **lst, t_sign **quote, char *str, int i)
 	return(0);
 }
 
+int shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote)
+{
+	int j;
+	int	h;
+	int type;
+
+	j = 0;
+	if(str[i] == '\0')
+		return(j);
+	if(str[i] == '>' && str[i + 1] != '>')
+	{
+		j = 1;
+		type = OUTPUT;
+	}
+	else if(str[i] == '<' && str[i + 1] != '<')
+	{
+		j = 1;
+		type = INPUT;
+	}
+	else if(str[i] == '|' && str[i + 1] != '|')
+	{
+		j = 1;
+		type = PIPE;
+	}
+	else if(str[i] == '|' && str[i + 1] == '|')
+	{
+		j = 2;
+		type = DOUBLE_PIPE;
+	}
+	else if(str[i] == '<' && str[i + 1] == '<')
+	{
+		j = 2;
+		type = HEREDOC;
+	}
+	else if(str[i] == '>' && str[i + 1] == '>')
+	{
+		j = 2;
+		type = APPEND;
+	}
+	else if(str[i] == '$')
+	{
+		h = i;
+		while(str[h] != ' ' && str[h])
+		{
+			if(find_quote(quote, str, h))
+		  		break ;
+			h++;
+			j++;
+		}
+		type = DOLLAR_SIGN;
+	}
+	if(j > 0)	
+	{
+		append_node(lst, str, i, j, type);
+		return (j);
+	}
+	else
+		return(0);
+}
+
 int arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 {
 	int j;
@@ -177,7 +189,7 @@ int arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	if(str[i] == '\0')
 		return(j);
 	if(str[i] == '|' || str[i] == '<' || str[i] == '>')
-		return(shellcommand_scan(lst, str, i));
+		return(shellcommand_scan(lst, str, i, quote));
 	while(str[i])
 	{
 		if((*quote)->quote_type == 0)
@@ -195,7 +207,8 @@ int arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 		i++;
 		j++;
 	}
-	append_node(lst, str, start, j, type);
+	if(j > 0) //it is new
+		append_node(lst, str, start, j, type);
 	return (j);
 }
 
@@ -216,8 +229,7 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	{
 		i += skip_space(str, i);// everytime when it is a space
 		i += handle_quotestring(&lst, &quote, str, i);
-		
-		i += shellcommand_scan(&lst, str, i);
+		i += shellcommand_scan(&lst, str, i, &quote);
 		if(quote->quote_type == 0)
 			i += skip_space(str, i);
 		i += arg_scan(&lst, str, i, &quote);
