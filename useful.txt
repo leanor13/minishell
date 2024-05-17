@@ -4,6 +4,14 @@ plan to do:
 3. create a free_shell function
 
 
+executor leftovers:
+1. handle memory leaks
+2. handle open fds 
+3. case with here_doc << << << 
+4. try to fix cat /dev/random | head
+5. handle >> mix with > case (parser change needs to go first)
+6.
+
 tests:
 
 1. ls -l | ls > out6 | wc -l - now not working (we need to investigate)
@@ -13,8 +21,9 @@ tests:
 5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
 6. check case when both here_doc and input file (can it be?). Maybe parser can write here_doc to input when it's the case?
 
-executor failures:0
-1. 
+executor failures:
+1. cat /dev/random | head
+2. 
 
 
 parser failures:
