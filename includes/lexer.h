@@ -98,6 +98,7 @@ typedef enum e_type
 	GOING_HEREDOC,
 	GOING_INPUT,
 	GOING_OUTPUT,
+	DOUBLE_PIPE,
 	//DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
@@ -109,5 +110,6 @@ void	append_node(t_arg **lst, char *str, int end, int len, int value);
 t_arg	*ft_parser(t_arg *lst);
 void	free_stackfinal(t_arg **lst);
 t_arg	*ft_stacklast(t_arg *lst);
+void	ft_printsyntaxerror(t_arg **lst);
 
 #endif
