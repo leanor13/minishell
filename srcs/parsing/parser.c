@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/17 16:51:19 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:01:00 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,22 @@ char	**ft_strjoinline_input(t_arg *lst, int i)
 	return(s1);
 }
 
+void	ft_printsyntaxerror(t_arg **lst)
+{
+	if((*lst)->next->type == HEREDOC)
+		ft_printf("minishell: syntax error near unexpected token `<<'\n");
+	else if((*lst)->next->type == OUTPUT)
+		ft_printf("minishell: syntax error near unexpected token `>'\n");
+	else if((*lst)->next->type == INPUT)
+		ft_printf("minishell: syntax error near unexpected token `<'\n");
+	else if((*lst)->next->type == APPEND)
+		ft_printf("minishell: syntax error near unexpected token `>>'\n");
+	else
+		ft_printf("minishell: syntax error near unexpected token `|'\n");
+	free_stackfinal(lst);
+	//	free(command);
+}
+
 t_arg *ft_parser(t_arg *lst)
 {
 	t_arg	*final;
@@ -303,11 +319,11 @@ t_arg *ft_parser(t_arg *lst)
 					lst = lst->next;
 					break;
 				}
-				// if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
-				// {
-				// 	ft_printf("HEREDOC SYNTAX ERROR\n");
-				// 	exit(1);
-				// }
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printsyntaxerror(&lst);
+					break ;
+				}				
 				node->in_file = ft_strdup("here_doc");
 				lst = lst->next;
 				i++;
@@ -325,11 +341,11 @@ t_arg *ft_parser(t_arg *lst)
 					lst = lst->next;
 					break;
 				}
-				// if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
-				// {
-				// 	ft_printf("OUTPUT SYNTAX ERROR\n");
-				// 	exit(1);
-				// }
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printsyntaxerror(&lst);
+					break ;
+				}
 				lst = lst->next;
 				k++;
 				lst->type = GOING_OUTPUT;
@@ -341,11 +357,11 @@ t_arg *ft_parser(t_arg *lst)
 					lst = lst->next;
 					break;
 				}
-				// if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
-				// {
-				// 	ft_printf("INPUT SYNTAX ERROR\n");
-				// 	exit(1);
-				// }
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printsyntaxerror(&lst);
+					break ;
+				}
 				lst = lst->next;
 				l++;
 				lst->type = GOING_INPUT;
@@ -357,11 +373,11 @@ t_arg *ft_parser(t_arg *lst)
 					lst = lst->next;
 					break;
 				}
-				// if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
-				// {
-				// 	ft_printf("APPEND SYNTAX ERROR\n");
-				// 	exit(1);
-				// }
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printsyntaxerror(&lst);
+					break ;
+				}
 				node->append = true;
 				lst = lst->next;
 				k++;
@@ -369,17 +385,17 @@ t_arg *ft_parser(t_arg *lst)
 			}
 			else if(lst->type == PIPE)
 			{
-				// if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
-				// {
-				// 	ft_printf("PIPEX SYNTAX ERROR\n");
-					
-				// 	exit(1);
-				// }
-				lst = lst->next;
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printsyntaxerror(&lst);
+					break ;
+				}				lst = lst->next;
 				break;
 			}
 			lst = lst->next;
 		}
+		if(!lst)
+			return(NULL);
 		node_num++;
 		printf("---NODE%i---\n", node_num);
 		if(i != 0)
