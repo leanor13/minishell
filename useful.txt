@@ -28,7 +28,7 @@ executor failures:
 
 parser failures:
 1. touch "Hello" should remove quotes (now - it creates file with quotes)
-3. put the << and just press enter (now - seg fault)
+3. put the << < and just press enter (now - exit but shouldn't)
 4. ls | awk '{print NL}' (now - unexpected character ''', expected: cmd2->args=[awk, {print NL}])
 5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
 

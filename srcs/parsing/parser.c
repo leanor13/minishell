@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/15 18:42:54 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:45:40 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ static char	*put_word(char *s)
 	int		len;
 
 	len = 0;
-	if (!s)
-		ft_putendl_fd("null", 1);
 	while (s[len])
 		len++;
 	word = ft_substr(s, 0, len);
@@ -305,6 +303,11 @@ t_arg *ft_parser(t_arg *lst)
 					lst = lst->next;
 					break;
 				}
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printf("HEREDOC SYNTAX ERROR\n");
+					exit(1);
+				}
 				node->in_file = ft_strdup("here_doc");
 				lst = lst->next;
 				i++;
@@ -322,6 +325,11 @@ t_arg *ft_parser(t_arg *lst)
 					lst = lst->next;
 					break;
 				}
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printf("OUTPUT SYNTAX ERROR\n");
+					exit(1);
+				}
 				lst = lst->next;
 				k++;
 				lst->type = GOING_OUTPUT;
@@ -332,6 +340,11 @@ t_arg *ft_parser(t_arg *lst)
 				{
 					lst = lst->next;
 					break;
+				}
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printf("INPUT SYNTAX ERROR\n");
+					exit(1);
 				}
 				lst = lst->next;
 				l++;
@@ -344,6 +357,11 @@ t_arg *ft_parser(t_arg *lst)
 					lst = lst->next;
 					break;
 				}
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printf("APPEND SYNTAX ERROR\n");
+					exit(1);
+				}
 				node->append = true;
 				lst = lst->next;
 				k++;
@@ -351,6 +369,12 @@ t_arg *ft_parser(t_arg *lst)
 			}
 			else if(lst->type == PIPE)
 			{
+				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				{
+					ft_printf("PIPEX SYNTAX ERROR\n");
+					
+					exit(1);
+				}
 				lst = lst->next;
 				break;
 			}
