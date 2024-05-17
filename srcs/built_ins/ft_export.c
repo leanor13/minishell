@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:54:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:36:50 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	is_valid_varname(const char *var_name)
 	return (1);
 }
 
-int	ft_export(t_shell *shell, t_arg *command)
+int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 {
 	int		i = 1;
-	char	*equal;
-	char	*var_name;
-	char	*var_value;
-	char 	**env = shell->env_2d;
-	char 	**args = command->arguments; 
+	//char	*equal;
+	//char	*var_name;
+	//char	*var_value;
+	//char 	**env = shell->env_2d;
+	char 	**args = command->arguments; //here is the args
 	t_env	*env_lst = shell->env_list;
 
 	if (args[i] == NULL)
@@ -58,30 +58,11 @@ int	ft_export(t_shell *shell, t_arg *command)
 		}
 		return (EXIT_SUCCESS);
 	}
-	while (args[i] != NULL)
+	while (args[i] != NULL)//doublechar
 	{
-		if (args[i][0] == '\0')
-		{
-			i++;
-			continue;
-		}
-		equal = ft_strchr(args[i], '=');
-		var_name = args[i];
-		if (equal != NULL)
-		{
-			*equal = '\0';
-			var_value = equal + 1;
-		}
-		else
-			var_value = ft_getenv(env, var_name);
-		if (!is_valid_varname(var_name))
-		{
-			ft_putstr_nl("export: not a valid identifier", STDERR_FILENO);
-			return (EXIT_FAILURE);
-		}
-		if (ft_setenv(&env, var_name, var_value) != EXIT_SUCCESS)
-			return (EXIT_FAILURE);
-		i++;
+		//if() use variabl name
+		return (1);// fix this
+		//TINA you have to do this
 	}
 	return (EXIT_SUCCESS);
 }

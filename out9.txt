@@ -1,0 +1,13 @@
+total 124
+-rw-r--r-- 1 thuy-ngu 2023_lisboa      0 mai 17 16:47 Hello
+drwxr-xr-x 3 thuy-ngu 2023_lisboa     71 mai 17 16:26 includes
+-rw-r--r-- 1 thuy-ngu 2023_lisboa      0 mai 17 16:46 list
+-rwxr-xr-x 1 thuy-ngu 2023_lisboa   2528 mai 17 16:26 Makefile
+-rwxr-xr-x 1 thuy-ngu 2023_lisboa 107536 mai 17 16:26 minishell
+drwxr-xr-x 8 thuy-ngu 2023_lisboa     99 mai 17 16:25 objs
+-rw-r--r-- 1 thuy-ngu 2023_lisboa      0 mai 17 16:47 out7.txt
+-rw-r--r-- 1 thuy-ngu 2023_lisboa      0 mai 17 16:47 out9.txt
+-rw-r--r-- 1 thuy-ngu 2023_lisboa      0 mai 17 16:47 out.txt
+drwxr-xr-x 8 thuy-ngu 2023_lisboa     99 mai 17 16:21 srcs
+-rw-r--r-- 1 thuy-ngu 2023_lisboa   4405 mai 17 16:26 useful.txt
+-rw-r--r-- 1 thuy-ngu 2023_lisboa    155 mai 17 16:21 valgrind.supp

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:39:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:41:10 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//TODO check with valgrind what happens if this is in the middle of the pipe
+//TODO check with valgrind what happens if this is in the middle of the pipe - only exit if this is first command in pipe. if not - ignore
 
 int	ft_exit(t_shell *shell, t_arg *command)
 {
