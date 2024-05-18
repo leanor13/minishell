@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/16 12:32:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/18 14:05:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int main_parsing(t_shell *shell)
 		if (command == NULL)
 		{
 			ft_putstr_nl("exit", STDERR_FILENO);
+			free_shell(shell);
 			exit(0);
 		}
 		add_history(command);
@@ -69,6 +70,7 @@ int main_parsing(t_shell *shell)
 			executor_main(shell);
 		free_stackfinal(&lst);
 		free(command);
+		close_all_protected(shell);
 
 		// Reset STDIN_FILENO to the original terminal input after command processing
 	}

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/16 15:35:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/18 13:41:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int exec_pipe(t_shell *shell)
 			if (pipe(fd_pipe) == -1)
 			{
 				perror("Error creating pipe");
-				return (close_all_protected(), NEG_ERROR);
+				return (close_all_protected(shell), NEG_ERROR);
 			}
 			if (current->next == NULL && (!current->out_file || !current->out_file[0]))
 				current->fd_out = STDOUT_FILENO;
