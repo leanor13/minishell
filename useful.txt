@@ -14,12 +14,8 @@ executor leftovers:
 
 tests:
 
-1. ls -l | ls > out6 | wc -l - now not working (we need to investigate)
-2. touch "Hello" should remove quotes (now - it creates file with quotes)
-3. put the << and just press enter (now - seg fault)
-4. ls | awk '{print $1}' (now - unexpected character ''')
-5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
-6. check case when both here_doc and input file (can it be?). Maybe parser can write here_doc to input when it's the case?
+1. ls -l | ls > out6 | wc -l - now not working (works)
+6. check case when both here_doc and input file (can it be?). Now different from bash
 
 executor failures:
 1. cat /dev/random | head
@@ -27,10 +23,10 @@ executor failures:
 
 
 parser failures:
-1. touch "Hello" should remove quotes (now - it creates file with quotes)
-3. put the << < and just press enter (now - exit but shouldn't)
-4. ls | awk '{print NL}' (now - unexpected character ''', expected: cmd2->args=[awk, {print NL}])
-5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
+1. touch "Hello" should remove quotes (works)
+3. put the << < and just press enter (works)
+4. ls | awk '{print NL}' (MAY 18 - in one args the whole)
+5. echo "Hello I am" (works)
 
 build-in failures:
 1. cd - not functioning

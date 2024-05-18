@@ -1,3 +1,4 @@
+
 NAME	= minishell
 
 SRCS	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))

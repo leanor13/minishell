@@ -6,7 +6,6 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 13:28:51 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +80,8 @@ static char	*put_word(char *s)
 	int		len;
 
 	len = 0;
+	if (!s)
+		return (NULL);
 	while (s[len])
 		len++;
 	word = ft_substr(s, 0, len);
@@ -99,44 +100,51 @@ void print_string(const char *str) {
     printf("\n");
 }
 
-char	**ft_strjoinline_args(t_arg *lst, int i)
+char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 {
 	char **s1;
-
+	char	*var_value;
 	s1 = (char **)malloc((i + 1) * sizeof(char *));
 	if (!s1)
 		return (NULL);
 	int count = 0;
+	
 	while (lst && count < i)
 	{
 		if(lst->type == GOING_ARG)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
-			printf("Content of args s1[%d]: ", count);
-            print_string(s1[count]);
-			count++;
+			// printf("Content of args s1[%d]: ", count);
+            // print_string(s1[count]);
+			// count++;
 		}
+		if(lst->type == GOING_DOLLAR_SIGN)
+		{
+			t_env *list = env_find_var(shell->env_list, &lst->str[1]);
+			if(list)
+				var_value = list->var_value;
+			if(!list)
+				break;
+			//var_value = env_find_var(shell->env_list, &lst->str[1])->var_value;
+			//if(var_value);
+			//ft_putstr_fd(var_value, 0);
+				//if(!var_value)
+			if(var_value && var_value[0])
+				s1[count] = put_word(var_value);
+			// printf("Content of args s1[%d]: ", count);
+			// // if(var_value && var_value[0])
+			// // 	print_string(s1[count]);
+			//count++;
+		}
+		printf("Content of args s1[%d]: ", count);
+        print_string(s1[count]);
+		count++;
 		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
 		// 	return (free_res(s1, count), NULL);
 		lst = lst->next;
 	}
 	s1[count] = NULL;
-	// char **arg_str;
- 	// t_arg *current = final;
-	// arg_str = current->args_doublechar;
-	// int y = 0;
-	// int x = 0;
-	// while (arg_str[y] != NULL)
-	// {
-	// 	x = 0;
-	// 	 while (arg_str[y][x] != '\0')
-	// 	{
-	// 		printf("%c\n", arg_str[y][x]);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
 	return(s1);
 }
 
@@ -280,7 +288,8 @@ void	ft_printsyntaxerror(t_arg **lst)
 	free_stackfinal(lst);
 }
 
-t_arg *ft_parser(t_arg *lst)
+t_arg *ft_parser(t_arg *lst, t_shell *shell)
+
 {
 	t_arg	*final;
 	t_arg	*node;
@@ -385,9 +394,10 @@ t_arg *ft_parser(t_arg *lst)
 				lst->type = GOING_OUTPUT;
 			}
 			else if(lst->type == DOLLAR_SIGN)
-			{
+			{	
+		
 				j++;
-				lst->type = GOING_ARG;
+				lst->type = GOING_DOLLAR_SIGN;
 			}
 			else if(lst->type == DOUBLE_PIPE)
 			{
@@ -416,7 +426,7 @@ t_arg *ft_parser(t_arg *lst)
 		if(i != 0)
 			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
 		if(j != 0)
-			node->arguments = ft_strjoinline_args(head_arg, j);
+			node->arguments = ft_strjoinline_args(head_arg, j, shell);
 		if(k != 0)
 			node->out_file = ft_strjoinline_output(head_output, k);
 		if(l != 0)
