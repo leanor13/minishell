@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 15:14:40 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:12:54 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ void print_string(const char *str) {
     printf("\n");
 }
 
-char	**ft_strjoinline_args(t_arg *lst, int i)
+char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 {
 	char **s1;
-
+	char	*var_value;
 	s1 = (char **)malloc((i + 1) * sizeof(char *));
 	if (!s1)
 		return (NULL);
@@ -120,8 +120,9 @@ char	**ft_strjoinline_args(t_arg *lst, int i)
 		}
 		if(lst->type == GOING_DOLLAR_SIGN)
 		{
-			lst->str = env_find_var(env_lst, arg + 1)->var_value;
-			s1[count] = put_word(lst->str);
+				var_value = env_find_var(shell->env_list, &lst->str[1])->var_value;
+				ft_putstr_fd(var_value, 1);
+			s1[count] = put_word(var_value);
 			//printf("ENTER STRJOINLINE ARGS\n");
 			printf("Content of args s1[%d]: ", count);
             print_string(s1[count]);
@@ -427,7 +428,7 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 		if(i != 0)
 			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
 		if(j != 0)
-			node->arguments = ft_strjoinline_args(head_arg, j);
+			node->arguments = ft_strjoinline_args(head_arg, j, shell);
 		if(k != 0)
 			node->out_file = ft_strjoinline_output(head_output, k);
 		if(l != 0)
