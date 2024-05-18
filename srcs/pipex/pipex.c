@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 13:41:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/18 15:48:40 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	exec_command(t_arg *command, t_shell *shell)
 			//printf("path: %s", command->path);
 			exit (NEG_ERROR);
 		}
+		close_all_unprotected();
 	}
 	return (pid);
 }
@@ -57,7 +58,7 @@ int exec_pipe(t_shell *shell)
 	int count;
 	int i;
 	t_arg *c_list = shell->args_list;
-	int fd_in = 0;
+	int fd_in = STDIN_FILENO;
 
 	if (!c_list)
 		return (NEG_ERROR);
@@ -68,14 +69,7 @@ int exec_pipe(t_shell *shell)
 		if (current->command)
 		{
 			if (!current->in_file_open || !current->in_file_open[0])
-			// && !(current->prev && current->prev->here_doc))
 				current->fd_in = fd_in;
-			//else if (!current->in_file && current->prev && current->prev->here_doc)
-			//{
-			//	current->fd_in = STDIN_FILENO;
-			//	//printf("current heredoc\n");
-			//}
-			//printf("current->command: %s\n", current->command);
 			if (pipe(fd_pipe) == -1)
 			{
 				perror("Error creating pipe");
@@ -85,14 +79,11 @@ int exec_pipe(t_shell *shell)
 				current->fd_out = STDOUT_FILENO;
 			else if (!current->out_file || !current->out_file[0])
 				current->fd_out = fd_pipe[FD_OUT];
-			//printf("command %s: fd_out: %d\n", current->command, current->fd_out);
 			if (exec_command(current, shell) < 0)
 			{
-				//printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
 				ft_close(fd_pipe[FD_OUT]);
 				if (current->next != NULL)
 				{
-					//printf("closing fd_in: %d\n", fd_in);
 					ft_close(fd_in);
 				}
 				current = current->next;
@@ -102,20 +93,19 @@ int exec_pipe(t_shell *shell)
 			{
 				fd_in = fd_pipe[FD_IN];
 			}
-			//printf("closing fd_pipe[FD_OUT]: %d\n", fd_pipe[FD_OUT]);
 			ft_close(fd_pipe[FD_OUT]);
 		}
 		current = current->next;
 	}
-	//printf("closing fd_in: %d\n", fd_in);
 	ft_close(fd_in);
 	for (i = 0; i < count; i++)
-    {
-        int child_status;
-        waitpid(-1, &child_status, 0);
-        if (WIFEXITED(child_status) && WEXITSTATUS(child_status) != EXIT_SUCCESS)
-            status = EXIT_FAILURE; // Added comment: Update status if any child process failed
-    }
+	{
+		int child_status;
+		waitpid(-1, &child_status, 0);
+		if (WIFEXITED(child_status) && WEXITSTATUS(child_status) != EXIT_SUCCESS)
+			status = EXIT_FAILURE;
+		shell->exit_status = child_status;
+	}
 	return (status);
 }
 

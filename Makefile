@@ -80,6 +80,6 @@ re: fclean all
 # 		valgrind --suppressions=valgrind.supp ./parsing
 
 valgrind:
-		valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all ./minishell
+		valgrind --suppressions=valgrind.supp --trace-children=yes  --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all ./minishell
 
 .PHONY: all fclean clean re valgrind parsing
