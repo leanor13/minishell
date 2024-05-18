@@ -98,6 +98,8 @@ typedef enum e_type
 	GOING_HEREDOC,
 	GOING_INPUT,
 	GOING_OUTPUT,
+	DOUBLE_PIPE,
+	DOLLAR_SIGN,
 	//DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
