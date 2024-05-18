@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 13:28:51 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/18 15:14:40 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,20 @@ char	**ft_strjoinline_args(t_arg *lst, int i)
 	if (!s1)
 		return (NULL);
 	int count = 0;
+	
 	while (lst && count < i)
 	{
 		if(lst->type == GOING_ARG)
 		{
+			s1[count] = put_word(lst->str);
+			//printf("ENTER STRJOINLINE ARGS\n");
+			printf("Content of args s1[%d]: ", count);
+            print_string(s1[count]);
+			count++;
+		}
+		if(lst->type == GOING_DOLLAR_SIGN)
+		{
+			lst->str = env_find_var(env_lst, arg + 1)->var_value;
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
 			printf("Content of args s1[%d]: ", count);
@@ -280,7 +290,7 @@ void	ft_printsyntaxerror(t_arg **lst)
 	free_stackfinal(lst);
 }
 
-t_arg *ft_parser(t_arg *lst)
+t_arg *ft_parser(t_arg *lst, t_shell *shell)
 {
 	t_arg	*final;
 	t_arg	*node;
@@ -385,9 +395,10 @@ t_arg *ft_parser(t_arg *lst)
 				lst->type = GOING_OUTPUT;
 			}
 			else if(lst->type == DOLLAR_SIGN)
-			{
+			{	
+		
 				j++;
-				lst->type = GOING_ARG;
+				lst->type = GOING_DOLLAR_SIGN;
 			}
 			else if(lst->type == DOUBLE_PIPE)
 			{

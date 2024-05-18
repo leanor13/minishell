@@ -100,6 +100,7 @@ typedef enum e_type
 	GOING_OUTPUT,
 	DOUBLE_PIPE,
 	DOLLAR_SIGN,
+	GOING_DOLLAR_SIGN,
 	//DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
@@ -108,7 +109,7 @@ typedef enum e_type
 
 t_arg	*ft_lexer(char *str, t_arg *lst);
 void	append_node(t_arg **lst, char *str, int end, int len, int value);
-t_arg	*ft_parser(t_arg *lst);
+t_arg *ft_parser(t_arg *lst, t_shell *shell);
 void	free_stackfinal(t_arg **lst);
 t_arg	*ft_stacklast(t_arg *lst);
 void	ft_printsyntaxerror(t_arg **lst);

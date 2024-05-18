@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/16 12:32:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/18 15:13:44 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int main_parsing(t_shell *shell)
         	printf("type %i\n", current->type);
         	current = current->next;
    		}
-		lst = ft_parser(lst);
+		lst = ft_parser(lst, shell);
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
 			executor_main(shell);
