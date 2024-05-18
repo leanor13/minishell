@@ -3,6 +3,7 @@ plan to do:
 2. parse and save **env into that shell struct
 3. create a free_shell function
 
+Heredoc with ctrl-C
 
 executor leftovers:
 1. handle memory leaks

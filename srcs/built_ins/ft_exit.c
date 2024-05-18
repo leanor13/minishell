@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:39:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/18 17:39:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_exit(t_shell *shell, t_arg *command)
 			exit_status = 0;
 		if (exit_status > 255)
 			exit_status = 255;
+		// TODO: probably need to wrap around - so do it unsigned int or something like that
 	}
 	shell->exit_status = exit_status;
     return (exit_status);

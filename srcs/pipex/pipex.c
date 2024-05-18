@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 15:48:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/18 16:58:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int exec_pipe(t_shell *shell)
 	int status = EXIT_SUCCESS;
 	t_arg *current;
 	int count;
-	int i;
+	//int i;
 	t_arg *c_list = shell->args_list;
 	int fd_in = STDIN_FILENO;
 
@@ -79,6 +79,7 @@ int exec_pipe(t_shell *shell)
 				current->fd_out = STDOUT_FILENO;
 			else if (!current->out_file || !current->out_file[0])
 				current->fd_out = fd_pipe[FD_OUT];
+			printf("command: %s, fd_in: %d, fd_out: %d, pipe_in: %d, pipe_out: %d\n", current->command, current->fd_in, current->fd_out, fd_pipe[0], fd_pipe[1]);
 			if (exec_command(current, shell) < 0)
 			{
 				ft_close(fd_pipe[FD_OUT]);
@@ -98,14 +99,19 @@ int exec_pipe(t_shell *shell)
 		current = current->next;
 	}
 	ft_close(fd_in);
-	for (i = 0; i < count; i++)
+	while (count > 0)
+	{
+		wait(&status);
+		count --;
+	}
+	/* for (i = 0; i < count; i++)
 	{
 		int child_status;
 		waitpid(-1, &child_status, 0);
 		if (WIFEXITED(child_status) && WEXITSTATUS(child_status) != EXIT_SUCCESS)
 			status = EXIT_FAILURE;
 		shell->exit_status = child_status;
-	}
+	} */
 	return (status);
 }
 
