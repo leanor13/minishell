@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/17 23:02:05 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/18 13:28:51 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,7 +407,7 @@ t_arg *ft_parser(t_arg *lst)
 					return(NULL);
 				}
 				lst = lst->next;
-				//break;
+				break;
 			}
 			lst = lst->next;
 		}
