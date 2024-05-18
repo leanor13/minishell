@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_helper_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:55:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 10:59:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/18 16:30:59 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_env	*env_find_var(t_env *env_lst, char *var_name)
 	{
 		if (ft_strcmp(env_lst->var_name, var_name) == 0)
 			return (env_lst);
+		// else
+		// 	return(NULL);
 		env_lst = env_lst->next;
 	}
 	return (NULL);

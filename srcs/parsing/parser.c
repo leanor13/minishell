@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 16:12:54 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:04:28 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static char	*put_word(char *s)
 	int		len;
 
 	len = 0;
+	if (!s)
+		return (NULL);
 	while (s[len])
 		len++;
 	word = ft_substr(s, 0, len);
@@ -114,40 +116,36 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
-			printf("Content of args s1[%d]: ", count);
-            print_string(s1[count]);
-			count++;
+			// printf("Content of args s1[%d]: ", count);
+            // print_string(s1[count]);
+			// count++;
 		}
 		if(lst->type == GOING_DOLLAR_SIGN)
 		{
-				var_value = env_find_var(shell->env_list, &lst->str[1])->var_value;
-				ft_putstr_fd(var_value, 1);
-			s1[count] = put_word(var_value);
-			//printf("ENTER STRJOINLINE ARGS\n");
-			printf("Content of args s1[%d]: ", count);
-            print_string(s1[count]);
-			count++;
+			t_env *list = env_find_var(shell->env_list, &lst->str[1]);
+			if(list)
+				var_value = list->var_value;
+			if(!list)
+				break;
+			//var_value = env_find_var(shell->env_list, &lst->str[1])->var_value;
+			//if(var_value);
+			//ft_putstr_fd(var_value, 0);
+				//if(!var_value)
+			if(var_value && var_value[0])
+				s1[count] = put_word(var_value);
+			// printf("Content of args s1[%d]: ", count);
+			// // if(var_value && var_value[0])
+			// // 	print_string(s1[count]);
+			//count++;
 		}
+		printf("Content of args s1[%d]: ", count);
+        print_string(s1[count]);
+		count++;
 		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
 		// 	return (free_res(s1, count), NULL);
 		lst = lst->next;
 	}
 	s1[count] = NULL;
-	// char **arg_str;
- 	// t_arg *current = final;
-	// arg_str = current->args_doublechar;
-	// int y = 0;
-	// int x = 0;
-	// while (arg_str[y] != NULL)
-	// {
-	// 	x = 0;
-	// 	 while (arg_str[y][x] != '\0')
-	// 	{
-	// 		printf("%c\n", arg_str[y][x]);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
 	return(s1);
 }
 
