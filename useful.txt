@@ -2,24 +2,41 @@ plan to do:
 1. create a Shell struct to store some values
 2. parse and save **env into that shell struct
 3. create a free_shell function
+4. handle $, echo $?, expr $? + $?
+5. cat | cat | cat | ls
+6. expr 4 \* 2
+7. ask seombody what it means: Check if multiple tries of the same redirections fail.
 
+export a=5
+export b=10
+result=$(expr $a + $b)
+echo $result
+
+Heredoc with ctrl-C
 
 executor leftovers:
-1. handle memory leaks
 2. handle open fds 
+3. cat | cat | cat
+1. handle memory leaks
+
 3. case with here_doc << << << 
+3-1. case with multiple here_docs in a pipe
 4. try to fix cat /dev/random | head
 5. handle >> mix with > case (parser change needs to go first)
 6.
 
 tests:
 
-1. ls -l | ls > out6 | wc -l - now not working (works)
-6. check case when both here_doc and input file (can it be?). Now different from bash
+1. ls -l | ls > out6 | wc -l - now not working (we need to investigate)
+2. touch "Hello" should remove quotes (now - it creates file with quotes)
+3. put the << and just press enter (now - seg fault)
+4. ls | awk '{print $1}' (now - unexpected character ''')
+5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
+6. check case when both here_doc and input file (can it be?). Maybe parser can write here_doc to input when it's the case?
 
 executor failures:
 1. cat /dev/random | head
-2. 
+2. heredoc after first cmd not working
 
 
 parser failures:
