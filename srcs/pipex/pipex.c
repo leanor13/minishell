@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 16:58:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/19 15:07:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int exec_pipe(t_shell *shell)
 	{
 		if (current->command)
 		{
+			printf("command: %s\n", current->command);
 			if (!current->in_file_open || !current->in_file_open[0])
 				current->fd_in = fd_in;
 			if (pipe(fd_pipe) == -1)

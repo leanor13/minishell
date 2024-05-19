@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 14:05:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/19 15:05:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main_parsing(t_shell *shell)
         	printf("type %i\n", current->type);
         	current = current->next;
    		}
-		lst = ft_parser(lst);
+		lst = ft_parser(lst, shell);
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
 			executor_main(shell);
