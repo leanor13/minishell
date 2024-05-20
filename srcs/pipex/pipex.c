@@ -6,15 +6,15 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/19 15:07:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/20 11:24:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	exec_command(t_arg *command, t_shell *shell)
+int exec_command(t_arg *command, t_shell *shell)
 {
-	pid_t	pid;
+	pid_t pid;
 
 	if (!command)
 		return (NEG_ERROR);
@@ -23,28 +23,30 @@ int	exec_command(t_arg *command, t_shell *shell)
 		return (perror("Error forking"), NEG_ERROR);
 	if (pid == 0)
 	{
-		//printf("child start\n");
+		// Child process
+		printf("Child process for command: %s\n", command->command);
+		printf("Child dup_close fd_in: %d -> STDIN, fd_out: %d -> STDOUT\n", command->fd_in, command->fd_out);
+		
+		// Redirect input and output
 		dup_close(command->fd_in, STDIN_FILENO);
 		dup_close(command->fd_out, STDOUT_FILENO);
-		//printf("command: %s, fd_in:%d, fd_out: %d\n", 
-		//	command->command, command->fd_in, command->fd_out);
-		//printf("child finish\n");
+
 		if (command->built_in_fn != NULL)
 		{
 			if (command->built_in_fn(shell, command) == EXIT_FAILURE)
 			{
-				ft_putstr_nl("Built-in error", STDERR_FILENO);
-				exit (NEG_ERROR);
+				fprintf(stderr, "Built-in error\n");
+				exit(NEG_ERROR);
 			}
 			else
-				exit (EXIT_SUCCESS);
+				exit(EXIT_SUCCESS);
 		}
 		else if (execve(command->path, command->arguments, shell->env_2d) == -1)
 		{
 			perror("Execve error");
-			//printf("path: %s", command->path);
-			exit (NEG_ERROR);
+			exit(NEG_ERROR);
 		}
+		// Close all file descriptors not used by the child
 		close_all_unprotected();
 	}
 	return (pid);
@@ -56,7 +58,6 @@ int exec_pipe(t_shell *shell)
 	int status = EXIT_SUCCESS;
 	t_arg *current;
 	int count;
-	//int i;
 	t_arg *c_list = shell->args_list;
 	int fd_in = STDIN_FILENO;
 
@@ -80,21 +81,19 @@ int exec_pipe(t_shell *shell)
 				current->fd_out = STDOUT_FILENO;
 			else if (!current->out_file || !current->out_file[0])
 				current->fd_out = fd_pipe[FD_OUT];
-			printf("command: %s, fd_in: %d, fd_out: %d, pipe_in: %d, pipe_out: %d\n", current->command, current->fd_in, current->fd_out, fd_pipe[0], fd_pipe[1]);
+
+			printf("command: %s, fd_in: %d, fd_out: %d, pipe_in: %d, pipe_out: %d\n", current->command, current->fd_in, current->fd_out, fd_pipe[FD_IN], fd_pipe[FD_OUT]);
+
 			if (exec_command(current, shell) < 0)
 			{
 				ft_close(fd_pipe[FD_OUT]);
 				if (current->next != NULL)
-				{
 					ft_close(fd_in);
-				}
 				current = current->next;
 				continue;
 			}
-			if (!current->out_file || !current->out_file[0])
-			{
+			if (current->next)
 				fd_in = fd_pipe[FD_IN];
-			}
 			ft_close(fd_pipe[FD_OUT]);
 		}
 		current = current->next;
@@ -103,8 +102,11 @@ int exec_pipe(t_shell *shell)
 	while (count > 0)
 	{
 		wait(&status);
-		count --;
+		count--;
 	}
+
+	return (status);
+}
 	/* for (i = 0; i < count; i++)
 	{
 		int child_status;
@@ -112,9 +114,9 @@ int exec_pipe(t_shell *shell)
 		if (WIFEXITED(child_status) && WEXITSTATUS(child_status) != EXIT_SUCCESS)
 			status = EXIT_FAILURE;
 		shell->exit_status = child_status;
-	} */
+	} 
 	return (status);
-}
+} */
 
 /* int	open_file(int ac, char **av, int type)
 {
