@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 15:56:49 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:03:00 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 		}
         i++;
 	}
-	shell->env_list = env_lst;
-	update_env_2d(shell);
+	update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
 	while (env_lst)
 	{
 		if (!env_lst->var_value)
