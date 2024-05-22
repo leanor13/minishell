@@ -6,13 +6,58 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 18:26:09 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:37:20 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+
+// #define	SIG_ERR	 ((__sighandler_t) -1)	/* Error return.  */
+// #define	SIG_DFL	 ((__sighandler_t)  0)	/* Default action.  */
+#define	SIG_IGN	 ((__sighandler_t)  1)	/* Ignore signal.  */
+#define	SIGINT		2	/* Interactive attention signal.  */
+#define	SIGTERM		15	/* Termination request.  */
+
+#define	SIGQUIT		3//quit
+#define	SIGKILL		9//kill is more like an action
+
+volatile int exit_sig;
+
+// void	handle_signal()
+// {
+// 	struct sigaction	sa;
+// 	struct sigaction	act;
+
+// 	sa.sa_flags = SA_RESTART;
+// 	act.sa_flags = SA_RESTART;
+// 	act.sa_handler = SIG_IGN;
+// 	sigemptyset(&act.sa_mask);
+// 	sigemptyset(&sa.sa_mask);
+// 	sigaction(SIGINT, &sa, NULL);
+// 	sigaction(SIGQUIT, &act, NULL);
+// 	sigaction(SIGTERM, &act, NULL);
+// }
+// {
+// 	sigemptyset(&signal.sa_mask);
+// 	sigaddset(&bitset, SIGUSR1);
+// 	sigaddset(&bitset, SIGUSR2);
+// 	signal.sa_handler = ft_signalhandler;
+// 	signal.sa_flags = SA_SIGINFO; //SA_RESTART
+// 	signal.sa_sigaction = ft_decodesignal;
+// 	if (sigaction(SIGUSR1, &signal, NULL) == -1) 
+// 	{
+// 		ft_printf("Error: invalid signal setup");
+// 		exit(1);
+// 	}
+// 	if (sigaction(SIGUSR2, &signal, NULL) == -1)
+// 	{
+// 		ft_printf("Error: invalid signal setup");
+// 		exit(1);
+// 	}
+// }
 
 int main_parsing(t_shell *shell)
 {
@@ -44,6 +89,11 @@ int main_parsing(t_shell *shell)
 			}
 		 */
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
+		//handle_signal();
+		// if (exit_sig == 1)
+		// 	shell->exit_status = 130;
+		// if (exit_sig != 0)
+		// 	g_sig = 0;
 		if (command == NULL)
 		{
 			ft_putstr_nl("exit", STDERR_FILENO);
