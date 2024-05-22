@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:44:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/13 22:25:18 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:29:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	init_shell(&shell, env);
 	main_parsing(&shell);
+	free_shell(&shell);
 	//ft_clean(); - this function will use free_stackfinal as well
 	return (EXIT_SUCCESS);
 }

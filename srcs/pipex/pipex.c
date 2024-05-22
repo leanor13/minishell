@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/20 11:24:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/22 08:36:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int exec_pipe(t_shell *shell)
 	int count;
 	t_arg *c_list = shell->args_list;
 	int fd_in = STDIN_FILENO;
+	//int	i;
 
 	if (!c_list)
 		return (NEG_ERROR);
@@ -104,10 +105,10 @@ int exec_pipe(t_shell *shell)
 		wait(&status);
 		count--;
 	}
-
 	return (status);
 }
-	/* for (i = 0; i < count; i++)
+
+/*	for (i = 0; i < count; i++)
 	{
 		int child_status;
 		waitpid(-1, &child_status, 0);
@@ -116,28 +117,6 @@ int exec_pipe(t_shell *shell)
 		shell->exit_status = child_status;
 	} 
 	return (status);
-} */
-
-/* int	open_file(int ac, char **av, int type)
-{
-	int	fd;
-
-	fd = 0;
-	if (type == HERE_DOC)
-		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (type == OUTPUT_REWRITE)
-		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == INPUT_FILE)
-		fd = open(av[1], O_RDONLY);
-	if (fd < 0)
-	{
-		if (type == INPUT_FILE)
-			perror("Failed opening input file");
-		else
-			perror("Failed opening output file");
-		return (NEG_ERROR);
-	}
-	return (fd);
 } */
 
 int			open_file(char *file, int type)

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 13:40:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/22 08:29:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,6 @@ int	executor_main(t_shell *shell)
 
 	if (!shell->args_list)
 		return (EXIT_SUCCESS);
-	// here: go through all args and try to open input and output files. 
-	//Check in what order. Check >> or > etc
-	
-	//if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
-	//	av ++;
 	open_fds(shell->args_list, shell);
 	if (build_command_list(shell) != EXIT_SUCCESS)
 	{
@@ -85,13 +80,8 @@ int	executor_main(t_shell *shell)
 		close_all_protected(shell);
 		return (EXIT_FAILURE);
 	}
-	// in future - change env to shell->env_list
-	// 
 	status = exec_pipe(shell);
-	//close_all_protected();
-	//free(fd_files);
 	free_command_list(&shell->args_list);
-	//free(shell->args_list);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
