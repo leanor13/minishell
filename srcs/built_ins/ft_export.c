@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 16:56:46 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 21:27:23 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_valid_varname(const char *var_name)
 //     t_env *existing_var = find_env_var(*env_lst, name);
 
 //     if (existing_var) {
-//         free(existing_var->var_value);
+//	free(existing_var->var_value);
 //         existing_var->var_value = strdup(value);
 //     } else {
 //         t_env *new_var = malloc(sizeof(t_env));
@@ -93,6 +93,7 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 	}
 	//update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
 	// t_env	*env_lst = shell->env_list;
+	update_env_2d(shell);
 	while (shell->env_list)
 	{
 		if (!shell->env_list->var_value)

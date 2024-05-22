@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:52:19 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/23 10:31:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/22 19:19:35 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int		ft_putptr(unsigned long l);
 int		ft_putnbr(long n, int base, char type);
 int		ft_putstr(char *str);
 int		ft_putchar(int c);
+char	*ft_strndup(const char *src, int size);
 
 #endif

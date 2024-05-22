@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+         #
+#    By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2024/04/25 11:37:57 by yioffe           ###   ########.fr        #
+#    Updated: 2024/05/22 19:19:54 by thuy-ngu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS =	ft_bzero.c ft_isalnum.c ft_isalpha.c \
 		ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 		ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
 		ft_lstclear.c ft_lstiter.c ft_lstmap.c get_next_line.c \
-		ft_chars.c ft_nums.c ft_printf.c
+		ft_chars.c ft_nums.c ft_printf.c ft_strndup.c
 
 OBJS = $(SRCS:.c=.o)
 NAME = libft.a
