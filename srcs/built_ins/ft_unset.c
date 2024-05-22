@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 21:39:48 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 21:55:59 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,33 +54,72 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-void	ft_delnode(t_env *env_list, int l)
-{
-	t_env	**temp_prev = NULL;
-	t_env	**temp_del = NULL;
-	int		i;
+// void	ft_delnode(t_env *env_list, int l)
+// {
+// 	t_env	**temp_prev = NULL;
+// 	t_env	**temp_del = NULL;
+// 	int		i;
 
-    // if (l == 1) 
-	// {
-	// 	*env_list = current->next;
-	// 	free(current->var_name);
-	// 	free(current->var_value);
-	// 	free(current);
-	// 	return;
-    // }
+//     // if (l == 1) 
+// 	// {
+// 	// 	*env_list = current->next;
+// 	// 	free(current->var_name);
+// 	// 	free(current->var_value);
+// 	// 	free(current);
+// 	// 	return;
+//     // }
+// 	i = 1;
+// 	while(env_list && i < l)
+// 	{
+// 		*temp_prev = env_list;
+// 		env_list = env_list->next;
+// 	}
+// 	env_list = env_list->next;
+// 	*temp_del = env_list;
+// 	(*temp_prev)->next = (*temp_del)->next->next;
+// 	env_list->next = NULL;
+// 	free(env_list->var_name);
+// 	free(env_list->var_value);
+// }
+
+void ft_delnode(t_env **env_list, int l)
+{
+    t_env *temp_prev = NULL;
+    t_env *temp_del = NULL;
+    t_env *current = *env_list;
+    int i;
+
+    if (l <= 0 || !current) // Handle invalid position or empty list
+        return;
+
+    if (l == 1) 
+    {
+        *env_list = current->next;
+        free(current->var_name);
+        free(current->var_value);
+        free(current);
+        return;
+    }
 	i = 1;
-	while(env_list && i < l)
-	{
-		*temp_prev = env_list;
-		env_list = env_list->next;
-	}
-	env_list = env_list->next;
-	*temp_del = env_list;
-	(*temp_prev)->next = (*temp_del)->next->next;
-	env_list->next = NULL;
-	free(env_list->var_name);
-	free(env_list->var_value);
+    while (i < l && current != NULL)
+    {
+        temp_prev = current;
+        current = current->next;
+		i++;
+    }
+
+    if (current == NULL) // If position is greater than the number of nodes
+        return;
+
+    temp_del = current;
+    if (temp_prev != NULL)
+        temp_prev->next = temp_del->next;
+
+    free(temp_del->var_name);
+    free(temp_del->var_value);
+    free(temp_del);
 }
+
 
 int	ft_unset(t_shell *shell, t_arg *command)// do not change the struc
 {
@@ -107,7 +146,7 @@ int	ft_unset(t_shell *shell, t_arg *command)// do not change the struc
 		{
 			if(!ft_strncmp(shell->env_list->var_name, find_command, k))
 			{
-				ft_delnode(env_lst, l);
+				ft_delnode(&env_lst, l);
 				break ;
 			}
 			l++;
