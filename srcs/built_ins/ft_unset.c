@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 21:55:59 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:47:52 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,37 +89,32 @@ void ft_delnode(t_env **env_list, int l)
     t_env *current = *env_list;
     int i;
 
-    if (l <= 0 || !current) // Handle invalid position or empty list
-        return;
-
-    if (l == 1) 
-    {
-        *env_list = current->next;
-        free(current->var_name);
-        free(current->var_value);
-        free(current);
-        return;
-    }
-	i = 1;
-    while (i < l && current != NULL)
-    {
-        temp_prev = current;
-        current = current->next;
+	i = 0;
+	if (l == 0)
+	{
+		temp_del = current;
+		*env_list = current->next;
+		free(temp_del->var_name);
+		free(temp_del->var_value);
+		free(temp_del);
+		return;
+	}
+	while (i < l && current)
+	{
+		temp_prev = current;
+		current = current->next;
 		i++;
-    }
-
-    if (current == NULL) // If position is greater than the number of nodes
-        return;
-
-    temp_del = current;
-    if (temp_prev != NULL)
-        temp_prev->next = temp_del->next;
-
-    free(temp_del->var_name);
-    free(temp_del->var_value);
-    free(temp_del);
+	}
+	temp_del = current;
+	
+	//current->next = NULL;
+	if (temp_prev != NULL)
+		temp_prev->next = temp_del->next;
+	temp_del->next = NULL;
+	free(temp_del->var_name);
+	free(temp_del->var_value);
+	free(temp_del);
 }
-
 
 int	ft_unset(t_shell *shell, t_arg *command)// do not change the struc
 {
@@ -155,17 +150,24 @@ int	ft_unset(t_shell *shell, t_arg *command)// do not change the struc
 		free(find_command);
 		i++;
 	}
-	update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
-	//t_env	*env_lst = shell->env_list;
-	char 	**env = shell->env_2d;
-	int 	fd_out = STDOUT_FILENO;
-
-	i = 0;
-	while (env && env[i] != NULL)
+	//env_lst = shell->env_list;
+	while (env_lst) // FIRST TEST
 	{
-		if (*env[i] != '\0' && *env[i] != '=' && ft_strchr(env[i], '='))
-			ft_putstr_nl(env[i], fd_out);
-		i ++;
+		ft_printf("%s=\"", env_lst->var_name);
+		ft_printf("%s\"\n", env_lst->var_value);
+		env_lst = env_lst->next;
 	}
+	update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
+	
+	// char 	**env = shell->env_2d;// SECOND TEST
+	// int 	fd_out = STDOUT_FILENO;
+
+	// i = 0;
+	// while (env && env[i] != NULL)
+	// {
+	// 	if (*env[i] != '\0' && *env[i] != '=' && ft_strchr(env[i], '='))
+	// 		ft_putstr_nl(env[i], fd_out);
+	// 	i ++;
+	// }
 	return (EXIT_SUCCESS);
 }
