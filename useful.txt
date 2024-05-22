@@ -1,4 +1,5 @@
 plan to do:
+***built-in on main process if there is no pipe at the end
 1. create a Shell struct to store some values
 2. parse and save **env into that shell struct
 3. create a free_shell function
