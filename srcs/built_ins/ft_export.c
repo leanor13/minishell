@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/17 22:46:18 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:38:41 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	is_valid_varname(const char *var_name)
 	}
 	return (1);
 }
-
 
 // void add_or_update_env_var(t_env **env_lst, const char *name, const char *value) 
 // {
@@ -61,8 +60,7 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 		while (env_lst)
 		{
 			if (!env_lst->var_value)
-				// TODO: this is not working - check why
-				ft_printf("declare -x %s\n", env_lst->var_name);
+				ft_printf("declare -x %s\n", env_lst->var_name);// TODO: this is not working - check why
 			else if (ft_strcmp(env_lst->var_value, " ") == 0)
 				ft_printf("declare -x %s=\"\"\n", env_lst->var_name);
 			else
@@ -74,6 +72,41 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 		}
 		return (EXIT_SUCCESS);
 	}
+	while (args[i] != NULL) 
+	{
+        char *equal_sign = strchr(args[i], '=');
+        if (equal_sign) 
+		{
+            size_t name_len = equal_sign - args[i];
+            char *var_name = strndup(args[i], name_len);
+            char *var_value = strdup(equal_sign + 1);
+
+			add_back_env(&env_lst, var_name, var_value);
+			free(var_name);	
+			free(var_value);
+        }
+		else 
+		{
+			//char *var_name = strdup(args[i]);
+            add_back_env(&env_lst, args[i], NULL);
+		}
+        i++;
+    }
+	//shell->env_list = env_lst;
+	while (env_lst)
+	{
+		if (!env_lst->var_value)
+			ft_printf("declare -x %s\n", env_lst->var_name);// TODO: this is not working - check why
+		else if (ft_strcmp(env_lst->var_value, " ") == 0)
+			ft_printf("declare -x %s=\"\"\n", env_lst->var_name);
+		else
+		{
+			ft_printf("declare -x %s=\"", env_lst->var_name);
+			ft_printf("%s\"\n", env_lst->var_value);
+		}
+		env_lst = env_lst->next;
+	}
+	return (EXIT_SUCCESS);
 	// while (args[i] != NULL) 
 	// {
     //     char *equal_sign = strchr(args[i], '=');
@@ -84,20 +117,17 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
     //         char *var_value = strdup(equal_sign + 1);
 
     //         add_or_update_env_var(&env_lst, var_name, var_value);
-
     //         free(var_name);
     //         free(var_value);
-    //     } 
+    //     }
 	// 	else 
     //         add_or_update_env_var(&env_lst, args[i], "");
     //     i++;
-    // }
-    // shell->env_list = env_lst;
+    // }	
 	// while (args[i] != NULL)//doublechar
 	// {
 	// 	//if() use variabl name
 	// 	return (1);// fix this
 	// 	//TINA you have to do this
 	// }
-	return (EXIT_SUCCESS);
 }

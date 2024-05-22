@@ -2,6 +2,8 @@ plan to do:
 1. create a Shell struct to store some values
 2. parse and save **env into that shell struct
 3. create a free_shell function
+4. aphabetical order
+5. echo $k is working, but export $okay=something we supposed to sign but minor
 
 
 executor leftovers:

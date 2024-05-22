@@ -6,10 +6,13 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
+/*   Updated: 2024/05/22 15:49:27 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 void	append_node_parser(t_arg **lst, char *str, int start, int len, int value)
 {
@@ -132,10 +135,6 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 				//if(!var_value)
 			if(var_value && var_value[0])
 				s1[count] = put_word(var_value);
-			// printf("Content of args s1[%d]: ", count);
-			// // if(var_value && var_value[0])
-			// // 	print_string(s1[count]);
-			//count++;
 		}
 		printf("Content of args s1[%d]: ", count);
         print_string(s1[count]);
