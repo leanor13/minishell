@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 16:03:00 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:56:46 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,21 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 	//char	*var_value;
 	//char 	**env = shell->env_2d;
 	char 	**args = command->arguments; //here is the args
-	t_env	*env_lst = shell->env_list;
 
 	if (args[i] == NULL)
 	{
-		while (env_lst)
+		while (shell->env_list)
 		{
-			if (!env_lst->var_value)
-				ft_printf("declare -x %s\n", env_lst->var_name);// TODO: this is not working - check why
-			else if (ft_strcmp(env_lst->var_value, " ") == 0)
-				ft_printf("declare -x %s=\"\"\n", env_lst->var_name);
+			if (!shell->env_list->var_value)
+				ft_printf("declare -x %s\n", shell->env_list->var_name);// TODO: this is not working - check why
+			else if (ft_strcmp(shell->env_list->var_value, " ") == 0)
+				ft_printf("declare -x %s=\"\"\n", shell->env_list->var_name);
 			else
 			{
-				ft_printf("declare -x %s=\"", env_lst->var_name);
-				ft_printf("%s\"\n", env_lst->var_value);
+				ft_printf("declare -x %s=\"", shell->env_list->var_name);
+				ft_printf("%s\"\n", shell->env_list->var_value);
 			}
-			env_lst = env_lst->next;
+			shell->env_list = shell->env_list->next;
 		}
 		return (EXIT_SUCCESS);
 	}
@@ -81,30 +80,31 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 			char *var_name = strndup(args[i], name_len);
 			char *var_value = strdup(equal_sign + 1);
 
-			add_back_env(&env_lst, var_name, var_value);
+			add_back_env(&shell->env_list, var_name, var_value);
 			free(var_name);	
 			free(var_value);
 		}
 		else 
 		{
-			//char *var_name = strdup(args[i]);
-			add_back_env(&env_lst, args[i], NULL);
+			// char *var_name = strdup(args[i]);
+			add_back_env(&shell->env_list, args[i], NULL);
 		}
         i++;
 	}
-	update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
-	while (env_lst)
+	//update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
+	// t_env	*env_lst = shell->env_list;
+	while (shell->env_list)
 	{
-		if (!env_lst->var_value)
-			ft_printf("declare -x %s\n", env_lst->var_name);// TODO: this is not working - check why
-		else if (ft_strcmp(env_lst->var_value, " ") == 0)
-			ft_printf("declare -x %s=\"\"\n", env_lst->var_name);
+		if (!shell->env_list->var_value)
+			ft_printf("declare -x %s\n", shell->env_list->var_name);// TODO: this is not working - check why
+		else if (ft_strcmp(shell->env_list->var_value, " ") == 0)
+			ft_printf("declare -x %s=\"\"\n", shell->env_list->var_name);
 		else
 		{
-			ft_printf("declare -x %s=\"", env_lst->var_name);
-			ft_printf("%s\"\n", env_lst->var_value);
+			ft_printf("declare -x %s=\"", shell->env_list->var_name);
+			ft_printf("%s\"\n", shell->env_list->var_value);
 		}
-		env_lst = env_lst->next;
+		shell->env_list = shell->env_list->next;
 	}
 	return (EXIT_SUCCESS);
 }

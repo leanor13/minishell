@@ -2,9 +2,9 @@ plan to do:
 1. create a Shell struct to store some values
 2. parse and save **env into that shell struct
 3. create a free_shell function
-4. aphabetical order
+4. Built-ins before chile process, if there's no pipe
 5. echo $k is working, but export $okay=something we supposed to sign but minor
-
+6. aphabetical order
 
 executor leftovers:
 1. handle memory leaks

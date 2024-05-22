@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 16:10:48 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:35:32 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ int main_parsing(t_shell *shell)
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
 			executor_main(shell);
+		while (shell->env_list)
+		{
+			if (!shell->env_list->var_value)
+				ft_printf("out of function%s\n", shell->env_list->var_name);// TODO: this is not working - check why
+			else if (ft_strcmp(shell->env_list->var_value, " ") == 0)
+				ft_printf("out of function %s=\"\"\n", shell->env_list->var_name);
+			else
+			{
+				ft_printf("out of function %s=\"", shell->env_list->var_name);
+				ft_printf("%s\"\n", shell->env_list->var_value);
+			}
+			shell->env_list = shell->env_list->next;
+		}
+		//update_env_2d(shell);
 		free_stackfinal(&lst);
 		free(command);
 
