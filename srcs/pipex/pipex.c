@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/23 12:54:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/23 12:58:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,27 +162,4 @@ int exec_pipe(t_shell *shell)
 	return (status);
 } */
 
-int			open_file(char *file, int type)
-{
-	int	fd;
-
-	if (!file)
-		return (0);
-	fd = 0;
-	if (type == HERE_DOC || type == OUTPUT_APPEND)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (type == OUTPUT_REWRITE)
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == INPUT_FILE)
-		fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		if (type == INPUT_FILE)
-			perror("Failed opening input file");
-		else
-			perror("Failed opening output file");
-		return (NEG_ERROR);
-	}
-	return (fd);
-}
 

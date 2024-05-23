@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 08:29:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/23 12:58:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,30 @@ static int	ft_min(int a, int b)
 		return (a);
 	else
 		return (b);
+}
+
+int			open_file(char *file, int type)
+{
+	int	fd;
+
+	if (!file)
+		return (0);
+	fd = 0;
+	if (type == HERE_DOC || type == OUTPUT_APPEND)
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == OUTPUT_REWRITE)
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == INPUT_FILE)
+		fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		if (type == INPUT_FILE)
+			perror("Failed opening input file");
+		else
+			perror("Failed opening output file");
+		return (NEG_ERROR);
+	}
+	return (fd);
 }
 
 static int	open_fds(t_arg *command, t_shell *shell)
