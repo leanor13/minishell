@@ -6,37 +6,57 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/23 12:58:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:42:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <sys/stat.h>
+
+void print_open_fds() 
+{
+    int fd;
+    struct stat stats;
+    printf("Open file descriptors:\n");
+    for (fd = 0; fd < getdtablesize(); fd++) {
+        if (fstat(fd, &stats) == 0) {
+            printf("fd %d is open\n", fd);
+        }
+    }
+}
 
 void handle_child_process(t_arg *command, t_shell *shell)
 {
-	printf("Child process for command: %s\n", command->command);
-	printf("Child dup_close fd_in: %d -> STDIN, fd_out: %d -> STDOUT\n", command->fd_in, command->fd_out);
-	
-	dup_close(command->fd_in, STDIN_FILENO);
-	dup_close(command->fd_out, STDOUT_FILENO);
+    printf("Child process for command: %s\n", command->command);
+    printf("Child dup_close fd_in: %d -> STDIN, fd_out: %d -> STDOUT\n", command->fd_in, command->fd_out);
 
-	if (command->built_in_fn != NULL)
-	{
-		if (command->built_in_fn(shell, command) == EXIT_FAILURE)
-		{
-			fprintf(stderr, "Built-in error\n");
-			exit(NEG_ERROR);
-		}
-		else
-			exit(EXIT_SUCCESS);
-	}
-	else if (execve(command->path, command->arguments, shell->env_2d) == -1)
-	{
-		perror("Execve error");
-		exit(NEG_ERROR);
-	}
-	close_all_unprotected();
+    if (dup2(command->fd_in, STDIN_FILENO) == -1 || dup2(command->fd_out, STDOUT_FILENO) == -1) {
+        perror("dup2 failed");
+        exit(EXIT_FAILURE);
+    }
+    ft_close(command->fd_in);
+    ft_close(command->fd_out);
+	//print_open_fds();
+	close_all_protected(shell);
+	//print_open_fds();
+    if (command->built_in_fn != NULL)
+    {
+        if (command->built_in_fn(shell, command) == EXIT_FAILURE)
+        {
+            fprintf(stderr, "Built-in error\n");
+            exit(NEG_ERROR);
+        }
+        else
+            exit(EXIT_SUCCESS);
+    }
+    else if (execve(command->path, command->arguments, shell->env_2d) == -1)
+    {
+        perror("Execve error");
+        exit(NEG_ERROR);
+    }
+    // No need to call close_all_unprotected here, as execve will replace the process image.
 }
+
 
 pid_t handle_parent_process(t_arg *command, t_shell *shell)
 {
@@ -85,6 +105,8 @@ void wait_for_children(int count)
 {
 	int status;
 
+	printf("wait starts\n");
+	//print_open_fds();
 	while (count > 0)
 	{
 		wait(&status);
@@ -124,6 +146,7 @@ void process_commands(t_shell *shell, t_arg *current, int *fd_pipe, int *fd_in)
                 close_all_protected(shell);
                 return;
             }
+			//print_open_fds();
             execute_current_command(current, shell, fd_pipe, fd_in);
         }
         current = current->next;
@@ -145,6 +168,7 @@ int exec_pipe(t_shell *shell)
     current = c_list;
     count = args_count(c_list);
     process_commands(shell, current, fd_pipe, &fd_in);
+	//print_open_fds();
     ft_close(fd_in);
     wait_for_children(count);
     return (EXIT_SUCCESS);

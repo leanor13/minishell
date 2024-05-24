@@ -16,7 +16,7 @@ Heredoc with ctrl-C
 
 executor leftovers:
 2. handle open fds 
-3. cat | cat | cat
+3. cat | cat | ls
 1. handle memory leaks
 
 3. case with here_doc << << << 
