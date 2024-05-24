@@ -6,13 +6,21 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/19 15:05:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:47:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+
+void signal_handler(int sig) {
+    if (sig == SIGINT) {
+        printf("Signal SIGINT received, terminating process...\n");
+        exit(EXIT_FAILURE);  // Or any cleanup code before exiting
+    }
+}
 
 int main_parsing(t_shell *shell)
 {
@@ -21,6 +29,7 @@ int main_parsing(t_shell *shell)
 	int saved_stdin = shell->std_fds[0]; // Save the original STDIN_FILENO
 
 	lst = NULL;
+	signal(SIGINT, signal_handler);
 	while (1)
 	{
 		printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);

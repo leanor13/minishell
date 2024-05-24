@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/24 13:42:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:59:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ void print_open_fds()
     }
 }
 
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+void close_fds_except(int fd1, int fd2, int fd3, int fd4, int fd5) {
+    int fd;
+    int max_fd = sysconf(_SC_OPEN_MAX); // Using sysconf to get the maximum number of open file descriptors
+    for (fd = 3; fd < max_fd; fd++) {
+        if (fd != fd1 && fd != fd2 && fd != fd3 && fd != fd4 && fd != fd5) {
+            close(fd);
+        }
+    }
+}
+
 void handle_child_process(t_arg *command, t_shell *shell)
 {
     printf("Child process for command: %s\n", command->command);
@@ -34,11 +50,12 @@ void handle_child_process(t_arg *command, t_shell *shell)
         perror("dup2 failed");
         exit(EXIT_FAILURE);
     }
-    ft_close(command->fd_in);
-    ft_close(command->fd_out);
-	//print_open_fds();
+    //ft_close(command->fd_in);
+    //ft_close(command->fd_out);
+	close_fds_except(STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO, command->fd_in, command->fd_out);
+	print_open_fds();
 	close_all_protected(shell);
-	//print_open_fds();
+	print_open_fds();
     if (command->built_in_fn != NULL)
     {
         if (command->built_in_fn(shell, command) == EXIT_FAILURE)
@@ -106,7 +123,7 @@ void wait_for_children(int count)
 	int status;
 
 	printf("wait starts\n");
-	//print_open_fds();
+	print_open_fds();
 	while (count > 0)
 	{
 		wait(&status);
@@ -146,7 +163,7 @@ void process_commands(t_shell *shell, t_arg *current, int *fd_pipe, int *fd_in)
                 close_all_protected(shell);
                 return;
             }
-			//print_open_fds();
+			print_open_fds();
             execute_current_command(current, shell, fd_pipe, fd_in);
         }
         current = current->next;
@@ -168,7 +185,7 @@ int exec_pipe(t_shell *shell)
     current = c_list;
     count = args_count(c_list);
     process_commands(shell, current, fd_pipe, &fd_in);
-	//print_open_fds();
+	print_open_fds();
     ft_close(fd_in);
     wait_for_children(count);
     return (EXIT_SUCCESS);
