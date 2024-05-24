@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 08:31:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/24 18:10:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		ft_close(int fd);
 void		validate_params(int ac, char **av);
 void		exit_pipe_error(int fd[2]);
 
-int			exec_command(t_arg *command, t_shell *shell);
-int			exec_pipe(t_shell *shell);
+//int			exec_command(t_arg *command, t_shell *shell);
+//int			exec_pipe(t_shell *shell);
 int			*handle_input(int ac, char **av);
 int			args_count(t_arg *args_list);

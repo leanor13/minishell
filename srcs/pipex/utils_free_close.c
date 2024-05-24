@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/24 13:55:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:20:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	close_all_protected(t_shell *shell)
 	while (i < 1024)
 	{
 		if (i != shell->std_fds[0] && i != shell->std_fds[1] && i != shell->std_fds[2])
-			close(i);
+			ft_close(i);
 		i ++;
 	}
 }
