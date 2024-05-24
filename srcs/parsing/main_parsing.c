@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/24 13:47:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:24:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main_parsing(t_shell *shell)
 	signal(SIGINT, signal_handler);
 	while (1)
 	{
-		printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);
+		//printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);
 		if (dup2(saved_stdin, STDIN_FILENO) == -1) // Reset STDIN_FILENO
 		{
 			perror("dup2");
@@ -61,7 +61,7 @@ int main_parsing(t_shell *shell)
 		}
 		add_history(command);
 		lst = ft_lexer(command, lst);
-		t_arg *current = lst;
+		/*t_arg *current = lst;
 		int	lst_num = 0;
    	 	while (current)
     	{	
@@ -72,7 +72,7 @@ int main_parsing(t_shell *shell)
         	printf(" %s,", current->str);
         	printf("type %i\n", current->type);
         	current = current->next;
-   		}
+   		} */
 		lst = ft_parser(lst, shell);
 		shell->args_list = lst;
 		if (shell->args_list != NULL)

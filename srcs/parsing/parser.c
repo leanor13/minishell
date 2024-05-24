@@ -3,11 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
+/*   Updated: 2024/05/24 17:30:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -137,8 +139,8 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 			// // 	print_string(s1[count]);
 			//count++;
 		}
-		printf("Content of args s1[%d]: ", count);
-        print_string(s1[count]);
+		//printf("Content of args s1[%d]: ", count);
+        //print_string(s1[count]);
 		count++;
 		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
 		// 	return (free_res(s1, count), NULL);
@@ -162,8 +164,8 @@ char	**ft_strjoinline_heredoc(t_arg *lst, int i)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
-			printf("Content of heredoc s1[%d]: ", count);
-			print_string(s1[count]);
+			//printf("Content of heredoc s1[%d]: ", count);
+			//print_string(s1[count]);
 			count++;
 		}
 		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
@@ -203,8 +205,8 @@ char	**ft_strjoinline_output(t_arg *lst, int i)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
-			printf("Content of output s1[%d]: ", count);
-            print_string(s1[count]);
+			//printf("Content of output s1[%d]: ", count);
+            //print_string(s1[count]);
 			count++;
 		}
 		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
@@ -244,8 +246,8 @@ char	**ft_strjoinline_input(t_arg *lst, int i)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
-			printf("Content of input s1[%d]: ", count);
-            print_string(s1[count]);
+			//printf("Content of input s1[%d]: ", count);
+            //print_string(s1[count]);
 			count++;
 		}
 		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
@@ -303,7 +305,7 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 	t_arg	*head_output;
 	t_arg	*head_input;
 
-	int node_num = 0;//delete later
+	//int node_num = 0;//delete later
 	final = NULL;
 	if (!lst)
 		return (NULL);
@@ -421,8 +423,8 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 			}
 			lst = lst->next;
 		}
-		node_num++;
-		printf("---NODE%i---\n", node_num);
+		//node_num++;
+		//printf("---NODE%i---\n", node_num);
 		if(i != 0)
 			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
 		if(j != 0)
@@ -444,7 +446,7 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 			node->prev = nlast;
 		}
 	}
-	node_num = 0;
+	/* node_num = 0;
  	t_arg *current = final;
     while (current)
     {	
@@ -455,6 +457,6 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
         printf("%sINPUT\n", current->in_file);
         printf("%iAPPEND\n", current->append);
         current = current->next;
-    }
+    } */
 	return(final);
 }
