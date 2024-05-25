@@ -6,13 +6,15 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/24 18:33:18 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/25 22:10:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <sys/stat.h>
 
+
+// debugging function, printf can be uncommented to monitor fds
 void print_open_fds(char *message) 
 {
     int fd;
