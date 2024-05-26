@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/24 19:08:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/26 14:42:59 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_shell
 	bool	here_doc;
 	int		exit_status;
 	int 	here_doc_fd;
+	bool	should_exit;
 }	t_shell;
 
 

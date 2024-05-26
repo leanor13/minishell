@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/24 17:24:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/26 15:13:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main_parsing(t_shell *shell)
 	char *command = NULL;
 	t_arg *lst;
 	int saved_stdin = shell->std_fds[0]; // Save the original STDIN_FILENO
+	int	exit_status = EXIT_SUCCESS;
 
 	lst = NULL;
 	signal(SIGINT, signal_handler);
@@ -37,6 +38,12 @@ int main_parsing(t_shell *shell)
 		{
 			perror("dup2");
 			return (EXIT_FAILURE);
+		}
+		if (shell->should_exit)
+		{
+			exit_status = shell->exit_status;
+			free_shell(shell);
+			exit(exit_status);
 		}
 		lst = NULL;
 		command = NULL;
@@ -57,7 +64,7 @@ int main_parsing(t_shell *shell)
 		{
 			ft_putstr_nl("exit", STDERR_FILENO);
 			free_shell(shell);
-			exit(0);
+			exit(exit_status);
 		}
 		add_history(command);
 		lst = ft_lexer(command, lst);

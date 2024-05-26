@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/25 22:10:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/26 15:32:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,7 @@ void handle_child_process(t_arg *command, t_shell *shell)
     print_open_fds("handle_child_process: before close protected");
     close_all_protected(shell);
     print_open_fds("handle_child_process: after close protected");
-    if (command->built_in_fn != NULL)
-    {
-        if (command->built_in_fn(shell, command) == EXIT_FAILURE)
-        {
-            fprintf(stderr, "Built-in error\n");
-            exit(NEG_ERROR);
-        }
-        else
-            exit(EXIT_SUCCESS);
-    }
-    else if (execve(command->path, command->arguments, shell->env_2d) == -1)
+    if (execve(command->path, command->arguments, shell->env_2d) == -1)
     {
         perror("Execve error");
         exit(NEG_ERROR);
@@ -120,13 +110,27 @@ pid_t handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 
 int exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 {
-    pid_t pid;
-
     if (!command)
-        return (NEG_ERROR);
-    pid = handle_parent_process(command, shell, fd_pipe);
-    return pid;
+        return NEG_ERROR;
+
+    if (command->built_in_fn != NULL) 
+	{
+        int result = command->built_in_fn(shell, command);
+        if (result == EXIT_FAILURE) 
+		{
+            ft_putstr_nl("Built-in error\n", STDERR_FILENO);
+            return NEG_ERROR;
+        }
+        if (shell->should_exit && (command->next || command->prev))
+            shell->should_exit = false;
+        return EXIT_SUCCESS;
+    } 
+	else 
+	{
+        return handle_parent_process(command, shell, fd_pipe);
+    }
 }
+
 
 int setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 {
@@ -152,17 +156,29 @@ int setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
     return (EXIT_SUCCESS);
 }
 
-void wait_for_children(int count)
+#include <sys/wait.h>  // Make sure to include this for waitpid and related macros
+
+int wait_for_children(int count, t_shell *shell)
 {
     int status;
+    int last_status;
+    pid_t child_pid;
 
-    //printf("wait starts\n");
-    print_open_fds("during wait for children");
+	last_status = 0;
+	if (shell->should_exit)
+		return (shell->exit_status);
     while (count > 0)
     {
-        wait(&status);
+        child_pid = wait(&status);
+        if (child_pid == -1)
+            return (-1);
+        if (WIFEXITED(status))
+            last_status = WEXITSTATUS(status);
+        else if (last_status != 0)
+                return last_status;
         count--;
     }
+    return last_status;
 }
 
 void close_pipes(int *fd_pipe) {
@@ -248,7 +264,7 @@ int exec_pipe(t_shell *shell)
     process_commands(shell, current, fd_pipe, &fd_in);
     print_open_fds("exec_pipe: before close and wait");
     close_if_needed(fd_in);
-    wait_for_children(count);
+    shell->exit_status = wait_for_children(count, shell);
     print_open_fds("exec_pipe: end of the function");
     return (EXIT_SUCCESS);
 }

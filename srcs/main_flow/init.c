@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/16 12:41:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/26 14:43:22 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	init_shell(t_shell *shell, char **env)
 	shell->here_doc_fd = 0;
 	shell->args_list = NULL;
 	shell->here_doc = false;
+	shell->should_exit = false;
 	shell->exit_status = EXIT_SUCCESS;
 	return (EXIT_SUCCESS);
 }
