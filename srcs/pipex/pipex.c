@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/26 15:32:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/26 21:42:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/stat.h>
 
 
-// debugging function, printf can be uncommented to monitor fds
+// debugging function, //printf can be uncommented to monitor fds
 void print_open_fds(char *message) 
 {
     int fd;
@@ -150,8 +150,12 @@ int setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
     }
     else if (!current->out_file || !current->out_file[0])
         current->fd_out = STDOUT_FILENO;
-    //printf("command: %s, fd_in: %d, fd_out: %d, pipe_in: %d, pipe_out: %d\n",
-    //       current->command, current->fd_in, current->fd_out, fd_pipe[FD_IN], fd_pipe[FD_OUT]);
+	//if (!current->prev)
+	//{
+	//	printf("closing fd HERE %d\n", fd_pipe[FD_IN]);
+	//	ft_close(fd_pipe[FD_IN]);
+	//}
+    //printf("command: %s, fd_in: %d, fd_out: %d, pipe_in: %d, pipe_out: %d\n", current->command, current->fd_in, current->fd_out, fd_pipe[FD_IN], fd_pipe[FD_OUT]);
     print_open_fds("setup_pipe: end of function");
     return (EXIT_SUCCESS);
 }
@@ -164,6 +168,7 @@ int wait_for_children(int count, t_shell *shell)
     int last_status;
     pid_t child_pid;
 
+	close_all_protected(shell);
 	last_status = 0;
 	if (shell->should_exit)
 		return (shell->exit_status);
