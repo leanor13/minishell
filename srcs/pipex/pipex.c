@@ -6,15 +6,14 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/26 21:42:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/27 11:06:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <sys/stat.h>
 
-
-// debugging function, //printf can be uncommented to monitor fds
+// debugging function, printf can be uncommented to monitor fds
 void print_open_fds(char *message) 
 {
     int fd;
@@ -159,8 +158,6 @@ int setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
     print_open_fds("setup_pipe: end of function");
     return (EXIT_SUCCESS);
 }
-
-#include <sys/wait.h>  // Make sure to include this for waitpid and related macros
 
 int wait_for_children(int count, t_shell *shell)
 {
