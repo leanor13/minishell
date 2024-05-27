@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 13:40:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/27 11:05:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_shell
 	bool	here_doc;
 	int		exit_status;
 	int 	here_doc_fd;
+	bool	should_exit;
 }	t_shell;
 
 
@@ -71,6 +72,7 @@ int		save_2d_env(char **arr, char ***dest);
 /* cleanup */
 void	free_shell(t_shell *shell);
 void	free_string_array(char ***str_arr);
+void	free_command_list(t_arg **command_list);
 
 /* testing */
 void	print_env(t_env *env);
@@ -87,14 +89,13 @@ void		open_files_here_doc(int ac, char **av, int fd_files[2]);
 void		close_all_protected(t_shell *shell);
 void		close_all_unprotected(void);
 
-void		free_command_list(t_arg **command_list);
 void		close_both_ends(int fd[2], bool pipe_error);
 void		dup_close(int fd, int reference);
 void		ft_close(int fd);
 void		validate_params(int ac, char **av);
 void		exit_pipe_error(int fd[2]);
 
-int			exec_command(t_arg *command, t_shell *shell);
+//int			exec_command(t_arg *command, t_shell *shell);
 int			exec_pipe(t_shell *shell);
 int			*handle_input(int ac, char **av);
 int			args_count(t_arg *args_list);

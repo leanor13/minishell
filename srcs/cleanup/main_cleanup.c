@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/18 14:08:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/22 08:35:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ void	free_env_lst(t_env *env_lst)
 void	free_args(t_arg **args_list)
 {
 	t_arg *curr_arg;
+	t_arg *next_arg;
 
 	if (!args_list || !args_list[0])
 		return ;
 	curr_arg = *args_list;
 	while (curr_arg)
 	{
+		next_arg = curr_arg->next;
 		free_string_array(&curr_arg->arguments);
 		free_string_array(&curr_arg->out_file);
 		free_string_array(&curr_arg->in_file_open);
@@ -66,6 +68,9 @@ void	free_args(t_arg **args_list)
 			free(curr_arg->command);
 		if (curr_arg->path)
 			free(curr_arg->path);
+		if (curr_arg)
+			free(curr_arg);
+		curr_arg = next_arg;
 	}
 }
 
