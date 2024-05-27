@@ -44,6 +44,11 @@ parser failures:
 3. put the << < and just press enter (works)
 4. ls | awk '{print NL}' (MAY 18 - in one args the whole)
 5. echo "Hello I am" (works)
+6. (minor) cat << f <<
+
+expected behavior
+> f
+bash: syntax error near unexpected token `newline'
 
 build-in failures:
 1. cd - not functioning
