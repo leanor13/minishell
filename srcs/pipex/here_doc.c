@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 12:31:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:54:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ static char	*get_line(void)
 	return (line);
 }
 
-static char	count_limiters(char **limiters)
+static int	count_limiters(char **limiters)
 {
 	int		lim_count;
 
 	lim_count = 0;
 	while (limiters[lim_count])
 		lim_count++;
+	return (lim_count);
 }
 
 static void	read_input(int fd[2], char **limiters, t_shell shell)
