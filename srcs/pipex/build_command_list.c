@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 12:09:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 17:12:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static char	*find_path(char *command, char **envp)
 		return (ft_strdup(command));
 	dir_start = envp_path(envp);
 	if (!dir_start)
+	{
+		ft_putstr_fd(command, STDERR_FILENO);
 		return (ft_putstr_fd(EMPTY_ENV, STDERR_FILENO), NULL);
+	}
 	is_end = false;
 	while (!is_end)
 	{

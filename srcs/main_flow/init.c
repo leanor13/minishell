@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 12:05:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 17:45:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,50 @@ int	save_2d_env(char **arr, char ***dest)
 
 void	new_env(t_shell *shell)
 {
-	// TODO
-	shell->env_2d = NULL;
-	shell->env_list = NULL;
-	return ;
-}
+	char	*default_env[4];
 
-void	print_env(t_env *env)
-{
-	int		i;
-	t_env	*current;
-
-	i = 0;
-	current = env;
-	while (current)
+	default_env[0] = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+	default_env[1] = "PWD=/";
+	default_env[2] = "USER=nobody";
+	default_env[3] = NULL;
+	if (save_2d_env(default_env, &shell->env_2d) != EXIT_SUCCESS)
 	{
-		// TODO remove printf
-		printf("%d: %s = %s\n", i, current->var_name, current->var_value);
-		i++;
-		current = current->next;
+		ft_putstr_fd("Failed to initialize default environment", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	if (parse_env(shell, shell->env_2d) != EXIT_SUCCESS)
+	{
+		ft_putstr_fd(ENV_PARSING, STDERR_FILENO);
+		free_shell(shell);
+		exit(EXIT_FAILURE);
 	}
 }
 
 void	empty_user(t_shell *shell)
 {
-	// TODO  - handle case when getenv("USER") == NULL;
-	(void)shell;
-	return ;
+	t_arg	*cmd;
+
+	if (getenv("USER") == NULL && !env_find_var(shell->env_list, "USER"))
+	{
+		cmd = ft_calloc(1, sizeof(t_arg));
+		if (!cmd)
+		{
+			free_shell(shell);
+			exit(EXIT_FAILURE);
+		}
+		// Only set the arguments necessary for the export command
+		cmd->arguments = (char *[]){"export", "USER=nobody", NULL};
+		// Call ft_export to set the environment variable
+		if (ft_export(shell, cmd) != EXIT_SUCCESS)
+		{
+			ft_putstr_fd("Failed to set default user environment variable",
+				STDERR_FILENO);
+			exit(EXIT_FAILURE);
+		}
+		free(cmd);
+		ft_putstr_fd("Environment variable 'USER' set to 'nobody'\n",
+			STDOUT_FILENO);
+	}
 }
 
 void	handle_env(t_shell *shell, char **env)
@@ -83,6 +100,7 @@ void	handle_env(t_shell *shell, char **env)
 	{
 		shell->no_env = true;
 		new_env(shell);
+		env = shell->env_2d;
 	}
 	else
 	{
@@ -94,6 +112,7 @@ void	handle_env(t_shell *shell, char **env)
 		}
 		if (parse_env(shell, env) != EXIT_SUCCESS)
 		{
+			ft_putstr_fd(ENV_PARSING, STDERR_FILENO);
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 11:44:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 17:19:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ int		save_2d_env(char **arr, char ***dest);
 void	free_shell(t_shell *shell);
 void	free_string_array(char ***str_arr);
 void	free_command_list(t_arg **command_list);
-
-/* testing */
-void	print_env(t_env *env);
 
 char		**ft_split_pipex(char *s, char c);
 int			is_quote(char c);

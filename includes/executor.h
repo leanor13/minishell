@@ -43,7 +43,8 @@ Usage: ./pipex file1 cmd1 cmd2 file2 or \
 ./pipex here_doc LIMITER cmd cmd1 file \n"
 # define ERR_NESTED_QUOTES "Syntax error: nested quotes"
 # define ERR_SINGLE_QUOTE "Syntax error: single quote"
-# define EMPTY_ENV "No PATH in envp, provide full path\n"
+# define EMPTY_ENV ": No such file or directory\n"
+# define ENV_PARSING "Environment can't be parsed\n"
 
 typedef struct command
 {
