@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 17:12:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 21:47:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ static char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 static char	*envp_path(char **envp)
 {
 	if (!envp)
+	{
+		printf("here\n");
 		return (NULL);
+	}
 	while (*envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)

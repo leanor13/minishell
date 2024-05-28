@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 17:45:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 21:49:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ void	empty_user(t_shell *shell)
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}
-		// Only set the arguments necessary for the export command
 		cmd->arguments = (char *[]){"export", "USER=nobody", NULL};
-		// Call ft_export to set the environment variable
 		if (ft_export(shell, cmd) != EXIT_SUCCESS)
 		{
 			ft_putstr_fd("Failed to set default user environment variable",

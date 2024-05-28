@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:31:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 11:50:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 21:47:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,19 @@ int	parse_env(t_shell *shell, char **env)
 	char	*var_name;
 	char	*var_value;
 	char	*equal;
+	char	*env_copy;
 
 	i = 0;
 	shell->env_list = NULL;
 	while (env[i])
 	{
-		equal = ft_strchr(env[i], '=');
+		env_copy = strdup(env[i]);
+		if (!env_copy)
+		{
+			free_shell(shell);
+			exit(EXIT_FAILURE);
+		}
+		equal = strchr(env_copy, '=');
 		if (equal != NULL)
 		{
 			*equal = '\0';
@@ -124,12 +131,14 @@ int	parse_env(t_shell *shell, char **env)
 		}
 		else
 			var_value = NULL;
-		var_name = env[i];
+		var_name = env_copy;
 		if (add_back_env(&shell->env_list, var_name, var_value) != EXIT_SUCCESS)
 		{
+			free(env_copy);
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}
+		free(env_copy);
 		i++;
 	}
 	return (EXIT_SUCCESS);
