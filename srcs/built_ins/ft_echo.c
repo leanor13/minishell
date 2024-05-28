@@ -6,15 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/09 17:50:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:58:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//TODO handle $variable
-
-static void handle_quotes_and_special_chars(char *arg, int len_arg, int fd_out) 
+static void	handle_quotes_and_special_chars(char *arg, int len_arg, int fd_out)
 {
 	bool	in_quote;
 	int		i;
@@ -23,24 +21,24 @@ static void handle_quotes_and_special_chars(char *arg, int len_arg, int fd_out)
 	in_quote = false;
 	while (i < len_arg)
 	{
-		if (arg[i] == '\'' && !in_quote) 
+		if (arg[i] == '\'' && !in_quote)
 			in_quote = true;
 		else if (arg[i] == '\'' && in_quote)
 			in_quote = false;
-		else if (arg[i] == '"' && !in_quote) 
+		else if (arg[i] == '"' && !in_quote)
 			in_quote = true;
-		else if (arg[i] == '"' && in_quote) 
+		else if (arg[i] == '"' && in_quote)
 			in_quote = false;
 		if (!in_quote && (arg[i] == '\\' || arg[i] == ';'))
-			continue;
+			continue ;
 		ft_putchar_fd(arg[i], fd_out);
-		i ++;
+		i++;
 	}
 }
 
 static void	echo_arg(char *arg, t_env *env_lst, int fd_out)
 {
-	int	len_arg;
+	int		len_arg;
 	char	*var_value;
 
 	len_arg = ft_strlen(arg);
@@ -57,57 +55,53 @@ static void	echo_arg(char *arg, t_env *env_lst, int fd_out)
 
 static void	process_escape_sequences(char *str)
 {
-	char	*src;
 	char	*dest;
-	
-	if (str == NULL)
-		return;
-	src = str;
+
 	dest = str;
-	while (*src)
+	while (*str)
 	{
-		if (*src == '\\' && *(src + 1) != '\0')
+		if (*str == '\\' && *(str + 1) != '\0')
 		{
-			if (*(src + 1) == 'n')
+			if (*(str + 1) == 'n')
 			{
 				*dest++ = '\n';
-				src += 2;
+				str += 2;
 			}
-			else if (*(src + 1) == 't')
+			else if (*(str + 1) == 't')
 			{
 				*dest++ = '\t';
-				src += 2;
+				str += 2;
 			}
 			else
-				*dest++ = *src++;
+				*dest++ = *str++;
 		}
 		else
-			*dest++ = *src++;
+			*dest++ = *str++;
 	}
 	*dest = '\0';
 }
-// TODO - handle quotes if needed? or check if it's part of parser
 
 int	ft_echo(t_shell *shell, t_arg *command)
 {
 	bool	new_line;
 	int		i;
-	char 	**args = command->arguments; 
-	int 	fd_out = STDOUT_FILENO;
+	char	**args;
+	int		fd_out;
 
+	args = command->arguments;
+	fd_out = STDOUT_FILENO;
+	new_line = true;
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
 	{
 		new_line = false;
-		args ++;
+		args++;
 	}
-	else
-		new_line = true;
 	i = 1;
 	while (args[i] != NULL)
 	{
 		process_escape_sequences(args[i]);
 		echo_arg(args[i], shell->env_list, fd_out);
-		i ++;
+		i++;
 		if (args[i] != NULL)
 			ft_putchar_fd(' ', fd_out);
 	}
