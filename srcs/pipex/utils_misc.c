@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/30 12:35:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:10:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,15 @@ void	validate_params(int ac, char **av)
 	}
 }
 
-void	exit_pipe_error(int fd[2])
+int	args_count(t_arg *args_list)
 {
-	if (pipe(fd) < 0)
+	int	i;
+
+	i = 0;
+	while (args_list != NULL)
 	{
-		perror("Error creating pipe");
-		exit(EXIT_FAILURE);
+		i++;
+		args_list = args_list->next;
 	}
+	return (i);
 }
