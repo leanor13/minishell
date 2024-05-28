@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:31:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 14:17:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:50:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int	env_len_count(t_env *env_lst)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env_lst != NULL)
 	{
-		i ++;
+		i++;
 		env_lst = env_lst->next;
 	}
 	return (i);
 }
 
-int convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
+int	convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 {
 	char	*temp;
 	int		i;
@@ -49,13 +49,13 @@ int convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 				return (perror("malloc error"), EXIT_FAILURE);
 			}
 			(*env_2d)[i] = ft_strjoin(temp, env_lst->var_value);
-			if (!**env_2d )
+			if (!**env_2d)
 			{
 				free_string_array(env_2d);
 				return (perror("malloc error"), EXIT_FAILURE);
 			}
 		}
-		i ++;
+		i++;
 		free(temp);
 		env_lst = env_lst->next;
 	}
@@ -130,7 +130,7 @@ int	parse_env(t_shell *shell, char **env)
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}
-		i ++;
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }

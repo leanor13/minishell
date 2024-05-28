@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 08:35:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:48:25 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_string_array(char ***str_arr)
 	{
 		free((*str_arr)[i]);
 		(*str_arr)[i] = NULL;
-		i ++;
+		i++;
 	}
 	free(*str_arr);
 	*str_arr = NULL;
@@ -51,8 +51,8 @@ void	free_env_lst(t_env *env_lst)
 
 void	free_args(t_arg **args_list)
 {
-	t_arg *curr_arg;
-	t_arg *next_arg;
+	t_arg	*curr_arg;
+	t_arg	*next_arg;
 
 	if (!args_list || !args_list[0])
 		return ;
@@ -92,6 +92,3 @@ void	free_shell(t_shell *shell)
 	// clean env_list, including all nodes, + all names and values.
 	return ;
 }
-
-// free_envs;
-// free_args;

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/27 11:05:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:44:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		main_parsing(t_shell *shell);
 
 /* execution */
 int	executor_main(t_shell *shell);
+int	process_command_fds(t_arg *command, t_shell *shell);
 //int	main_pipex(int ac, char **av, char **env);
 
 /* built-ins */
