@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 17:19:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/29 17:09:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	free_shell(t_shell *shell);
 void	free_string_array(char ***str_arr);
 void	free_command_list(t_arg **command_list);
 
-char		**ft_split_pipex(char *s, char c);
 int			is_quote(char c);
 int			build_command_list(t_shell *shell);
 bool		check_built_in(t_arg *command);
