@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 21:49:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/29 17:37:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	new_env(t_shell *shell)
 
 	default_env[0] = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 	default_env[1] = "PWD=/";
-	default_env[2] = "USER=nobody";
+	default_env[2] = "USER=evaluator";
 	default_env[3] = NULL;
 	if (save_2d_env(default_env, &shell->env_2d) != EXIT_SUCCESS)
 	{
@@ -79,7 +79,7 @@ void	empty_user(t_shell *shell)
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}
-		cmd->arguments = (char *[]){"export", "USER=nobody", NULL};
+		cmd->arguments = (char *[]){"export", "USER=evaluator", NULL};
 		if (ft_export(shell, cmd) != EXIT_SUCCESS)
 		{
 			ft_putstr_fd("Failed to set default user environment variable",
@@ -87,7 +87,7 @@ void	empty_user(t_shell *shell)
 			exit(EXIT_FAILURE);
 		}
 		free(cmd);
-		ft_putstr_fd("Environment variable 'USER' set to 'nobody'\n",
+		ft_putstr_fd("Environment variable 'USER' set to 'evaluator'\n",
 			STDOUT_FILENO);
 	}
 }
