@@ -10,6 +10,20 @@ plan to do:
 9. remove all TODO
 10. empty env handling
 
+Notes (29.05) while checking on 42evals:
+1. Pressing tab few times shows all files 
+2. (need to implement) Execute a simple command with an absolute path like /bin/ls, or any other command with arguments but without any quotes and double quotes. Then execute echo $?
+Notes: - PARSER: can take *shell as an input. And $? should be shell->exit_status. 
+      -  PARSER: It would be good if PARSER also can write list right into shell->args_list.
+      - EXECUTOR: make sure to write all needed exit statuses to shell->exit_status. Check builtins and cases when no path etc.
+3. Signals - will do in the end. Don't forget to add signals to here_doc as well
+4. PARSER: echo '$USER' - EXPECTED: $USER. NOW it prints content of $USER with ' in the end. echo '"$USER"' should print "$USER", echo "$USER" should print username, now both work good.
+5. We need to run more tests for single quotes. Also for '$?', some flags etc.
+6. (minor) export should print alphabetically. We can do it if we want.
+7. export, unset, cd and pwd not yet tested. (for pwd testing we need cd). When cd is done, check how it works with empty env (env -i ./minishell)
+8. (minor) if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
+9. 
+
 export a=5
 export b=10
 result=$(expr $a + $b)
