@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/10 13:52:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 21:47:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ static char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 static char	*envp_path(char **envp)
 {
 	if (!envp)
+	{
+		printf("here\n");
 		return (NULL);
+	}
 	while (*envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
 			return (*envp + 5);
-		envp ++;
+		envp++;
 	}
 	return (NULL);
 }
@@ -57,7 +60,10 @@ static char	*find_path(char *command, char **envp)
 		return (ft_strdup(command));
 	dir_start = envp_path(envp);
 	if (!dir_start)
+	{
+		ft_putstr_fd(command, STDERR_FILENO);
 		return (ft_putstr_fd(EMPTY_ENV, STDERR_FILENO), NULL);
+	}
 	is_end = false;
 	while (!is_end)
 	{
@@ -72,8 +78,7 @@ static char	*find_path(char *command, char **envp)
 			dir_start = ft_strchr(dir_start, ':') + 1;
 	}
 	ft_putstr_fd(command, STDERR_FILENO);
-	ft_putstr_nl(": command not found", STDERR_FILENO);
-	return (NULL);
+	return (ft_putstr_nl(": command not found", STDERR_FILENO), NULL);
 }
 
 static int	update_command(t_arg *command, t_shell *shell)
@@ -104,24 +109,11 @@ static int	update_command(t_arg *command, t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-int	args_count(t_arg *args_list)
-{
-	int i;
-
-	i = 0;
-	while (args_list != NULL)
-	{
-		i ++;
-		args_list = args_list->next;
-	}
-	return (i);
-}
-
 int	build_command_list(t_shell *shell)
 {
-	int			i;
-	int			command_count;
-	t_arg		*curr_arg;
+	int		i;
+	int		command_count;
+	t_arg	*curr_arg;
 
 	command_count = args_count(shell->args_list);
 	curr_arg = shell->args_list;

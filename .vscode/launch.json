@@ -41,6 +41,18 @@
             //"autoAttachChildProcess": true
         },
         {
+            "name": "EMPTY ENV HOME (lldb) Launch Main",
+            "type": "cppdbg",
+            "request": "launch",
+            "targetArchitecture": "arm64", // or "arm64" if you're using an Apple Silicon Mac
+            "program": "/usr/bin/env",
+            "args": ["-i", "${workspaceFolder}/minishell"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+        }
+        {
             "name": "SCHOOL (gdb) Launch Main",
             "type": "cppdbg",
             "request": "launch",

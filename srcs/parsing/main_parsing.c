@@ -3,10 +3,9 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 23:37:20 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +13,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
+
 
 // #define	SIG_ERR	 ((__sighandler_t) -1)	/* Error return.  */
 // #define	SIG_DFL	 ((__sighandler_t)  0)	/* Default action.  */
@@ -59,20 +59,36 @@ volatile int exit_sig;
 // 	}
 // }
 
+void signal_handler(int sig) {
+    if (sig == SIGINT) {
+        printf("Signal SIGINT received, terminating process...\n");
+        exit(EXIT_FAILURE);  // Or any cleanup code before exiting
+    }
+}
+
+
 int main_parsing(t_shell *shell)
 {
 	char *command = NULL;
 	t_arg *lst;
 	int saved_stdin = shell->std_fds[0]; // Save the original STDIN_FILENO
+	int	exit_status = EXIT_SUCCESS;
 
 	lst = NULL;
+	signal(SIGINT, signal_handler);
 	while (1)
 	{
-		printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);
+		//printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);
 		if (dup2(saved_stdin, STDIN_FILENO) == -1) // Reset STDIN_FILENO
 		{
 			perror("dup2");
 			return (EXIT_FAILURE);
+		}
+		if (shell->should_exit)
+		{
+			exit_status = shell->exit_status;
+			free_shell(shell);
+			exit(exit_status);
 		}
 		lst = NULL;
 		command = NULL;
@@ -97,11 +113,12 @@ int main_parsing(t_shell *shell)
 		if (command == NULL)
 		{
 			ft_putstr_nl("exit", STDERR_FILENO);
-			exit(0);
+			free_shell(shell);
+			exit(exit_status);
 		}
 		add_history(command);
 		lst = ft_lexer(command, lst);
-		t_arg *current = lst;
+		/*t_arg *current = lst;
 		int	lst_num = 0;
    	 	while (current)
     	{	
@@ -112,7 +129,7 @@ int main_parsing(t_shell *shell)
         	printf(" %s,", current->str);
         	printf("type %i\n", current->type);
         	current = current->next;
-   		}
+   		} */
 		lst = ft_parser(lst, shell);
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
@@ -133,6 +150,7 @@ int main_parsing(t_shell *shell)
 		//update_env_2d(shell);
 		free_stackfinal(&lst);
 		free(command);
+		close_all_protected(shell);
 
 		// Reset STDIN_FILENO to the original terminal input after command processing
 	}

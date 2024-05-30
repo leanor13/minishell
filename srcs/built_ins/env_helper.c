@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:31:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/08 14:17:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/28 21:47:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int	env_len_count(t_env *env_lst)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env_lst != NULL)
 	{
-		i ++;
+		i++;
 		env_lst = env_lst->next;
 	}
 	return (i);
 }
 
-int convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
+int	convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 {
 	char	*temp;
 	int		i;
@@ -49,13 +49,13 @@ int convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 				return (perror("malloc error"), EXIT_FAILURE);
 			}
 			(*env_2d)[i] = ft_strjoin(temp, env_lst->var_value);
-			if (!**env_2d )
+			if (!**env_2d)
 			{
 				free_string_array(env_2d);
 				return (perror("malloc error"), EXIT_FAILURE);
 			}
 		}
-		i ++;
+		i++;
 		free(temp);
 		env_lst = env_lst->next;
 	}
@@ -111,12 +111,19 @@ int	parse_env(t_shell *shell, char **env)
 	char	*var_name;
 	char	*var_value;
 	char	*equal;
+	char	*env_copy;
 
 	i = 0;
 	shell->env_list = NULL;
 	while (env[i])
 	{
-		equal = ft_strchr(env[i], '=');
+		env_copy = strdup(env[i]);
+		if (!env_copy)
+		{
+			free_shell(shell);
+			exit(EXIT_FAILURE);
+		}
+		equal = strchr(env_copy, '=');
 		if (equal != NULL)
 		{
 			*equal = '\0';
@@ -124,13 +131,15 @@ int	parse_env(t_shell *shell, char **env)
 		}
 		else
 			var_value = NULL;
-		var_name = env[i];
+		var_name = env_copy;
 		if (add_back_env(&shell->env_list, var_name, var_value) != EXIT_SUCCESS)
 		{
+			free(env_copy);
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}
-		i ++;
+		free(env_copy);
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }

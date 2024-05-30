@@ -1,13 +1,13 @@
 NAME	= minishell
 
 SRCS	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
-FILES	= pipex/pipex pipex/split_pipex pipex/build_command_list pipex/utils_free_close \
+FILES	= pipex/pipex pipex/build_command_list pipex/utils_free_close \
 	pipex/utils_misc pipex/here_doc pipex/free_command_list pipex/check_builtin \
 	built_ins/ft_cd built_ins/ft_pwd built_ins/ft_env built_ins/get_current_pwd  built_ins/ft_echo \
 	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset built_ins/env_helper built_ins/env_helper_2\
 	main_flow/init main_flow/main_minishell \
 	parsing/main_parsing parsing/lexer parsing/lexer_listutils parsing/parser cleanup/main_cleanup\
-	executor/executor_main \
+	executor/executor_main executor/open_fds
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs
@@ -80,6 +80,6 @@ re: fclean all
 # 		valgrind --suppressions=valgrind.supp ./parsing
 
 valgrind:
-		valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all ./minishell
+		valgrind --suppressions=valgrind.supp --trace-children=yes  --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all ./minishell
 
 .PHONY: all fclean clean re valgrind parsing
