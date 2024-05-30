@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 22:47:52 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:53:32 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,15 +150,16 @@ int	ft_unset(t_shell *shell, t_arg *command)// do not change the struc
 		free(find_command);
 		i++;
 	}
-	//env_lst = shell->env_list;
-	while (env_lst) // FIRST TEST
-	{
-		ft_printf("%s=\"", env_lst->var_name);
-		ft_printf("%s\"\n", env_lst->var_value);
-		env_lst = env_lst->next;
-	}
-	update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
+	shell->env_list = env_lst;
 	
+	//env_lst = shell->env_list;
+	// while (env_lst) // FIRST TEST
+	// {
+	// 	ft_printf("%s=\"", env_lst->var_name);
+	// 	ft_printf("%s\"\n", env_lst->var_value);
+	// 	env_lst = env_lst->next;
+	// }
+	update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
 	// char 	**env = shell->env_2d;// SECOND TEST
 	// int 	fd_out = STDOUT_FILENO;
 

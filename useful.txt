@@ -1,86 +1,30 @@
-plan to do:
-***built-in on main process if there is no pipe at the end
-1. create a Shell struct to store some values
-2. parse and save **env into that shell struct
-3. create a free_shell function
 
-4. Built-ins before chile process, if there's no pipe
-5. echo $k is working, but export $okay=something we supposed to sign but minor
-6. aphabetical order
-4. handle $, echo $?, expr $? + $?
-5. cat | cat | cat | ls
-6. expr 4 \* 2
-7. ask seombody what it means: Check if multiple tries of the same redirections fail.
-8. export - print in alphabet order
-9. remove all TODO
-10. empty env handling
 
 Notes (29.05) while checking on 42evals:
-1. Pressing tab few times shows all files 
+1. OK Pressing tab few times shows all files - ASK FOR EXPLANATION
 2. (need to implement) Execute a simple command with an absolute path like /bin/ls, or any other command with arguments but without any quotes and double quotes. Then execute echo $?
-Notes: - PARSER: can take *shell as an input. And $? should be shell->exit_status. 
+handle $, echo $?, expr $? + $?
+Notes: - PARSER: can take *shell as an input. And $? should be shell->exit_status.
       -  PARSER: It would be good if PARSER also can write list right into shell->args_list.
       - EXECUTOR: make sure to write all needed exit statuses to shell->exit_status. Check builtins and cases when no path etc.
+For export return error status for {export name = dmkdm}
 3. Signals - will do in the end. Don't forget to add signals to here_doc as well
 4. PARSER: echo '$USER' - EXPECTED: $USER. NOW it prints content of $USER with ' in the end. echo '"$USER"' should print "$USER", echo "$USER" should print username, now both work good.
-5. We need to run more tests for single quotes. Also for '$?', some flags etc.
-6. (minor) export should print alphabetically. We can do it if we want.
-7. export, unset, cd and pwd not yet tested. (for pwd testing we need cd). When cd is done, check how it works with empty env (env -i ./minishell)
-8. (minor) if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
-9. 
-
-export a=5
-export b=10
-result=$(expr $a + $b)
-echo $result
-
-Heredoc with ctrl-C
-
-executor leftovers:
-2. handle open fds 
-3. cat | cat | ls
-1. handle memory leaks
-
-3. case with here_doc << << << 
-3-1. case with multiple here_docs in a pipe
-4. try to fix cat /dev/random | head
-5. handle >> mix with > case (parser change needs to go first)
-6.
-
-tests:
-
-1. ls -l | ls > out6 | wc -l - now not working (we need to investigate)
-2. touch "Hello" should remove quotes (now - it creates file with quotes)
-3. put the << and just press enter (now - seg fault)
-4. ls | awk '{print $1}' (now - unexpected character ''')
-5. echo "Hello I am" (need to remove quotes, also send Hello I am as one argument, not few)
-6. check case when both here_doc and input file (can it be?). Maybe parser can write here_doc to input when it's the case?
-
-executor failures:
-1. cat /dev/random | head
-2. heredoc after first cmd not working
-
-
-parser failures:
-1. touch "Hello" should remove quotes (works)
-3. put the << < and just press enter (works)
-4. ls | awk '{print NL}' (MAY 18 - in one args the whole)
-5. echo "Hello I am" (works)
-6. (minor) cat << f <<
-
+5. PARSER: We need to run more tests for single quotes. Also for '$?', some flags etc.
+6. (YULIA?) (minor) export should print alphabetically. We can do it if we want.
+7. (YULIA - implement cd) , cd and pwd not yet tested. (for pwd testing we need cd). When cd is done, check how it works with empty env (env -i ./minishell)
+8. (TINA) export (only need to fix update and case with spaces)
+9. (minor) if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
+9. (TINA?)(minor) export $okay=something - in bash this gives error
+10. (YULIA) remove all TODO
+11. (TINA) ask seombody what it means on EVALUATION SHEET: Check if multiple tries of the same redirections fail.
+12. (YULIA) HEREDOC: once SIGNALS done - add signals there
+13. (YULIA) ./minishell
+14. (TINA?) (minor) cat << f <<
 expected behavior
 > f
 bash: syntax error near unexpected token `newline'
-
-build-in failures:
-1. cd - not functioning
-2. export - works only with no arguments
-3. 
-
-init failures:
-1. init with empty env
-2. init with no user (we'll check if we need that)
-3. 
+15. Memory leaks
 
 
 
@@ -89,46 +33,3 @@ testers help:
 3. check all buildins to make sure 1st argument is taken
 4. https://docs.google.com/spreadsheets/d/17linwSWODYO4O9Db0FohJYr_8shMTGvyo0MjToPrcAI/edit#gid=1305472556
 5. check empty and corrupted env
-
-
-chat gpt for sharing project:
-
-Fork the Repository: Your friend can fork the main repository on GitHub. This creates a copy of the repository under her GitHub account.
-Make Changes and Create Pull Requests: Your friend can then make changes to her forked repository by creating new branches, making commits, and pushing those changes to her fork. When she's ready to merge her changes into the main repository, she can create a pull request from her branch to the main repository.
-Merge Pull Requests: Once the pull request is created, you or other collaborators on the main repository can review the changes and merge the pull request if everything looks good.
-Activity Feed: GitHub will then attribute the contributions made by your friend to her GitHub activity, even though the changes were made in a forked repository. Her contributions will appear in her GitHub profile and activity feed.
-
-To keep her forked repository up to date with the changes in the main repository (often referred to as "syncing" or "fetching" updates), your friend can follow these steps:
-
-1. **Add the Main Repository as a Remote**: In her local clone of the forked repository, she can add the main repository as a remote. This allows her to fetch changes from the main repository into her local clone.
-
-   ```bash
-   git remote add upstream <main_repository_URL>
-   ```
-
-   Replace `<main_repository_URL>` with the URL of the main repository.
-
-2. **Fetch Changes from the Main Repository**: Next, she can fetch the changes from the main repository into her local clone. This fetches the changes from the main repository to her local machine but doesn't apply them yet.
-
-   ```bash
-   git fetch upstream
-   ```
-
-3. **Merge Changes into Her Local Branch**: After fetching the changes, she can merge them into her local branch (usually the `main` or `master` branch) to update it with the changes from the main repository.
-
-   ```bash
-   git checkout main  # or git checkout master
-   git merge upstream/main  # or git merge upstream/master
-   ```
-
-   This command switches to the local `main` (or `master`) branch and merges the changes from the `upstream/main` branch (or `upstream/master`).
-
-4. **Push Changes to Her Forked Repository**: Finally, she can push the updated branch with the merged changes to her forked repository on GitHub.
-
-   ```bash
-   git push origin main  # or git push origin master
-   ```
-
-   This command pushes the changes in her local `main` (or `master`) branch to her forked repository on GitHub, updating it with the changes from the main repository.
-
-By following these steps regularly, your friend can keep her forked repository up to date with the changes in the main repository, ensuring that she's working with the latest codebase.

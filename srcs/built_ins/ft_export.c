@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 21:27:23 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:16:41 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 	//char	*var_value;
 	//char 	**env = shell->env_2d;
 	char 	**args = command->arguments; //here is the args
+	t_env	*env_lst_start = shell->env_list;
 
 	if (args[i] == NULL)
 	{
@@ -69,6 +70,7 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 			}
 			shell->env_list = shell->env_list->next;
 		}
+		shell->env_list = env_lst_start;
 		return (EXIT_SUCCESS);
 	}
 	while (args[i] != NULL) 
@@ -92,20 +94,20 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
         i++;
 	}
 	//update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
-	// t_env	*env_lst = shell->env_list;
+	//t_env	*env_lst = shell->env_list;
 	update_env_2d(shell);
-	while (shell->env_list)
-	{
-		if (!shell->env_list->var_value)
-			ft_printf("declare -x %s\n", shell->env_list->var_name);// TODO: this is not working - check why
-		else if (ft_strcmp(shell->env_list->var_value, " ") == 0)
-			ft_printf("declare -x %s=\"\"\n", shell->env_list->var_name);
-		else
-		{
-			ft_printf("declare -x %s=\"", shell->env_list->var_name);
-			ft_printf("%s\"\n", shell->env_list->var_value);
-		}
-		shell->env_list = shell->env_list->next;
-	}
+	// while (shell->env_list)
+	// {
+	// 	if (!shell->env_list->var_value)
+	// 		ft_printf("declare -x %s\n", shell->env_list->var_name);// TODO: this is not working - check why
+	// 	else if (ft_strcmp(shell->env_list->var_value, " ") == 0)
+	// 		ft_printf("declare -x %s=\"\"\n", shell->env_list->var_name);
+	// 	else
+	// 	{
+	// 		ft_printf("declare -x %s=\"", shell->env_list->var_name);
+	// 		ft_printf("%s\"\n", shell->env_list->var_value);
+	// 	}
+	// 	shell->env_list = shell->env_list->next;
+	// }
 	return (EXIT_SUCCESS);
 }
