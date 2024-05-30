@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 14:40:05 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:45:17 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-void print_string(const char *str) {
-    for (size_t i = 0; str[i] != '\0'; i++) {
+void print_string(const char *str) 
+{
+    for (size_t i = 0; str[i] != '\0'; i++) 
+	{
         printf("%c", str[i]);
     }
     printf("\n");
@@ -128,6 +130,7 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 			if(lst->str[1] == '?')
 			{
 				char *res = ft_itoa(shell->exit_status);
+				ft_strcat(res, &lst->str[2]);
 				var_value = ft_strdup(res);
 			}
 			else

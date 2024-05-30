@@ -3,11 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
+/*   Updated: 2024/05/30 15:47:14 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 #include <readline/readline.h>
@@ -118,7 +120,8 @@ int main_parsing(t_shell *shell)
 		}
 		add_history(command);
 		lst = ft_lexer(command, lst);
-		/*t_arg *current = lst;
+		
+		t_arg *current = lst;
 		int	lst_num = 0;
    	 	while (current)
     	{	
@@ -129,7 +132,7 @@ int main_parsing(t_shell *shell)
         	printf(" %s,", current->str);
         	printf("type %i\n", current->type);
         	current = current->next;
-   		} */
+   		}
 		lst = ft_parser(lst, shell);
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
