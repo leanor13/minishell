@@ -6,8 +6,10 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
+/*   Updated: 2024/05/30 14:14:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 #include <readline/readline.h>
@@ -17,7 +19,7 @@
 
 // #define	SIG_ERR	 ((__sighandler_t) -1)	/* Error return.  */
 // #define	SIG_DFL	 ((__sighandler_t)  0)	/* Default action.  */
-#define	SIG_IGN	 ((__sighandler_t)  1)	/* Ignore signal.  */
+//#define	SIG_IGN	 ((__sighandler_t)  1)	/* Ignore signal.  */
 #define	SIGINT		2	/* Interactive attention signal.  */
 #define	SIGTERM		15	/* Termination request.  */
 
