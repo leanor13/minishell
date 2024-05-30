@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 12:10:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/30 14:19:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ int	dir_len_count(char *dir_start)
 
 char	*absolute_path(char *command)
 {
-	if (*command == '/')
+	if (*command == '/' || (*command == '.' && *(command + 1) == '/'))
 	{
 		if (access(command, X_OK) == 0)
 			return (command);
 		else
-			return (ft_putstr_fd("Wrong command path\n", STDERR_FILENO), NULL);
+		{
+			ft_putstr_fd("no such file or directory: ", STDERR_FILENO);
+			ft_putstr_nl(command, STDERR_FILENO);
+			return (NULL);
+		}
 	}
 	return (NULL);
 }
