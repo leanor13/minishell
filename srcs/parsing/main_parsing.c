@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 15:47:14 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:50:57 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void signal_handler(int sig) {
         exit(EXIT_FAILURE);  // Or any cleanup code before exiting
     }
 }
-
 
 int main_parsing(t_shell *shell)
 {
