@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 11:48:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:31:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	free_args(t_arg **args_list)
 
 void	free_shell(t_shell *shell)
 {
-	// TODO
 	if (!shell)
 		return ;
 	free_string_array(&shell->env_2d);
