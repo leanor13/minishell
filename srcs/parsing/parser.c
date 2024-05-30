@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 15:49:27 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:40:05 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,20 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 		}
 		if(lst->type == GOING_DOLLAR_SIGN)
 		{
-			t_env *list = env_find_var(shell->env_list, &lst->str[1]);
-			if(list)
-				var_value = list->var_value;
-			if(!list)
-				break;
+			int i = 1;
+			if(lst->str[1] == '?')
+			{
+				char *res = ft_itoa(shell->exit_status);
+				var_value = ft_strdup(res);
+			}
+			else
+			{
+				t_env *list = env_find_var(shell->env_list, &lst->str[i]);
+				if(list)
+					var_value = list->var_value;
+				if(!list)
+					break;
+			}
 			//var_value = env_find_var(shell->env_list, &lst->str[1])->var_value;
 			//if(var_value);
 			//ft_putstr_fd(var_value, 0);
