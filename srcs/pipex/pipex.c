@@ -118,7 +118,7 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 		result = command->built_in_fn(shell, command);
 		if (result == EXIT_FAILURE)
 		{
-			ft_putstr_nl("Built-in error\n", STDERR_FILENO);
+			//ft_putstr_nl("Built-in error\n", STDERR_FILENO);
 			return (NEG_ERROR);
 		}
 		if (shell->should_exit && (command->next || command->prev))
