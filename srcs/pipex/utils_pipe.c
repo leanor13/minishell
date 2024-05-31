@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 12:34:59 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/31 18:22:26 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	wait_for_children(int count, t_shell *shell)
 	int		last_status;
 	pid_t	child_pid;
 
-	last_status = 0;
+	last_status = EXIT_SUCCESS;
 	close_all_protected(shell);
 	if (shell->should_exit)
 		return (shell->exit_status);
@@ -73,12 +73,28 @@ int	wait_for_children(int count, t_shell *shell)
 	{
 		child_pid = wait(&status);
 		if (child_pid == -1)
+		{
 			return (EXIT_CMD_NOT_FOUND);
+		}
 		if (WIFEXITED(status))
+		{
 			last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			last_status = EXIT_SIGNAL_OFFSET + WTERMSIG(status);
+		}
 		count--;
 	}
 	return (last_status);
+}
+
+int	child_count(t_arg *args_list)
+{
+	int	i;
+
+	i = 0;
+	while (args_list != NULL)
+	{
+		if (!args_list->built_in_fn)
+			i++;
+		args_list = args_list->next;
+	}
+	return (i);
 }

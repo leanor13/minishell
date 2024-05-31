@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 16:10:36 by thuy-ngu         ###   ########.fr       */
-
+/*   Updated: 2024/05/31 18:02:26 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +88,8 @@ char		*absolute_path(char *command);
 int			here_doc(t_arg *command, t_shell *shell);
 int			open_file(char *file, int type);
 int			args_count(t_arg *args_list);
+int			child_count(t_arg *args_list);
+
 
 /* close fds */
 void		close_all_protected(t_shell *shell);

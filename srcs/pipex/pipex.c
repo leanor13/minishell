@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 12:32:35 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/31 18:27:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	print_open_fds(char *message)
 {
 	int			fd;
 	struct stat	stats;
+	int			result;
+	int			original_stdout;
 
 	(void)message;
 	printf("Open file descriptors (%s):\n", message);
@@ -30,24 +32,40 @@ void	print_open_fds(char *message)
 	}
 } */
 
-int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
+int exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 {
-	int	result;
+    int result;
+    int original_stdout;
 
-	if (!command)
-		return (EXIT_CMD_NOT_FOUND);
-	if (command->built_in_fn != NULL)
-	{
-		result = command->built_in_fn(shell, command);
-		if (result != EXIT_SUCCESS)
-			return (result);
-		if (shell->should_exit && (command->next || command->prev))
-			shell->should_exit = false;
-		return (EXIT_SUCCESS);
-	}
-	else
-		return (handle_parent_process(command, shell, fd_pipe));
+    if (!command)
+        return (EXIT_CMD_NOT_FOUND);
+
+    // Handle redirection before checking if it's a built-in or external command
+    original_stdout = dup(STDOUT_FILENO);
+    if (command->fd_out != STDOUT_FILENO) {
+        if (dup2(command->fd_out, STDOUT_FILENO) == -1) {
+            perror("dup2 failed for built-in");
+            return (EXIT_FAILURE);
+        }
+    }
+
+    if (command->built_in_fn != NULL) {
+        result = command->built_in_fn(shell, command);
+        dup2(original_stdout, STDOUT_FILENO);
+        close(original_stdout);
+        if (result != EXIT_SUCCESS)
+            return (result);
+        if (shell->should_exit && (command->next || command->prev))
+            shell->should_exit = false;
+        return (EXIT_SUCCESS);
+    } else {
+        result = handle_parent_process(command, shell, fd_pipe);
+        dup2(original_stdout, STDOUT_FILENO);
+        close(original_stdout);
+        return result;
+    }
 }
+
 
 int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 {
@@ -58,10 +76,10 @@ int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 		if (pipe(fd_pipe) == -1)
 		{
 			perror("Error creating pipe");
-			return (EXIT_SIGNAL_OFFSET);
+			return (EXIT_FAILURE);
 		}
-		if (!current->out_file || !current->out_file[0])
-			current->fd_out = fd_pipe[FD_OUT];
+		current->fd_out = fd_pipe[FD_OUT];
+		current->next->fd_in = fd_pipe[FD_IN];
 	}
 	else if (!current->out_file || !current->out_file[0])
 		current->fd_out = STDOUT_FILENO;
@@ -71,29 +89,25 @@ int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 void	execute_current_command(t_arg *current, t_shell *shell, int *fd_pipe,
 		int *fd_in)
 {
-	if (exec_command(current, shell, fd_pipe) < 0)
-		close_pipes(fd_pipe);
+	int	result;
+
+	result = exec_command(current, shell, fd_pipe);
+	if (result < 0)
+		return ;
+	if (current->next)
+	{
+		close(fd_pipe[FD_OUT]);
+		fd_pipe[FD_OUT] = -1;
+		*fd_in = fd_pipe[FD_IN];
+	}
 	else
 	{
-		if (fd_pipe[FD_OUT] != -1)
-		{
-			close(fd_pipe[FD_OUT]);
-			fd_pipe[FD_OUT] = -1;
-		}
-		if (current->next)
-		{
-			*fd_in = fd_pipe[FD_IN];
-		}
-		else
-		{
-			if (fd_pipe[FD_IN] != -1)
-			{
-				close(fd_pipe[FD_IN]);
-				fd_pipe[FD_IN] = -1;
-			}
-			ft_close(*fd_in);
-			*fd_in = -1;
-		}
+		close(fd_pipe[FD_IN]);
+		close(fd_pipe[FD_OUT]);
+		fd_pipe[FD_IN] = -1;
+		fd_pipe[FD_OUT] = -1;
+		ft_close(*fd_in);
+		*fd_in = -1;
 	}
 }
 
@@ -130,7 +144,7 @@ int	exec_pipe(t_shell *shell)
 	if (!c_list)
 		return (EXIT_CMD_NOT_FOUND);
 	current = c_list;
-	count = args_count(c_list);
+	count = child_count(c_list);
 	process_commands(shell, current, fd_pipe, &fd_in);
 	shell->exit_status = wait_for_children(count, shell);
 	return (EXIT_SUCCESS);

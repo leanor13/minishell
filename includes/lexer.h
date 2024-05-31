@@ -1,99 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
+/*   Updated: 2024/05/31 16:36:16 by thuy-ngu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
-#include <stdbool.h>
-#include <dirent.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <stdbool.h>
+# include <dirent.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-typedef struct s_shell t_shell;
+typedef struct s_shell	t_shell;
 
 typedef struct s_arg
 {
 	char			*str; // args in the lexer
 	int				type; //assign type in the lexer
-	char 			**arguments;
-	char 			*in_file; // >>  > out.txt -> out.txt
-	char 			**out_file; //< in.txt -> in.txt
-	char 			**in_file_open; //< in.txt -> in.txt
-	char 			**here_doc; // << first one is going ot be an argument so it nice in this way
-	bool 			append; // it is only a bool if the last on is append other thatn that they are outputfiles 
+	char			**arguments;
+	char			*in_file; // >>  > out.txt -> out.txt
+	char			**out_file; //< in.txt -> in.txt
+	char			**in_file_open; //< in.txt -> in.txt
+	char			**here_doc; // << first one is going ot be an argument so it nice in this way
+	bool			append; // it is only a bool if the last on is append other thatn that they are outputfiles 
 	char			*command; // used in executor
 	char			*path; // used in executor
 	int				fd_in;
 	int				fd_out;
-	int				(*built_in_fn)(t_shell *shell, struct s_arg *command); // used in executor
+	int				(*built_in_fn)(t_shell *shell, struct s_arg *command);
 	struct s_arg	*next;
 	struct s_arg	*prev;
 }				t_arg;
 
+typedef struct s_append
+{
+	int				start;
+	int				len;
+}				t_append;
+
 typedef struct s_sign
 {
-	int quote_type;
+	int	quote_type;
 }				t_sign;
 
-# define FIRST_DOUBLE_QUOTE 11
-# define FIRST_SINGLE_QUOTE 22
-# define SECOND_DOUBLE_QUOTE 33
-# define SECOND_SINGLE_QUOTE 44
-// typedef struct s_arg_pass
-// {
-// 	char *args; // args = echo "Hello" this is me
-// 	char *in_file; // >> out.txt -> out.txt
-// 	char *out_file; //<< in.txt -> in.txt
-// 	char *here_doc; //
-// 	bool append;	//if >> - true, else false;
-// 	//char *str; //maybe just simple pointer
-// 	int	type;
-// 	struct s_arg	*next;
-// 	struct s_arg	*prev;
-// }				t_arg_pass;
-
-// typedef struct s_arg
-// {
-// 	char *args; // args = echo "Hello" this is me
-// 	char *in_file; // >> out.txt -> out.txt
-// 	char *out_file; //<< in.txt -> in.txt
-
-// 	bool here_doc; //
-// 	bool append;	//if >> - true, else false;
-// 	struct s_arg	*next; // next pipe command, if none - NULL
-// 	struct s_arg	*prev; // prev pipe command, if none - NULL
-// }				command_for_pipex;
-// tyepedef struct command
-// {
-// 	char			*command;
-// 	char			*path;
-// 	char			**args;
-// }	t_command;
-
-// enum TokenType
-// {
-// 	CHAR_GENERAL = -1,
-// 	CHAR_PIPE = '|',
-// 	CHAR_AMPERSAND = '&',
-// 	CHAR_QOUTE = '\'',
-// 	CHAR_DQUOTE = '\"',
-// 	CHAR_SEMICOLON = ';',
-// 	CHAR_WHITESPACE = ' ',
-// 	CHAR_ESCAPESEQUENCE = '\\',
-// 	CHAR_TAB = '\t',
-// 	CHAR_NEWLINE = '\n',
-// 	CHAR_GREATER = '>',
-// 	CHAR_LESSER = '<',
-// 	CHAR_NULL = 0,
-
-// 	TOKEN	= -1,
-// };
+# define FIRST_DOUBLE_QUOTE 2
+# define FIRST_SINGLE_QUOTE 3
+# define SECOND_DOUBLE_QUOTE 4
+# define SECOND_SINGLE_QUOTE 5
 
 typedef enum e_type
 {
-	OUTPUT,   //0 integer value// >
-	INPUT,    //1 integer value// <
-	HEREDOC,  //2 integer valueetc.//<<
-	APPEND,   //.../ >>
-	PIPE,     // |
-	ARG,      // string //EXACT COMMANS? LIKE ECHO STB, AND FLAGS TOO ASK YULIA
+	OUTPUT,
+	INPUT,
+	HEREDOC,
+	APPEND,
+	PIPE,
+	ARG,
 	GOING_ARG,
 	GOING_HEREDOC,
 	GOING_INPUT,
@@ -101,18 +70,22 @@ typedef enum e_type
 	DOUBLE_PIPE,
 	DOLLAR_SIGN,
 	GOING_DOLLAR_SIGN,
-
-	//DELETE_ARG,
-	//END       // end of cmd 
-	// LPR,      // (
-	// RPR,      // )
-}t_type;
+	SINGLEQUOTE_DOLLAR,
+	GOING_SINGLEQUOTE_DOLLAR,
+	WRONG,
+}				t_type;
 
 t_arg	*ft_lexer(char *str, t_arg *lst);
-void	append_node(t_arg **lst, char *str, int end, int len, int value);
-t_arg *ft_parser(t_arg *lst, t_shell *shell);
+void	append_node(t_arg **lst, char *str, t_append info, int value);
+t_arg	*ft_parser(t_arg *lst, t_shell *shell);
 void	free_stackfinal(t_arg **lst);
 t_arg	*ft_stacklast(t_arg *lst);
 void	ft_printsyntaxerror(t_arg **lst);
+int		find_quote(t_sign **lst, char *str, int i);
+int		handle_quotestring(t_arg **lst, t_sign **quote, char *str, int i);
+char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell);
+char	**ft_strjoinline_heredoc(t_arg *lst, int i);
+char	**ft_strjoinline_output(t_arg *lst, int i);
+char	**ft_strjoinline_input(t_arg *lst, int i);
 
 #endif
