@@ -103,6 +103,7 @@ typedef enum e_type
 	GOING_DOLLAR_SIGN,
 	SINGLEQUOTE_DOLLAR,
 	GOING_SINGLEQUOTE_DOLLAR,
+	WRONG,
 	//DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (

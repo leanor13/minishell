@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 12:53:32 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:41:12 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ int	ft_unset(t_shell *shell, t_arg *command)// do not change the struc
 		i++;
 	}
 	shell->env_list = env_lst;
-	
 	//env_lst = shell->env_list;
 	// while (env_lst) // FIRST TEST
 	// {
