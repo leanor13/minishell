@@ -27,7 +27,6 @@ void	free_stackfinal(t_arg **lst)
 	t_arg	*tmp;
 	t_arg	*current;
 
-	// I added protection in case there is no lst at all :)
 	if (!lst)
 		return ;
 	current = *lst;
