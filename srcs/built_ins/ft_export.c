@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 13:37:08 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:51:36 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ int	is_valid_varname(const char *var_name)
 //         *env_lst = new_var;
 //     }
 // }
+void ft_changenode(t_env **env_list, char * copy_value)
+{
+	free((*env_list)->var_value);
+	(*env_list)->var_value = NULL;
+	(*env_list)->var_value = strdup(copy_value);
+}
 
 int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 {
@@ -54,7 +60,8 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 	//char 	**env = shell->env_2d;
 	char 	**args = command->arguments; //here is the args
 	t_env	*env_lst_start = shell->env_list;
-
+	char *equal_sign = NULL;
+	int	sign = 0;
 	if (args[i] == NULL)
 	{
 		while (shell->env_list)
@@ -73,24 +80,50 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 		shell->env_list = env_lst_start;
 		return (EXIT_SUCCESS);
 	}
+	if(*args[i] == '0' || *args[i] == '1' || *args[i] == '2' || *args[i] == '3' || *args[i] == '4' \
+			|| *args[i] == '5' || *args[i] == '6' || *args[i] == '7' || *args[i] == '8' || *args[i] == '9' \
+			|| *args[i] == '-' || *args[i] == '+' || *args[i] == '!' || *args[i] == '?' || *args[i] == '$' \
+			|| *args[i] == '=' || *args[i] == 34 || *args[i] == 39 || shell->args_list->type == WRONG)
+	{
+		ft_printf("not a valid identifier\n");
+		return(EXIT_FAILURE);
+	}
 	while (args[i] != NULL) 
 	{
-        char *equal_sign = strchr(args[i], '=');
-        if (equal_sign) 
+        equal_sign = strchr(args[i], '=');
+        if (equal_sign)
 		{
 			size_t name_len = equal_sign - args[i];
 			char *var_name = strndup(args[i], name_len);
 			char *var_value = strdup(equal_sign + 1);
-			add_back_env(&shell->env_list, var_name, var_value);
-			free(var_name);	
-			free(var_value);
+			int k = ft_strlen(var_name);
+			t_env *env_lst_start = shell->env_list;
+			while(shell->env_list)
+			{
+				if(!ft_strncmp(shell->env_list->var_name, var_name, k))
+				{
+					ft_changenode(&shell->env_list, var_value);
+					free(var_name);	
+					free(var_value);
+					sign = 1;
+					break;
+				}
+				shell->env_list = shell->env_list->next;
+			}
+			shell->env_list = env_lst_start;
+			if (sign == 0)
+			{
+				add_back_env(&shell->env_list, var_name, var_value);
+				free(var_name);	
+				free(var_value);
+			}
 		}
-		else 
+		else
 		{
 			if(*args[i] == '0' || *args[i] == '1' || *args[i] == '2' || *args[i] == '3' || *args[i] == '4' \
 			|| *args[i] == '5' || *args[i] == '6' || *args[i] == '7' || *args[i] == '8' || *args[i] == '9' \
 			|| *args[i] == '-' || *args[i] == '+' || *args[i] == '!' || *args[i] == '?' || *args[i] == '$' \
-			|| *args[i] == '=' || *args[i] == 34 || *args[i] == 39)
+			|| *args[i] == '=' || *args[i] == 34 || *args[i] == 39 || shell->args_list->type == WRONG)
 			{
 				ft_printf("not a valid identifier\n");
 				return(EXIT_FAILURE);
@@ -100,6 +133,8 @@ int	ft_export(t_shell *shell, t_arg *command)// do not change the struc
 		}
         i++;
 	}
+	if (equal_sign)
+		shell->env_list = env_lst_start;
 	//update_env_2d(shell);// I amd not sure if I need this it MAYBE DELETE LATER
 	//t_env	*env_lst = shell->env_list;
 	update_env_2d(shell);
