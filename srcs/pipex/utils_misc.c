@@ -6,15 +6,39 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 14:19:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:54:46 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_quote(char c)
+char	*envp_path(char **envp)
 {
-	return (c == '\'' || c == '\"');
+	if (!envp)
+	{
+		ft_putstr_nl("Empty environment", STDERR_FILENO);
+		return (NULL);
+	}
+	while (*envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+			return (*envp + 5);
+		envp++;
+	}
+	return (NULL);
+}
+
+char	*dir_start_calc(char *command, char **envp)
+{
+	char	*dir_start;
+
+	dir_start = envp_path(envp);
+	if (!dir_start)
+	{
+		ft_putstr_fd(command, STDERR_FILENO);
+		return (ft_putstr_fd(EMPTY_ENV, STDERR_FILENO), NULL);
+	}
+	return (dir_start);
 }
 
 int	dir_len_count(char *dir_start)
@@ -44,16 +68,6 @@ char	*absolute_path(char *command)
 		}
 	}
 	return (NULL);
-}
-
-void	validate_params(int ac, char **av)
-{
-	if (ac < 5 || !av || !av[1]
-		|| (ft_strcmp(av[1], "here_doc") == 0 && ac < 6))
-	{
-		ft_putstr_fd(WRONG_ARG_NUM, STDERR_FILENO);
-		exit (EXIT_FAILURE);
-	}
 }
 
 int	args_count(t_arg *args_list)

@@ -36,10 +36,11 @@ typedef struct s_shell
 	bool	should_exit;
 }	t_shell;
 
+#define EXIT_CMD_NOT_FOUND 127
+#define EXIT_SIGNAL_OFFSET 128
 
 /* main flow */
 int		init_shell(t_shell *shell, char **env);
-//int		run_shell(t_shell *shell);
 
 /* parsing */
 int		main_parsing(t_shell *shell);
@@ -47,7 +48,6 @@ int		main_parsing(t_shell *shell);
 /* execution */
 int	executor_main(t_shell *shell);
 int	process_command_fds(t_arg *command, t_shell *shell);
-//int	main_pipex(int ac, char **av, char **env);
 
 /* built-ins */
 int		ft_pwd(t_shell *shell, t_arg *command);
@@ -57,10 +57,6 @@ int		ft_unset(t_shell *shell, t_arg *command);
 int		ft_exit(t_shell *shell, t_arg *command);
 int		ft_cd(t_shell *shell, t_arg *command);
 int		ft_export(t_shell *shell, t_arg *command);
-
-/* built-in helper */
-char	*ft_getenv(char **env, const char *name);
-int		ft_setenv(char ***env, const char *name, const char *value);
 char	*get_current_pwd(void);
 
 /* env handling */
@@ -71,29 +67,33 @@ int		parse_env(t_shell *shell, char **env);
 t_env	*env_find_var(t_env *env_lst, char *var_name);
 int		save_2d_env(char **arr, char ***dest);
 
+/* executor functions */
+int		exec_pipe(t_shell *shell);
+void	handle_child_process(t_arg *command, t_shell *shell);
+pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe);
+int		wait_for_children(int count, t_shell *shell);
+
 /* cleanup */
 void	free_shell(t_shell *shell);
 void	free_string_array(char ***str_arr);
 void	free_command_list(t_arg **command_list);
+void	exit_pipe_error(int fd[2]);
 
-int			is_quote(char c);
+/* handle commands */
 int			build_command_list(t_shell *shell);
+char		*dir_start_calc(char *command, char **envp);
+char		*envp_path(char **envp);
 bool		check_built_in(t_arg *command);
 int			dir_len_count(char *dir_start);
 char		*absolute_path(char *command);
 int			here_doc(t_arg *command, t_shell *shell);
 int			open_file(char *file, int type);
-void		open_files_here_doc(int ac, char **av, int fd_files[2]);
+int			args_count(t_arg *args_list);
+
+/* close fds */
 void		close_all_protected(t_shell *shell);
 void		close_all_unprotected(void);
-
-void		close_both_ends(int fd[2], bool pipe_error);
+void		close_pipes(int *fd_pipe);
 void		dup_close(int fd, int reference);
 void		ft_close(int fd);
-void		validate_params(int ac, char **av);
-void		exit_pipe_error(int fd[2]);
 
-//int			exec_command(t_arg *command, t_shell *shell);
-int			exec_pipe(t_shell *shell);
-int			*handle_input(int ac, char **av);
-int			args_count(t_arg *args_list);
