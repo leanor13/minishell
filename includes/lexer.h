@@ -101,7 +101,8 @@ typedef enum e_type
 	DOUBLE_PIPE,
 	DOLLAR_SIGN,
 	GOING_DOLLAR_SIGN,
-
+	SINGLEQUOTE_DOLLAR,
+	GOING_SINGLEQUOTE_DOLLAR,
 	//DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
