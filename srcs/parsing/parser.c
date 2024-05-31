@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/22 15:49:27 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:26:38 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-void print_string(const char *str) {
-    for (size_t i = 0; str[i] != '\0'; i++) {
+void print_string(const char *str) 
+{
+    for (size_t i = 0; str[i] != '\0'; i++) 
+	{
         printf("%c", str[i]);
     }
     printf("\n");
@@ -114,7 +116,7 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 	
 	while (lst && count < i)
 	{
-		if(lst->type == GOING_ARG)
+		if(lst->type == GOING_ARG || lst->type == GOING_SINGLEQUOTE_DOLLAR)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
@@ -124,11 +126,21 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 		}
 		if(lst->type == GOING_DOLLAR_SIGN)
 		{
-			t_env *list = env_find_var(shell->env_list, &lst->str[1]);
-			if(list)
-				var_value = list->var_value;
-			if(!list)
-				break;
+			int i = 1;
+			if(lst->str[1] == '?')
+			{
+				char *res = ft_itoa(shell->exit_status);
+				ft_strcat(res, &lst->str[2]);
+				var_value = ft_strdup(res);
+			}
+			else
+			{
+				t_env *list = env_find_var(shell->env_list, &lst->str[i]);
+				if(list)
+					var_value = list->var_value;
+				if(!list)
+					break;
+			}
 			//var_value = env_find_var(shell->env_list, &lst->str[1])->var_value;
 			//if(var_value);
 			//ft_putstr_fd(var_value, 0);
@@ -319,6 +331,7 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 		j = 0;
 		k = 0;
 		l = 0;
+
 		while(lst)
 		{
 			if(lst->type == HEREDOC)
@@ -393,10 +406,14 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 				lst->type = GOING_OUTPUT;
 			}
 			else if(lst->type == DOLLAR_SIGN)
-			{	
-		
+			{
 				j++;
 				lst->type = GOING_DOLLAR_SIGN;
+			}
+			else if(lst->type == SINGLEQUOTE_DOLLAR)
+			{	
+				j++;
+				lst->type = GOING_SINGLEQUOTE_DOLLAR;
 			}
 			else if(lst->type == DOUBLE_PIPE)
 			{

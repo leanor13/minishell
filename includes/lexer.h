@@ -32,10 +32,10 @@ typedef struct s_sign
 	int quote_type;
 }				t_sign;
 
-# define FIRST_DOUBLE_QUOTE 11
-# define FIRST_SINGLE_QUOTE 22
-# define SECOND_DOUBLE_QUOTE 33
-# define SECOND_SINGLE_QUOTE 44
+# define FIRST_DOUBLE_QUOTE 2
+# define FIRST_SINGLE_QUOTE 3
+# define SECOND_DOUBLE_QUOTE 4
+# define SECOND_SINGLE_QUOTE 5
 // typedef struct s_arg_pass
 // {
 // 	char *args; // args = echo "Hello" this is me
@@ -101,7 +101,8 @@ typedef enum e_type
 	DOUBLE_PIPE,
 	DOLLAR_SIGN,
 	GOING_DOLLAR_SIGN,
-
+	SINGLEQUOTE_DOLLAR,
+	GOING_SINGLEQUOTE_DOLLAR,
 	//DELETE_ARG,
 	//END       // end of cmd 
 	// LPR,      // (
