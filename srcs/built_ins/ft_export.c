@@ -6,12 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 17:31:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/31 13:00:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// YULIA: let's chech that varname is valid by using this function
 int	is_valid_varname(const char *var_name)
 {
 	if (!ft_isalpha(*var_name) && *var_name != '_')
