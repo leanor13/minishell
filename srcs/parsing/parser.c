@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 13:26:38 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:00:53 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ size_t	ft_strjoinlen(char *s)
 
 	len = 0;
 	if (!s)
-		return (0);// THIS IS IMPORTANT protection here
+		return (0);
 	while (s[len] && s[len] != '\0')
 		len++;
 	return (len);
@@ -117,13 +117,7 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 	while (lst && count < i)
 	{
 		if(lst->type == GOING_ARG || lst->type == GOING_SINGLEQUOTE_DOLLAR)
-		{
 			s1[count] = put_word(lst->str);
-			//printf("ENTER STRJOINLINE ARGS\n");
-			// printf("Content of args s1[%d]: ", count);
-            // print_string(s1[count]);
-			// count++;
-		}
 		if(lst->type == GOING_DOLLAR_SIGN)
 		{
 			int i = 1;
@@ -141,18 +135,12 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 				if(!list)
 					break;
 			}
-			//var_value = env_find_var(shell->env_list, &lst->str[1])->var_value;
-			//if(var_value);
-			//ft_putstr_fd(var_value, 0);
-				//if(!var_value)
 			if(var_value && var_value[0])
 				s1[count] = put_word(var_value);
 		}
 		printf("Content of args s1[%d]: ", count);
         print_string(s1[count]);
 		count++;
-		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
-		// 	return (free_res(s1, count), NULL);
 		lst = lst->next;
 	}
 	s1[count] = NULL;
@@ -172,31 +160,13 @@ char	**ft_strjoinline_heredoc(t_arg *lst, int i)
 		if(lst->type == GOING_HEREDOC)
 		{
 			s1[count] = put_word(lst->str);
-			//printf("ENTER STRJOINLINE ARGS\n");
 			printf("Content of heredoc s1[%d]: ", count);
 			print_string(s1[count]);
 			count++;
 		}
-		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
-		// 	return (free_res(s1, count), NULL);
 		lst = lst->next;
 	}
 	s1[count] = NULL;
-	// char **arg_str;
- 	// t_arg *current = final;
-	// arg_str = current->args_doublechar;
-	// int y = 0;
-	// int x = 0;
-	// while (arg_str[y] != NULL)
-	// {
-	// 	x = 0;
-	// 	 while (arg_str[y][x] != '\0')
-	// 	{
-	// 		printf("%c\n", arg_str[y][x]);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
 	return(s1);
 }
 
@@ -213,31 +183,13 @@ char	**ft_strjoinline_output(t_arg *lst, int i)
 		if(lst->type == GOING_OUTPUT)
 		{
 			s1[count] = put_word(lst->str);
-			//printf("ENTER STRJOINLINE ARGS\n");
 			printf("Content of output s1[%d]: ", count);
             print_string(s1[count]);
 			count++;
 		}
-		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
-		// 	return (free_res(s1, count), NULL);
 		lst = lst->next;
 	}
 	s1[count] = NULL;
-	// char **arg_str;
- 	// t_arg *current = final;
-	// arg_str = current->args_doublechar;
-	// int y = 0;
-	// int x = 0;
-	// while (arg_str[y] != NULL)
-	// {
-	// 	x = 0;
-	// 	 while (arg_str[y][x] != '\0')
-	// 	{
-	// 		printf("%c\n", arg_str[y][x]);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
 	return(s1);
 }
 
@@ -254,31 +206,13 @@ char	**ft_strjoinline_input(t_arg *lst, int i)
 		if(lst->type == GOING_INPUT)
 		{
 			s1[count] = put_word(lst->str);
-			//printf("ENTER STRJOINLINE ARGS\n");
 			printf("Content of input s1[%d]: ", count);
             print_string(s1[count]);
 			count++;
 		}
-		// if (!s1[count])// MAYBE SOME OTHER PROTECTION THIS ONE IS NOT WORKING
-		// 	return (free_res(s1, count), NULL);
 		lst = lst->next;
 	}
 	s1[count] = NULL;
-	// char **arg_str;
- 	// t_arg *current = final;
-	// arg_str = current->args_doublechar;
-	// int y = 0;
-	// int x = 0;
-	// while (arg_str[y] != NULL)
-	// {
-	// 	x = 0;
-	// 	 while (arg_str[y][x] != '\0')
-	// 	{
-	// 		printf("%c\n", arg_str[y][x]);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
 	return(s1);
 }
 
@@ -447,7 +381,6 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 			node->out_file = ft_strjoinline_output(head_output, k);
 		if(l != 0)
 			node->in_file_open = ft_strjoinline_input(head_input, l);
-		//MAYBE CHANGE HEREDOC
 		if (!(final))
 		{
 			final = node;
@@ -463,9 +396,7 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 	node_num = 0;
  	t_arg *current = final;
     while (current)
-    {	
-		// printf("%sOUTPUT\n", current->out_file);
-		// printf("%sHEREDOC\n", current->here_doc);
+	{
 		node_num++;
 		printf("---NODE%i---\n", node_num);
         printf("%sINPUT\n", current->in_file);

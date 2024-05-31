@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/05/31 14:58:28 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:59:33 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 		i++;
 		j++;
 	}
-	if(j > 0) //it is new
+	if(j > 0)
 		append_node(lst, str, start, j, type);
 	return (j);
 }
@@ -214,10 +214,9 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	if (!str || !*str)
 		return (NULL);
 	quote = ft_calloc(1, sizeof(t_sign));
-	// 	return (NULL); //YULIA maybe error for here? instead of return
 	while(str[i])
 	{
-		i += skip_space(str, i);// everytime when it is a space
+		i += skip_space(str, i);
 		i += handle_quotestring(&lst, &quote, str, i);
 		i += shellcommand_scan(&lst, str, i, &quote);
 		if(quote->quote_type == 0)
@@ -225,7 +224,7 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 		i += arg_scan(&lst, str, i, &quote);
 	}
 	head = lst;
-	if(quote->quote_type == FIRST_SINGLE_QUOTE || quote->quote_type == FIRST_DOUBLE_QUOTE)// YULIA should something if it is unclosed quote 
+	if(quote->quote_type == FIRST_SINGLE_QUOTE || quote->quote_type == FIRST_DOUBLE_QUOTE)
 	{
 		free(head);
 		ft_printf("bash: syntax error: UNCLOSED_QUOTE\n");
