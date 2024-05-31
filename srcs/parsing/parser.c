@@ -6,31 +6,30 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 16:35:21 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:58:01 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_printsyntaxerror(t_arg **lst)
+void	ft_printsyntaxerror(t_arg **lst) //TAKE CARE OF EXIT STATUS
 {
-	if((*lst)->type == DOUBLE_PIPE)
+	if ((*lst)->type == DOUBLE_PIPE)
 		ft_printf("minishell: syntax error near unexpected token `|'\n");
-	else if((*lst)->next->type == HEREDOC)
+	else if ((*lst)->next->type == HEREDOC)
 		ft_printf("minishell: syntax error near unexpected token `<<'\n");
-	else if((*lst)->next->type == OUTPUT)
+	else if ((*lst)->next->type == OUTPUT)
 		ft_printf("minishell: syntax error near unexpected token `>'\n");
-	else if((*lst)->next->type == INPUT)
+	else if ((*lst)->next->type == INPUT)
 		ft_printf("minishell: syntax error near unexpected token `<'\n");
-	else if((*lst)->next->type == APPEND)
+	else if ((*lst)->next->type == APPEND)
 		ft_printf("minishell: syntax error near unexpected token `>>'\n");
 	else
 		ft_printf("minishell: syntax error near unexpected token `|'\n");
 	free_stackfinal(lst);
 }
 
-t_arg *ft_parser(t_arg *lst, t_shell *shell)
-
+t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 {
 	t_arg	*final;
 	t_arg	*node;
@@ -44,7 +43,7 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 	t_arg	*head_output;
 	t_arg	*head_input;
 
-	int node_num = 0;//delete later
+	int node_num = 0;//DELETE
 	final = NULL;
 	if (!lst)
 		return (NULL);
@@ -167,8 +166,8 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 			}
 			lst = lst->next;
 		}
-		node_num++;
-		printf("---NODE%i---\n", node_num);
+		node_num++;//DELETE
+		printf("---NODE%i---\n", node_num);//DELETE
 		if(i != 0)
 			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
 		if(j != 0)
@@ -189,15 +188,15 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 			node->prev = nlast;
 		}
 	}
-	node_num = 0;
- 	t_arg *current = final;
-    while (current)
+	node_num = 0;//DELETE
+ 	t_arg *current = final;//DELETE
+    while (current)//DELETE
 	{
 		node_num++;
 		printf("---NODE%i---\n", node_num);
         printf("%sINPUT\n", current->in_file);
         printf("%iAPPEND\n", current->append);
         current = current->next;
-    }
+    }//DELETE
 	return(final);
 }

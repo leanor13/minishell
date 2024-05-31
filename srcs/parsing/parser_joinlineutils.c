@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 16:48:31 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:02:25 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-ststiac void	print_string(const char *str)// DELETE
+static void	print_string(const char *str)// DELETE
 {
 	for (size_t i = 0; str[i] != '\0'; i++) 
 	{
