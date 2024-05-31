@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_listutils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/21 21:03:49 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:53:21 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +38,7 @@ void	free_stackfinal(t_arg **lst)
 	*lst = NULL;
 }
 
-void	append_node(t_arg **lst, char *str, int start, int len, int value)
+void	append_node(t_arg **lst, char *str, t_append info, int value)
 {
 	t_arg	*node;
 	t_arg	*nlast;
@@ -50,7 +49,7 @@ void	append_node(t_arg **lst, char *str, int start, int len, int value)
 	if (!node)
 		return ;
 	node->next = NULL;
-	node->str = ft_substr(str, start, len);
+	node->str = ft_substr(str, info.start, info.len);
 	node->type = value;
 	if (!(*lst))
 	{
