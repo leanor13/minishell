@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 15:45:17 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:26:38 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 	
 	while (lst && count < i)
 	{
-		if(lst->type == GOING_ARG)
+		if(lst->type == GOING_ARG || lst->type == GOING_SINGLEQUOTE_DOLLAR)
 		{
 			s1[count] = put_word(lst->str);
 			//printf("ENTER STRJOINLINE ARGS\n");
@@ -331,6 +331,7 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 		j = 0;
 		k = 0;
 		l = 0;
+
 		while(lst)
 		{
 			if(lst->type == HEREDOC)
@@ -405,10 +406,14 @@ t_arg *ft_parser(t_arg *lst, t_shell *shell)
 				lst->type = GOING_OUTPUT;
 			}
 			else if(lst->type == DOLLAR_SIGN)
-			{	
-		
+			{
 				j++;
 				lst->type = GOING_DOLLAR_SIGN;
+			}
+			else if(lst->type == SINGLEQUOTE_DOLLAR)
+			{	
+				j++;
+				lst->type = GOING_SINGLEQUOTE_DOLLAR;
 			}
 			else if(lst->type == DOUBLE_PIPE)
 			{

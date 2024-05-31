@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/05/30 16:30:37 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:18:52 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ int shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	else if(str[i] == '$')
 	{
 		h = i;
-		// if (quote->type == FIRST_SINGLE_QUOTE)
-		//make it dolarsign stuff	
+		if ((*quote)->quote_type == FIRST_SINGLE_QUOTE)
+			type = SINGLEQUOTE_DOLLAR;
 		while(str[h] != ' ' && str[h])
 		{
 			if(find_quote(quote, str, h))
