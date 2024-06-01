@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:04:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 17:55:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,15 @@ void	free_env_lst(t_env *env_lst)
 	}
 }
 
+void	ft_free(char **str)
+{
+	if (!str || !*str)
+		return ;
+	if (*str)
+		free(*str);
+	*str = NULL;
+}
+
 void	free_args(t_arg **args_list)
 {
 	t_arg	*curr_arg;
@@ -65,12 +74,12 @@ void	free_args(t_arg **args_list)
 		free_string_array(&curr_arg->out_file);
 		free_string_array(&curr_arg->in_file);
 		free_string_array(&curr_arg->here_doc);
-		if (curr_arg->command)
-			free(curr_arg->command);
+		//if (curr_arg->command)
+		//	free(curr_arg->command);
 		if (curr_arg->path)
 			free(curr_arg->path);
-		if (curr_arg)
-			free(curr_arg);
+		//if (curr_arg)
+		//	free(curr_arg);
 		curr_arg = next_arg;
 	}
 }

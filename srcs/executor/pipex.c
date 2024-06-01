@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 16:41:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 17:33:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 		result = command->built_in_fn(shell, command);
 		dup_close(original_stdin, STDIN_FILENO);
 		dup_close(original_stdout, STDOUT_FILENO);
+		shell->exit_status = result;
 		if (result != EXIT_SUCCESS)
 			return (result);
 		if (shell->should_exit && (command->next || command->prev))
@@ -137,5 +138,5 @@ int	exec_pipe(t_shell *shell)
 	process_commands(shell, current, fd_pipe, &fd_in);
 	shell->exit_status = wait_for_children(count, shell);
 	close_all_protected(shell);
-	return (EXIT_SUCCESS);
+	return (shell->exit_status);
 }
