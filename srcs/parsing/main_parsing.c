@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 17:56:12 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:10:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ int main_parsing(t_shell *shell)
 		// 	shell->env_list = shell->env_list->next;
 		// }
 		//update_env_2d(shell);
-		free_stackfinal(&lst);
+		//free_args(&lst);
+		free_command_list(&lst);
 		free(command);
 		close_all_protected(shell);
 

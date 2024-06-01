@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:22:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 17:14:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_sign
 	int					quote_type;
 }						t_sign;
 
+# define NONE_TYPE 0
 # define FIRST_DOUBLE_QUOTE 2
 # define FIRST_SINGLE_QUOTE 3
 # define SECOND_DOUBLE_QUOTE 4

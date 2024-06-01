@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 16:10:20 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:04:25 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	free_shell(t_shell *shell)
 	free_string_array(&shell->env_2d);
 	free_env_lst(shell->env_list);
 	free_args(&shell->args_list);
+	//free_stackfinal(&shell->args_list);
 	close_all_protected(shell);
 	dup2(shell->std_fds[0], STDIN_FILENO);
 	dup2(shell->std_fds[1], STDOUT_FILENO);
