@@ -8,6 +8,11 @@ bash: unexpected EOF while looking for matching `"'
 bash: syntax error: unexpected end of file
 thuy-ngu@c1r9s1:~/minishellfinal$ echo $?
 
+MEMORY leaks tests:
+1. echo
+2. cat Makefile > out | awk '{print $1}'
+3. 
+
 echo '$USERkoevkfvpojrvs'
 
 return(EXIT_FAILURE)
