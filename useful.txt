@@ -1,4 +1,5 @@
-
+export ""
+export ''
 
 "$USER'''" this one maybe a changin on find_var
 1. Checking the exit status, sometimes -1 instead of 1, export spaces, export "" ? $ with special symbols
