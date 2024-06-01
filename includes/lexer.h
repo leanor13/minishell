@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 16:36:16 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:13:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ typedef struct s_arg
 	char			*str; // args in the lexer
 	int				type; //assign type in the lexer
 	char			**arguments;
-	char			*in_file; // >>  > out.txt -> out.txt
 	char			**out_file; //< in.txt -> in.txt
-	char			**in_file_open; //< in.txt -> in.txt
+	char			**in_file; //< in.txt -> in.txt
 	char			**here_doc; // << first one is going ot be an argument so it nice in this way
 	bool			append; // it is only a bool if the last on is append other thatn that they are outputfiles 
 	char			*command; // used in executor

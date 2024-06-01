@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:39:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 11:42:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 11:12:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	open_file(char *file, int type)
 static void	handle_here_doc(t_arg *command, t_shell *shell)
 {
 	here_doc(command, shell);
-	command->in_file = "here_doc";
 	command->fd_in = STDIN_FILENO;
 }
 
@@ -48,9 +47,9 @@ static void	open_input_files(t_arg *command)
 	int	i;
 
 	i = 0;
-	while (command->in_file_open[i])
+	while (command->in_file[i])
 	{
-		command->fd_in = open_file(command->in_file_open[i], INPUT_FILE);
+		command->fd_in = open_file(command->in_file[i], INPUT_FILE);
 		if (command->fd_in == -1)
 			perror("open input file");
 		i++;
@@ -80,7 +79,7 @@ int	process_command_fds(t_arg *command, t_shell *shell)
 	{
 		if (command->here_doc != NULL)
 			handle_here_doc(command, shell);
-		else if (command->in_file_open && command->in_file_open[0])
+		else if (command->in_file && command->in_file[0])
 			open_input_files(command);
 		if (command->out_file && command->out_file[0])
 			open_output_files(command);

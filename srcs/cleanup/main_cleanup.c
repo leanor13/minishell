@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 17:31:54 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 11:12:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	free_args(t_arg **args_list)
 		next_arg = curr_arg->next;
 		free_string_array(&curr_arg->arguments);
 		free_string_array(&curr_arg->out_file);
-		free_string_array(&curr_arg->in_file_open);
+		free_string_array(&curr_arg->in_file);
 		free_string_array(&curr_arg->here_doc);
 		if (curr_arg->command)
 			free(curr_arg->command);

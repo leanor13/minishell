@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:08:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 11:12:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 
 int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 {
-	if (!current->in_file_open || !current->in_file_open[0])
+	if (!current->in_file || !current->in_file[0])
 		current->fd_in = fd_in;
 	if (current->next)
 	{
@@ -71,7 +71,7 @@ int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 		}
 		if (!current->out_file || !current->out_file[0])
 			current->fd_out = fd_pipe[FD_OUT];
-		if (!current->next->in_file_open || !current->next->in_file_open[0])
+		if (!current->next->in_file || !current->next->in_file[0])
 			current->next->fd_in = fd_pipe[FD_IN];
 	}
 	else if (!current->out_file || !current->out_file[0])
