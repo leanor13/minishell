@@ -37,6 +37,8 @@ expected behavior
 > f
 bash: syntax error near unexpected token `newline'
 15. Memory leaks
+16. (TINA) export without value (like {export r}) creates duplicates
+17. (YULIA) failed builtins don't give $? = 1, they return 0
 
 
 
