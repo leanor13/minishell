@@ -24,14 +24,14 @@ For export return error status for {export name = dmkdm}
 4. PARSER: echo '$USER' - EXPECTED: $USER. NOW it prints content of $USER with ' in the end. echo '"$USER"' should print "$USER", echo "$USER" should print username, now both work good.
 5. PARSER: We need to run more tests for single quotes. Also for '$?', some flags etc.
 6. (YULIA?) (minor) export should print alphabetically. We can do it if we want.
-7. (YULIA - implement cd) , cd and pwd not yet tested. (for pwd testing we need cd). When cd is done, check how it works with empty env (env -i ./minishell)
+7. (done YULIA) cd and pwd not yet tested. (for pwd testing we need cd). When cd is done, check how it works with empty env (env -i ./minishell)
 8. (TINA) export (only need to fix update and case with spaces)
 9. (minor) if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
 9. (TINA?)(minor) export $okay=something - in bash this gives error
 10. (YULIA) remove all TODO
 11. (TINA) ask seombody what it means on EVALUATION SHEET: Check if multiple tries of the same redirections fail.
 12. (YULIA) HEREDOC: once SIGNALS done - add signals there
-13. (YULIA) ./minishell
+13. (Done - YULIA) ./minishell
 14. (TINA?) (minor) cat << f <<
 expected behavior
 > f

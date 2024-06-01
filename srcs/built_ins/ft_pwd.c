@@ -6,11 +6,30 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:38:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 12:02:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:54:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*get_current_pwd(void)
+{
+	char	*buffer;
+
+	buffer = (char *)ft_calloc(PATH_MAX, sizeof(char));
+	if (buffer != NULL)
+	{
+		if (getcwd(buffer, PATH_MAX) == NULL)
+		{
+			perror("getcwd() error");
+			free(buffer);
+			return (NULL);
+		}
+	}
+	else
+		perror("ft_calloc() error");
+	return (buffer);
+}
 
 int	ft_pwd(t_shell *shell, t_arg *command)
 {

@@ -6,13 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:15:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 11:59:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:31:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// TODO: clean fd_out every time we run command with it
 
 int	ft_env(t_shell *shell, t_arg *command)
 {

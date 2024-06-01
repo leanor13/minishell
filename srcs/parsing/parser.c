@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 16:58:01 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:13:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 					ft_printsyntaxerror(&lst);
 					return(NULL);
 				}
-				node->in_file = ft_strdup("here_doc");
 				lst = lst->next;
 				i++;
 				lst->type = GOING_HEREDOC;
@@ -175,7 +174,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 		if(k != 0)
 			node->out_file = ft_strjoinline_output(head_output, k);
 		if(l != 0)
-			node->in_file_open = ft_strjoinline_input(head_input, l);
+			node->in_file = ft_strjoinline_input(head_input, l);
 		if (!(final))
 		{
 			final = node;
@@ -194,7 +193,6 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 	{
 		node_num++;
 		printf("---NODE%i---\n", node_num);
-        printf("%sINPUT\n", current->in_file);
         printf("%iAPPEND\n", current->append);
         current = current->next;
     }//DELETE

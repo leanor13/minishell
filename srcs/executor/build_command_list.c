@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/28 21:47:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:55:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,6 @@ static char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 	return (path_buf);
 }
 
-static char	*envp_path(char **envp)
-{
-	if (!envp)
-	{
-		printf("here\n");
-		return (NULL);
-	}
-	while (*envp)
-	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-			return (*envp + 5);
-		envp++;
-	}
-	return (NULL);
-}
-
 static char	*find_path(char *command, char **envp)
 {
 	char	*command_path_buf;
@@ -58,12 +42,9 @@ static char	*find_path(char *command, char **envp)
 
 	if (absolute_path(command))
 		return (ft_strdup(command));
-	dir_start = envp_path(envp);
+	dir_start = dir_start_calc(command, envp);
 	if (!dir_start)
-	{
-		ft_putstr_fd(command, STDERR_FILENO);
-		return (ft_putstr_fd(EMPTY_ENV, STDERR_FILENO), NULL);
-	}
+		return (NULL);
 	is_end = false;
 	while (!is_end)
 	{
@@ -85,7 +66,6 @@ static int	update_command(t_arg *command, t_shell *shell)
 {
 	int	i;
 
-	// add here error messages
 	if (!command->arguments)
 		return (EXIT_FAILURE);
 	command->command = command->arguments[0];

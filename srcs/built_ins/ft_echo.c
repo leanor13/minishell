@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 13:31:35 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:40:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,20 @@ static void	handle_quotes_and_special_chars(char *arg, int len_arg, int fd_out)
 	}
 }
 
-static void	echo_arg(char *arg, t_env *env_lst, int fd_out)
+static void	echo_arg(char *arg, int fd_out)
 {
 	int		len_arg;
-	char	*var_value;
 
 	len_arg = ft_strlen(arg);
 	if (!arg || !arg[0])
 		return ;
-	if (arg[0] == '$')
+	/* if (arg[0] == '$')
 	{
 		var_value = env_find_var(env_lst, arg + 1)->var_value;
 		ft_putstr_fd(var_value, fd_out);
 	}
-	else
-		handle_quotes_and_special_chars(arg, len_arg, fd_out);
+	else */
+	handle_quotes_and_special_chars(arg, len_arg, fd_out);
 }
 
 static void	process_escape_sequences(char *str)
@@ -89,6 +88,7 @@ int	ft_echo(t_shell *shell, t_arg *command)
 	int		fd_out;
 
 	args = command->arguments;
+	(void)shell;
 	fd_out = STDOUT_FILENO;
 	new_line = true;
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
@@ -100,7 +100,7 @@ int	ft_echo(t_shell *shell, t_arg *command)
 	while (args[i] != NULL)
 	{
 		process_escape_sequences(args[i]);
-		echo_arg(args[i], shell->env_list, fd_out);
+		echo_arg(args[i], fd_out);
 		i++;
 		if (args[i] != NULL)
 			ft_putchar_fd(' ', fd_out);
