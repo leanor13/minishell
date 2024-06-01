@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 16:11:31 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:28:59 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	find_quote(t_sign **lst, char *str, int i)
 			(*lst)->quote_type = SECOND_DOUBLE_QUOTE;
 			return (1);
 		}
+		else
+			return(0);
 	}
 	if ((*lst)->quote_type == FIRST_SINGLE_QUOTE)
 	{
@@ -29,6 +31,8 @@ int	find_quote(t_sign **lst, char *str, int i)
 			(*lst)->quote_type = SECOND_SINGLE_QUOTE;
 			return (1);
 		}
+		else
+			return(0);
 	}
 	if ((*lst)->quote_type != FIRST_DOUBLE_QUOTE)
 	{
