@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:11:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:12:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 16:10:20 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	free_args(t_arg **args_list)
 	while (curr_arg)
 	{
 		next_arg = curr_arg->next;
+		free(curr_arg->str);
 		free_string_array(&curr_arg->arguments);
 		free_string_array(&curr_arg->out_file);
 		free_string_array(&curr_arg->in_file);

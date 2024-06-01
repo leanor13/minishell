@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 17:38:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 15:30:22 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// YULIA: let's chech that varname is valid by using this function
+// YULIA: let's check that varname is valid by using this function
 int	is_valid_varname(const char *var_name)
 {
 	if (!ft_isalpha(*var_name) && *var_name != '_')
