@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:12:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 16:41:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,14 @@ void	execute_current_command(t_arg *current, t_shell *shell, int *fd_pipe,
 		return ;
 	if (current->next)
 	{
-		close(fd_pipe[FD_OUT]);
-		fd_pipe[FD_OUT] = -1;
+		ft_close(fd_pipe[FD_OUT]);
 		*fd_in = fd_pipe[FD_IN];
 	}
 	else
 	{
-		close(fd_pipe[FD_IN]);
-		close(fd_pipe[FD_OUT]);
-		fd_pipe[FD_IN] = -1;
-		fd_pipe[FD_OUT] = -1;
+		ft_close(fd_pipe[FD_IN]);
+		ft_close(fd_pipe[FD_OUT]);
 		ft_close(*fd_in);
-		*fd_in = -1;
 	}
 }
 
