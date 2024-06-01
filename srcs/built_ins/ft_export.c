@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 18:52:21 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:17:19 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,18 @@ int	ft_export(t_shell *shell, t_arg *command)
 			// || *args[i] == '=' || *args[i] == 34 || *args[i] == 39 || shell->args_list->type == WRONG)
 	while (args[i] != NULL) 
 	{
-		if(!is_valid_varname(args[i]))
-		{
-			printf("OKAAYA\n");
-			ft_printf("not a valid identifier\n");
-			return(EXIT_FAILURE);
-		}
         equal_sign = strchr(args[i], '=');
-        if (equal_sign)
+		if (equal_sign)
 		{
 			size_t name_len = equal_sign - args[i];
 			char *var_name = strndup(args[i], name_len);
+			char *var_name_test = strdup(var_name);
+			if(!is_valid_varname(var_name_test))
+			{
+				ft_printf("not a valid identifier\n");
+				return(EXIT_FAILURE);
+			}
+			free(var_name_test);
 			char *var_value = strdup(equal_sign + 1);
 			int k = ft_strlen(var_name);
 			t_env *env_lst_start = shell->env_list;
@@ -105,9 +106,25 @@ int	ft_export(t_shell *shell, t_arg *command)
 				ft_printf("not a valid identifier\n");
 				return(EXIT_FAILURE);
 			}
+			size_t name_len = ft_strlen(args[i]);//NEW
+			char *var_name = strndup(args[i], name_len);
+			int k = ft_strlen(var_name);
+			t_env *env_lst_start = shell->env_list;
+			while(shell->env_list)
+			{
+				if(!ft_strncmp(shell->env_list->var_name, var_name, k))
+				{
+					free(var_name);	
+					sign = 1;
+					break;
+				}
+				shell->env_list = shell->env_list->next;
+			}
+			shell->env_list = env_lst_start;
+			if (sign == 0)
 			add_back_env(&shell->env_list, args[i], NULL);
 		}
-        i++;
+		i++;
 	}
 	if (equal_sign)
 		shell->env_list = env_lst_start;
