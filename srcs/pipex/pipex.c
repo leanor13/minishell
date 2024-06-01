@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 18:27:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 11:08:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,41 +31,32 @@ void	print_open_fds(char *message)
 		}
 	}
 } */
-
-int exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
+int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 {
-    int result;
-    int original_stdout;
+	int	result;
+	int	original_stdout;
+	int	original_stdin;
 
-    if (!command)
-        return (EXIT_CMD_NOT_FOUND);
-
-    // Handle redirection before checking if it's a built-in or external command
-    original_stdout = dup(STDOUT_FILENO);
-    if (command->fd_out != STDOUT_FILENO) {
-        if (dup2(command->fd_out, STDOUT_FILENO) == -1) {
-            perror("dup2 failed for built-in");
-            return (EXIT_FAILURE);
-        }
-    }
-
-    if (command->built_in_fn != NULL) {
-        result = command->built_in_fn(shell, command);
-        dup2(original_stdout, STDOUT_FILENO);
-        close(original_stdout);
-        if (result != EXIT_SUCCESS)
-            return (result);
-        if (shell->should_exit && (command->next || command->prev))
-            shell->should_exit = false;
-        return (EXIT_SUCCESS);
-    } else {
-        result = handle_parent_process(command, shell, fd_pipe);
-        dup2(original_stdout, STDOUT_FILENO);
-        close(original_stdout);
-        return result;
-    }
+	if (!command)
+		return (EXIT_CMD_NOT_FOUND);
+	if (command->built_in_fn != NULL)
+	{
+		original_stdout = dup(STDOUT_FILENO);
+		original_stdin = dup(STDIN_FILENO);
+		dup_close(command->fd_in, STDIN_FILENO);
+		dup_close(command->fd_out, STDOUT_FILENO);
+		result = command->built_in_fn(shell, command);
+		dup_close(original_stdin, STDIN_FILENO);
+		dup_close(original_stdout, STDOUT_FILENO);
+		if (result != EXIT_SUCCESS)
+			return (result);
+		if (shell->should_exit && (command->next || command->prev))
+			shell->should_exit = false;
+		return (EXIT_SUCCESS);
+	}
+	else
+		return (handle_parent_process(command, shell, fd_pipe));
 }
-
 
 int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 {
@@ -78,8 +69,10 @@ int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 			perror("Error creating pipe");
 			return (EXIT_FAILURE);
 		}
-		current->fd_out = fd_pipe[FD_OUT];
-		current->next->fd_in = fd_pipe[FD_IN];
+		if (!current->out_file || !current->out_file[0])
+			current->fd_out = fd_pipe[FD_OUT];
+		if (!current->next->in_file_open || !current->next->in_file_open[0])
+			current->next->fd_in = fd_pipe[FD_IN];
 	}
 	else if (!current->out_file || !current->out_file[0])
 		current->fd_out = STDOUT_FILENO;
@@ -147,5 +140,6 @@ int	exec_pipe(t_shell *shell)
 	count = child_count(c_list);
 	process_commands(shell, current, fd_pipe, &fd_in);
 	shell->exit_status = wait_for_children(count, shell);
+	close_all_protected(shell);
 	return (EXIT_SUCCESS);
 }
