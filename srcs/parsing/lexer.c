@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/06/01 17:15:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 17:19:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	t_append	info;
 
 	j = 0;
+	// make sure if it's ok please :)
 	type = NONE_TYPE;
 	if (str[i] == '\0')
 		return (j);
