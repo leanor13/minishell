@@ -69,19 +69,20 @@ void	free_args(t_arg **args_list)
 	while (curr_arg)
 	{
 		next_arg = curr_arg->next;
-		free(curr_arg->str);
+		ft_free(&curr_arg->str);
 		free_string_array(&curr_arg->arguments);
 		free_string_array(&curr_arg->out_file);
 		free_string_array(&curr_arg->in_file);
 		free_string_array(&curr_arg->here_doc);
+		curr_arg->command = NULL;
+		curr_arg->built_in_fn = NULL;
 		//if (curr_arg->command)
 		//	free(curr_arg->command);
-		if (curr_arg->path)
-			free(curr_arg->path);
-		//if (curr_arg)
-		//	free(curr_arg);
+		ft_free(&curr_arg->path);
+		free(curr_arg);
 		curr_arg = next_arg;
 	}
+	*args_list = NULL;
 }
 
 void	free_shell(t_shell *shell)

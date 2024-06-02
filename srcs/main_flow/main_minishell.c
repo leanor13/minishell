@@ -22,5 +22,5 @@ int	main(int argc, char **argv, char **env)
 	main_parsing(&shell);
 	free_shell(&shell);
 	//ft_clean(); - this function will use free_stackfinal as well
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

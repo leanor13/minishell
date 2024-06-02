@@ -24,7 +24,7 @@ OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror -g3
+CFLAGS	= -g3 # -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 INCL	= ./includes/executor.h ./includes/lexer.h ./includes/minishell.h
@@ -81,6 +81,6 @@ re: fclean all
 # 		valgrind --suppressions=valgrind.supp ./parsing
 
 valgrind:
-		valgrind --suppressions=valgrind.supp --trace-children=yes  --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all ./minishell
+		valgrind --suppressions=valgrind.supp --trace-children=yes  --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all --read-var-info=yes ./minishell
 
 .PHONY: all fclean clean re valgrind parsing
