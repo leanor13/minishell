@@ -42,6 +42,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 	t_arg	*head_heredoc;
 	t_arg	*head_output;
 	t_arg	*head_input;
+	t_arg	*temp_lst = lst;
 
 	//int node_num = 0;//DELETE
 	final = NULL;
@@ -53,10 +54,13 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 		head_heredoc = lst;
 		head_output = lst;
 		head_input = lst;
-		node = lst;
-		//node = ft_calloc(1, sizeof(t_arg));
-		//if (!node)
-		//	return (NULL);
+		//node = lst;
+		node = ft_calloc(1, sizeof(t_arg));
+		if (!node)
+		{
+			free_args(&temp_lst);
+			return (NULL);
+		}
 		i = 0;
 		j = 0;
 		k = 0;
@@ -73,6 +77,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
+					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
 					return(NULL);
 				}
@@ -94,6 +99,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
+					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
 					return(NULL);
 				}
@@ -110,6 +116,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
+					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
 					return(NULL);
 				}
@@ -126,6 +133,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
+					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
 					return(NULL);
 				}
@@ -146,6 +154,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 			}
 			else if(lst->type == DOUBLE_PIPE)
 			{
+				free_args(&temp_lst);
 				ft_printsyntaxerror(&lst);
 				return(NULL);
 			}
@@ -158,6 +167,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
+					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
 					return(NULL);
 				}
@@ -198,5 +208,6 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
         printf("%iAPPEND\n", current->append);
         current = current->next;
     }//DELETE */
+	free_args(&temp_lst);
 	return(final);
 }

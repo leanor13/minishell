@@ -68,7 +68,6 @@ int main_parsing(t_shell *shell)
 		}
 		add_history(command);
 		lst = ft_lexer(command, lst);
-		printf("here\n");
 		/* t_arg *current = lst;
 		int	lst_num = 0;
    	 	while (current)
