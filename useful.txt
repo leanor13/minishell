@@ -12,6 +12,7 @@ MEMORY leaks tests:
 1. echo
 2. cat Makefile > out | awk '{print $1}'
 3. empty env + not-empty env but no USER
+4. check open fds for children
 
 echo '$USERkoevkfvpojrvs'
 
