@@ -51,3 +51,15 @@ testers help:
 3. check all buildins to make sure 1st argument is taken
 4. https://docs.google.com/spreadsheets/d/17linwSWODYO4O9Db0FohJYr_8shMTGvyo0MjToPrcAI/edit#gid=1305472556
 5. check empty and corrupted env
+
+
+To open VS Code in a Docker container:
+
+Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Open Folder in Container...").
+Select the folder you want to open in the container.
+VS Code will reload and open the folder inside the Docker container.
+To switch back to running VS Code on your local machine:
+
+Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Reopen Locally").
+VS Code will reload and open the folder on your local machine.
+Remember, you need to have Docker installed and running on your machine to use the "Remote - Containers" extension. If you don't have the extension installed, you can install it from the Extensions view (Ctrl+Shift+X).

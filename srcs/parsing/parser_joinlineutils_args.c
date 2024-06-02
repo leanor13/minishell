@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_joinlineutils_args.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 16:48:26 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:27:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	print_string(const char *str)// DELETE
+void	print_string(const char *str)// DELETE
 {
 	for (size_t i = 0; str[i] != '\0'; i++) 
 	{
