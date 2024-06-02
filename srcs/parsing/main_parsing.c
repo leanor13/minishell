@@ -68,8 +68,8 @@ int main_parsing(t_shell *shell)
 		}
 		add_history(command);
 		lst = ft_lexer(command, lst);
-		
-		t_arg *current = lst;
+		printf("here\n");
+		/* t_arg *current = lst;
 		int	lst_num = 0;
    	 	while (current)
     	{	
@@ -80,7 +80,7 @@ int main_parsing(t_shell *shell)
         	printf(" %s,", current->str);
         	printf("type %i\n", current->type);
         	current = current->next;
-   		}
+   		} */
 		lst = ft_parser(lst, shell);
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
@@ -101,7 +101,7 @@ int main_parsing(t_shell *shell)
 		//update_env_2d(shell);
 		//free_args(&lst);
 		//free_command_list(&lst);
-		free_args(&lst);
+		free_args(&shell->args_list);
 		free(command);
 		close_all_protected(shell);
 

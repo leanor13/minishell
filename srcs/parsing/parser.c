@@ -43,7 +43,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 	t_arg	*head_output;
 	t_arg	*head_input;
 
-	int node_num = 0;//DELETE
+	//int node_num = 0;//DELETE
 	final = NULL;
 	if (!lst)
 		return (NULL);
@@ -53,9 +53,10 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 		head_heredoc = lst;
 		head_output = lst;
 		head_input = lst;
-		node = ft_calloc(1, sizeof(t_arg));
-		if (!node)
-			return (NULL);
+		node = lst;
+		//node = ft_calloc(1, sizeof(t_arg));
+		//if (!node)
+		//	return (NULL);
 		i = 0;
 		j = 0;
 		k = 0;
@@ -165,8 +166,8 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 			}
 			lst = lst->next;
 		}
-		node_num++;//DELETE
-		printf("---NODE%i---\n", node_num);//DELETE
+		//node_num++;//DELETE
+		//printf("---NODE%i---\n", node_num);//DELETE
 		if(i != 0)
 			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
 		if(j != 0)
@@ -187,7 +188,8 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 			node->prev = nlast;
 		}
 	}
-	node_num = 0;//DELETE
+
+	/* node_num = 0;//DELETE
  	t_arg *current = final;//DELETE
     while (current)//DELETE
 	{
@@ -195,6 +197,6 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 		printf("---NODE%i---\n", node_num);
         printf("%iAPPEND\n", current->append);
         current = current->next;
-    }//DELETE
+    }//DELETE */
 	return(final);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+         #
+#    By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2024/05/22 19:19:54 by thuy-ngu         ###   ########.fr        #
+#    Updated: 2024/06/02 10:59:48 by yioffe           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ NAME = libft.a
 LIBC = ar rcs
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g3 -O3 -I.
+CFLAGS = -g3 -O3 -I. #-Wall -Wextra -Werror 
 
 GREEN = \033[0;32m
 CYAN = \033[0;36m
