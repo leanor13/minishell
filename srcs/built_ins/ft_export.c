@@ -67,6 +67,11 @@ int	ft_export(t_shell *shell, t_arg *command)
 		ft_printf("not a valid identifier\n");
 		return(EXIT_FAILURE);
 	}
+	if (shell && shell->args_list && shell->args_list->type && shell->args_list->type == WRONG)
+	{
+		ft_printf("not a valid identifier\n");
+		return(EXIT_FAILURE);
+	}
 	while (args[i] != NULL) 
 	{
         equal_sign = strchr(args[i], '=');
@@ -104,6 +109,11 @@ int	ft_export(t_shell *shell, t_arg *command)
 			|| *args[i] == '-' || *args[i] == '+' || *args[i] == '!' || *args[i] == '?' || *args[i] == '$' \
 			|| *args[i] == '=' || *args[i] == 34 || *args[i] == 39 )
 			//|| shell->args_list->type == WRONG)
+			{
+				ft_printf("not a valid identifier\n");
+				return(EXIT_FAILURE);
+			}
+			if (shell && shell->args_list && shell->args_list->type && shell->args_list->type == WRONG)
 			{
 				ft_printf("not a valid identifier\n");
 				return(EXIT_FAILURE);
