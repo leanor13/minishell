@@ -123,12 +123,12 @@ void	handle_env(t_shell *shell, char **env)
 
 int	init_shell(t_shell *shell, char **env)
 {
+	shell->args_list = NULL;
 	handle_env(shell, env);
 	shell->std_fds[0] = dup(STDIN_FILENO);
 	shell->std_fds[1] = dup(STDOUT_FILENO);
 	shell->std_fds[2] = dup(STDERR_FILENO);
 	shell->here_doc_fd = 0;
-	shell->args_list = NULL;
 	shell->here_doc = false;
 	shell->should_exit = false;
 	shell->exit_status = EXIT_SUCCESS;
