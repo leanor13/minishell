@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:29:36 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 16:57:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 	return (EXIT_SUCCESS);
 }
 
-void	execute_current_command(t_arg *current, t_shell *shell, int *fd_pipe,
+int	execute_current_command(t_arg *current, t_shell *shell, int *fd_pipe,
 		int *fd_in)
 {
 	int	result;
 
 	result = exec_command(current, shell, fd_pipe);
 	if (result < 0)
-		return ;
+		return (result);
 	if (current->next)
 	{
 		ft_close(fd_pipe[FD_OUT]);
@@ -100,24 +100,27 @@ void	execute_current_command(t_arg *current, t_shell *shell, int *fd_pipe,
 		ft_close(fd_pipe[FD_OUT]);
 		ft_close(*fd_in);
 	}
+	return (result);
 }
 
-void	process_commands(t_shell *shell, t_arg *current, int *fd_pipe,
+int	process_commands(t_shell *shell, t_arg *current, int *fd_pipe,
 		int *fd_in)
 {
+	int	result;
 	while (current)
 	{
 		if (current->command)
 		{
-			if (setup_pipe(current, fd_pipe, *fd_in) == NEG_ERROR)
+			if (setup_pipe(current, fd_pipe, *fd_in) == EXIT_FAILURE)
 			{
 				close_all_protected(shell);
-				return ;
+				return (EXIT_FAILURE);
 			}
-			execute_current_command(current, shell, fd_pipe, fd_in);
+			result = execute_current_command(current, shell, fd_pipe, fd_in);
 		}
 		current = current->next;
 	}
+	return (result);
 }
 
 int	exec_pipe(t_shell *shell)
@@ -136,8 +139,9 @@ int	exec_pipe(t_shell *shell)
 		return (EXIT_CMD_NOT_FOUND);
 	current = c_list;
 	count = child_count(c_list);
-	process_commands(shell, current, fd_pipe, &fd_in);
-	shell->exit_status = wait_for_children(count, shell);
+	shell->exit_status = process_commands(shell, current, fd_pipe, &fd_in);
+	if (count)
+		shell->exit_status = wait_for_children(count, shell);
 	close_all_protected(shell);
 	return (shell->exit_status);
 }

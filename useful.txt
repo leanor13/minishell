@@ -1,0 +1,148 @@
+export ""
+export ''
+export $USER - it opens
+export $okay=something - in bash this gives error
+echo '"$USER"'''" - UNCLOSED QUOTES
+
+"$USER'''" this one maybe a changin on find_var
+1. Checking the exit status, sometimes -1 instead of 1, export spaces, export "" ? $ with special symbols
+
+Notes (3.06):
+0. Many leaks: 
+cat Makefile > out | wc -l < in > out2 (in does not exist)
+1. cat Makefile > out | wc -l < out > in
+==587019== 2 bytes in 1 blocks are definitely lost in loss record 2 of 69
+==587019==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==587019==    by 0x406CCC: ft_itoa (ft_itoa.c:67)
+==587019==    by 0x406138: ft_strjoinline_args (parser_joinlineutils_args.c:63)
+==587019==    by 0x405558: ft_parser (parser.c:184)
+==587019==    by 0x404590: main_parsing (main_parsing.c:83)
+==587019==    by 0x404419: main (main_minishell.c:23)
+==587019== 
+==587019== 2 bytes in 1 blocks are definitely lost in loss record 3 of 69
+==587019==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==587019==    by 0x4067A9: ft_strdup (ft_strdup.c:24)
+==587019==    by 0x406159: ft_strjoinline_args (parser_joinlineutils_args.c:65)
+==587019==    by 0x405558: ft_parser (parser.c:184)
+==587019==    by 0x404590: main_parsing (main_parsing.c:83)
+==587019==    by 0x404419: main (main_minishell.c:23)
+
+2. export anything
+==589452== 12 bytes in 2 blocks are definitely lost in loss record 5 of 72
+==589452==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==589452==    by 0x496E5CE: strndup (strndup.c:43)
+==589452==    by 0x403666: ft_export (ft_export.c:105)
+==589452==    by 0x401371: exec_command (pipex.c:48)
+==589452==    by 0x401568: execute_current_command (pipex.c:88)
+==589452==    by 0x401640: process_commands (pipex.c:116)
+==589452==    by 0x4016CC: exec_pipe (pipex.c:138)
+==589452==    by 0x406338: executor_main (executor_main.c:28)
+==589452==    by 0x4045B8: main_parsing (main_parsing.c:86)
+==589452==    by 0x404419: main (main_minishell.c:23)
+==589452== 
+
+3. here_doc with empty user.
+
+4. What if USER is unset? what will be problems?
+
+MEMORY leaks tests:
+1. echo
+2. cat Makefile > out | awk '{print $1}'
+3. empty env + not-empty env but no USER
+4. check open fds for children
+
+echo '$USERkoevkfvpojrvs'
+echo '$USER;;;'
+
+return(EXIT_FAILURE)
+
+-  unset $USER, investigate what to protect - ASK FOR EXPLANATION
+- (TINA) ask seombody what it means on EVALUATION SHEET: Check if multiple tries of the same redirections fail.
+ -  PARSER: It would be good if PARSER also can write list right into shell->args_list.
+(test when Yulia fixes)For export return error status for {export name = dmkdm}
+- SIGNALS - will do in the end. Don't forget to add signals to here_doc as well
+- PARSER: We need to run more tests for single quotes. Also for '$?', some flags etc.
+- (YULIA?) (minor) export should print alphabetically. We can do it if we want.
+- (minor) if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
+- (YULIA) HEREDOC: once SIGNALS done - add signals there
+- (TINA?) (minor) cat << f <<
+expected behavior
+> f
+bash: syntax error near unexpected token `newline'
+- (YULIA) failed builtins don't give $? = 1, they return 0
+- builtin inside a pipe
+- (minor) if it's Tab - now empty command
+- cat <<                 ola
+- (YULIA) NEG_ERROR get rid of it
+- (YULIA) export % | wc -l - don't see error message even though it's counted.
+
+
+TAB: ctrl-v + TAB
+
+testers help:
+2. https://github.com/MariaAguiar/minitester
+3. check all buildins to make sure 1st argument is taken
+4. https://docs.google.com/spreadsheets/d/17linwSWODYO4O9Db0FohJYr_8shMTGvyo0MjToPrcAI/edit#gid=1305472556
+5. check empty and corrupted env
+
+
+To open VS Code in a Docker container:
+
+Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Open Folder in Container...").
+Select the folder you want to open in the container.
+VS Code will reload and open the folder inside the Docker container.
+To switch back to running VS Code on your local machine:
+
+Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Reopen Locally").
+VS Code will reload and open the folder on your local machine.
+Remember, you need to have Docker installed and running on your machine to use the "Remote - Containers" extension. If you don't have the extension installed, you can install it from the Extensions view (Ctrl+Shift+X).
+
+
+
+minishell$<<eof cat | wc | cat
+> ola
+> tudo bem
+> eof             
+==596565== Conditional jump or move depends on uninitialised value(s)
+==596565==    at 0x405656: free_string_array (main_cleanup.c:22)
+==596565==    by 0x405811: free_args (main_cleanup.c:73)
+==596565==    by 0x4058D2: free_shell (main_cleanup.c:94)
+==596565==    by 0x402242: here_doc (here_doc.c:92)
+==596565==    by 0x4065AC: handle_here_doc (open_fds.c:41)
+==596565==    by 0x4064D6: process_command_fds (open_fds.c:81)
+==596565==    by 0x406307: executor_main (executor_main.c:21)
+==596565==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==596565==    by 0x404429: main (main_minishell.c:23)
+==596565== 
+==596565== 
+==596565== HEAP SUMMARY:
+==596565==     in use at exit: 209,752 bytes in 301 blocks
+==596565==   total heap usage: 2,558 allocs, 2,257 frees, 305,804 bytes allocated
+==596565== 
+==596565== LEAK SUMMARY:
+==596565==    definitely lost: 18 bytes in 6 blocks
+==596565==    indirectly lost: 0 bytes in 0 blocks
+==596565==      possibly lost: 0 bytes in 0 blocks
+==596565==    still reachable: 209,734 bytes in 295 blocks
+==596565==         suppressed: 0 bytes in 0 blocks
+==596565== Rerun with --leak-check=full to see details of leaked memory
+==596565== 
+==596565== Use --track-origins=yes to see where uninitialised values come from
+==596565== For lists of detected and suppressed errors, rerun with: -s
+==596565== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==595723== Conditional jump or move depends on uninitialised value(s)
+==595723==    at 0x401756: build_command_list (build_command_list.c:103)
+==595723==    by 0x406310: executor_main (executor_main.c:22)
+==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==595723==    by 0x404429: main (main_minishell.c:23)
+==595723== 
+Syntax error: empty command
+      2       3      13
+==595723== Conditional jump or move depends on uninitialised value(s)
+==595723==    at 0x405656: free_string_array (main_cleanup.c:22)
+==595723==    by 0x405811: free_args (main_cleanup.c:73)
+==595723==    by 0x406358: executor_main (executor_main.c:30)
+==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==595723==    by 0x404429: main (main_minishell.c:23)
+==595723== 
+

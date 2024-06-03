@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:39:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:02:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 			char *var_name_test = strdup(var_name);
 			if(!is_valid_varname(var_name_test))
 			{
-				ft_printf("not a valid identifier\n");
+				ft_putstr_nl("not a valid identifier", STDERR_FILENO);
 				return(EXIT_FAILURE);
 			}
 			free(var_name_test);

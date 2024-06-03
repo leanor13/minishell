@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:52:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:04:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 	{
 		perror("Execve error");
 		free_shell(shell);
+		close_all_unprotected();
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
