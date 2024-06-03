@@ -1,13 +1,8 @@
+export ""
+export ''
 
-
-Notes (29.05) while checking on 42evals:
+"$USER'''" this one maybe a changin on find_var
 1. Checking the exit status, sometimes -1 instead of 1, export spaces, export "" ? $ with special symbols
-thuy-ngu@c1r9s1:~/minishellfinal$ echo "okay
-> 
-bash: unexpected EOF while looking for matching `"'
-bash: syntax error: unexpected end of file
-thuy-ngu@c1r9s1:~/minishellfinal$ echo $?
-
 
 Notes (3.06):
 0. Many leaks: 
@@ -71,6 +66,7 @@ MEMORY leaks tests:
 4. check open fds for children
 
 echo '$USERkoevkfvpojrvs'
+echo '$USER;;;'
 
 return(EXIT_FAILURE)
 
