@@ -8,6 +8,57 @@ bash: unexpected EOF while looking for matching `"'
 bash: syntax error: unexpected end of file
 thuy-ngu@c1r9s1:~/minishellfinal$ echo $?
 
+
+Notes (3.06):
+1. need to fix this - when shell is empty
+==4100== Use of uninitialised value of size 8
+==4100==    at 0x10B540: ft_export (ft_export.c:70)
+==4100==    by 0x10C43F: empty_user (init.c:84)
+==4100==    by 0x10C57B: handle_env (init.c:120)
+==4100==    by 0x10C5A7: init_shell (init.c:126)
+==4100==    by 0x10C673: main (main_minishell.c:22)
+==4100==  Uninitialised value was created by a stack allocation
+==4100==    at 0x10C618: main (main_minishell.c:14)
+==4100== 
+==4100== 
+==4100== 1 errors in context 2 of 6:
+==4100== Use of uninitialised value of size 8
+==4100==    at 0x10B52C: ft_export (ft_export.c:70)
+==4100==    by 0x10C43F: empty_user (init.c:84)
+==4100==    by 0x10C57B: handle_env (init.c:120)
+==4100==    by 0x10C5A7: init_shell (init.c:126)
+==4100==    by 0x10C673: main (main_minishell.c:22)
+==4100==  Uninitialised value was created by a stack allocation
+==4100==    at 0x10C618: main (main_minishell.c:14)
+==4100== 
+
+2. Need to investigate. it's some malloc that is used and not freed
+==4100== 2 bytes in 1 blocks are definitely lost in loss record 2 of 89
+==4100==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
+==4100==    by 0x10F01F: ft_itoa (ft_itoa.c:67)
+==4100==    by 0x10E3C3: ft_strjoinline_args (parser_joinlineutils_args.c:63)
+==4100==    by 0x10D7BB: ft_parser (parser.c:184)
+==4100==    by 0x10C7EB: main_parsing (main_parsing.c:83)
+==4100==    by 0x10C67B: main (main_minishell.c:23)
+==4100== 
+==4100== 2 bytes in 1 blocks are definitely lost in loss record 3 of 89
+==4100==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
+==4100==    by 0x10EF9B: ft_itoa (ft_itoa.c:67)
+==4100==    by 0x10E3C3: ft_strjoinline_args (parser_joinlineutils_args.c:63)
+==4100==    by 0x10D7BB: ft_parser (parser.c:184)
+==4100==    by 0x10C7EB: main_parsing (main_parsing.c:83)
+==4100==    by 0x10C67B: main (main_minishell.c:23)
+==4100== 
+==4100== 4 bytes in 2 blocks are definitely lost in loss record 5 of 89
+==4100==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
+==4100==    by 0x10E9F3: ft_strdup (ft_strdup.c:24)
+==4100==    by 0x10E3E7: ft_strjoinline_args (parser_joinlineutils_args.c:65)
+==4100==    by 0x10D7BB: ft_parser (parser.c:184)
+==4100==    by 0x10C7EB: main_parsing (main_parsing.c:83)
+==4100==    by 0x10C67B: main (main_minishell.c:23)
+
+3. 
+
 MEMORY leaks tests:
 1. echo
 2. cat Makefile > out | awk '{print $1}'

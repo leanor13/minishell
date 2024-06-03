@@ -67,10 +67,13 @@ int	ft_export(t_shell *shell, t_arg *command)
 		ft_printf("not a valid identifier\n");
 		return(EXIT_FAILURE);
 	}
-	if (shell && shell->args_list && shell->args_list->type && shell->args_list->type == WRONG)
+	if (shell && shell->args_list)
 	{
-		ft_printf("not a valid identifier\n");
-		return(EXIT_FAILURE);
+		if (shell->args_list->type && shell->args_list->type == WRONG)
+		{
+			ft_printf("not a valid identifier\n");
+			return(EXIT_FAILURE);
+		}
 	}
 	while (args[i] != NULL) 
 	{
@@ -113,10 +116,13 @@ int	ft_export(t_shell *shell, t_arg *command)
 				ft_printf("not a valid identifier\n");
 				return(EXIT_FAILURE);
 			}
-			if (shell && shell->args_list && shell->args_list->type && shell->args_list->type == WRONG)
+			if (shell && shell->args_list)
 			{
-				ft_printf("not a valid identifier\n");
-				return(EXIT_FAILURE);
+				if (shell->args_list->type && shell->args_list->type == WRONG)
+				{
+					ft_printf("not a valid identifier\n");
+					return(EXIT_FAILURE);
+				}
 			}
 			add_back_env(&shell->env_list, args[i], NULL);
 		}
