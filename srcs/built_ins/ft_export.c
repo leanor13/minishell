@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 15:10:44 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:23:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int	ft_export(t_shell *shell, t_arg *command)
 		{
 			if(!is_valid_varname(args[i]))
 			{
-				printf("here\n");
 				ft_printf("not a valid identifier\n");
 				return(EXIT_FAILURE);
 			}
