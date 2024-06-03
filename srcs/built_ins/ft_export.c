@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:23:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 16:39:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 		if (equal_sign)
 		{
 			size_t name_len = equal_sign - args[i];
+			// replace with ft_strndup
 			char *var_name = strndup(args[i], name_len);
 			char *var_name_test = strdup(var_name);
 			if(!is_valid_varname(var_name_test))
