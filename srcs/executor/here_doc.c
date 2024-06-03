@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static char	*get_line(void)
+static char	*get_line(t_shell *shell)
 {
 	char	*line;
 
@@ -20,6 +20,7 @@ static char	*get_line(void)
 	if (line == NULL)
 	{
 		close_all_unprotected();
+		free_shell(shell);
 		perror("Error reading from standard input");
 		exit(EXIT_FAILURE);
 	}
@@ -48,7 +49,7 @@ static void	read_input(int fd[2], char **limiters, t_shell shell)
 	while (true)
 	{
 		write(shell.std_fds[FD_OUT], "> ", 2);
-		line = get_line();
+		line = get_line(&shell);
 		if (strncmp(line, limiters[i], strlen(limiters[i])) == 0
 			&& strlen(line) == strlen(limiters[i]) + 1)
 		{
@@ -88,6 +89,7 @@ int	here_doc(t_arg *command, t_shell *shell)
 	{
 		read_input(fd, limiters, *shell);
 		close_all_unprotected();
+		free_shell(shell);
 		exit(EXIT_SUCCESS);
 	}
 	close(fd[1]);
