@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 17:02:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:19:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void ft_changenode(t_env **env_list, char * copy_value)
 {
 	free((*env_list)->var_value);
 	(*env_list)->var_value = NULL;
-	(*env_list)->var_value = strdup(copy_value);
+	(*env_list)->var_value = ft_strdup(copy_value);
 }
 
 int	ft_export(t_shell *shell, t_arg *command)
@@ -68,16 +68,15 @@ int	ft_export(t_shell *shell, t_arg *command)
 		if (equal_sign)
 		{
 			size_t name_len = equal_sign - args[i];
-			// replace with ft_strndup
-			char *var_name = strndup(args[i], name_len);
-			char *var_name_test = strdup(var_name);
+			char *var_name = ft_strndup(args[i], name_len);
+			char *var_name_test = ft_strdup(var_name);
 			if(!is_valid_varname(var_name_test))
 			{
 				ft_putstr_nl("not a valid identifier", STDERR_FILENO);
 				return(EXIT_FAILURE);
 			}
 			free(var_name_test);
-			char *var_value = strdup(equal_sign + 1);
+			char *var_value = ft_strdup(equal_sign + 1);
 			int k = ft_strlen(var_name);
 			t_env *env_lst_start = shell->env_list;
 			while(shell->env_list)
@@ -108,14 +107,14 @@ int	ft_export(t_shell *shell, t_arg *command)
 				return(EXIT_FAILURE);
 			}
 			size_t name_len = ft_strlen(args[i]);//NEW
-			char *var_name = strndup(args[i], name_len);
+			char *var_name = ft_strndup(args[i], name_len);
 			int k = ft_strlen(var_name);
 			t_env *env_lst_start = shell->env_list;
 			while(shell->env_list)
 			{
 				if(!ft_strncmp(shell->env_list->var_name, var_name, k))
 				{
-					free(var_name);	
+					free(var_name);
 					sign = 1;
 					break;
 				}
@@ -124,6 +123,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 			shell->env_list = env_lst_start;
 			if (sign == 0)
 			add_back_env(&shell->env_list, args[i], NULL);
+			free(var_name);	
 		}
 		i++;
 	}
