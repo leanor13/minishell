@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:49:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 16:46:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int main_parsing(t_shell *shell)
 {
 	char *command = NULL;
 	t_arg *lst;
-	int saved_stdin = shell->std_fds[0]; // Save the original STDIN_FILENO
+	//int saved_stdin = shell->std_fds[0];
+	//int saved_stdout = shell->std_fds[1];
+	//int saved_stderr = shell->std_fds[2];
 	int	exit_status = EXIT_SUCCESS;
 
 	lst = NULL;
@@ -34,7 +36,17 @@ int main_parsing(t_shell *shell)
 	while (1)
 	{
 		//printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);
-		if (dup2(saved_stdin, STDIN_FILENO) == -1) // Reset STDIN_FILENO
+		if (dup2(shell->std_fds[0], STDIN_FILENO) == -1) // Reset STDIN_FILENO
+		{
+			perror("dup2");
+			return (EXIT_FAILURE);
+		}
+		if (dup2(shell->std_fds[1], STDOUT_FILENO) == -1) // Reset STDIN_FILENO
+		{
+			perror("dup2");
+			return (EXIT_FAILURE);
+		}
+		if (dup2(shell->std_fds[2], STDERR_FILENO) == -1) // Reset STDIN_FILENO
 		{
 			perror("dup2");
 			return (EXIT_FAILURE);
