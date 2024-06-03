@@ -6,12 +6,13 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
+/*   Updated: 2024/06/03 15:10:44 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// YULIA: let's check that varname is valid by using this function
+// YULIA: let's chech that varname is valid by using this function
 int	is_valid_varname(const char *var_name)
 {
 	if (!ft_isalpha(*var_name) && *var_name != '_')
@@ -57,6 +58,10 @@ int	ft_export(t_shell *shell, t_arg *command)
 		shell->env_list = env_lst_start;
 		return (EXIT_SUCCESS);
 	}
+	//if(*args[i] == '0' || *args[i] == '1' || *args[i] == '2' || *args[i] == '3' || *args[i] == '4' \
+			// || *args[i] == '5' || *args[i] == '6' || *args[i] == '7' || *args[i] == '8' || *args[i] == '9' \
+			// || *args[i] == '-' || *args[i] == '+' || *args[i] == '!' || *args[i] == '?' || *args[i] == '$' \
+			// || *args[i] == '=' || *args[i] == 34 || *args[i] == 39 || shell->args_list->type == WRONG)
 	while (args[i] != NULL) 
 	{
         equal_sign = strchr(args[i], '=');
@@ -98,6 +103,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 		{
 			if(!is_valid_varname(args[i]))
 			{
+				printf("here\n");
 				ft_printf("not a valid identifier\n");
 				return(EXIT_FAILURE);
 			}
