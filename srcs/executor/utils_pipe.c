@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:30:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 16:35:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 
 	dup_close(command->fd_in, STDIN_FILENO);
 	dup_close(command->fd_out, STDOUT_FILENO);
-	//close_all_protected(shell);
+	close_all_protected(shell);
 	if (command->built_in_fn)
     {
 		result = command->built_in_fn(shell, command);
 		free_shell(shell);
-		close_all_unprotected;
+		close_all_unprotected();
 		exit(result);
     }
 	else if (execve(command->path, command->arguments, shell->env_2d) == -1)
