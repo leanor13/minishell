@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_listutils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 15:53:21 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:51:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,16 @@ void	append_node(t_arg **lst, char *str, t_append info, int value)
 
 	if (!lst)
 		return ;
-	node = malloc(sizeof(t_arg));
+	node = ft_calloc(1, sizeof(t_arg));
 	if (!node)
 		return ;
 	node->next = NULL;
 	node->str = ft_substr(str, info.start, info.len);
+	if (!node->str) 
+	{  // Ensure that substr was successful
+		free(node);    // Free the node if substr fails
+		return;
+	}
 	node->type = value;
 	if (!(*lst))
 	{

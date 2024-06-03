@@ -1,31 +1,27 @@
 {
     "version": "0.2.0",
     "configurations": [
+        // valgrind --vgdb=yes --vgdb-error=0 /workspaces/minishell/minishell &
         {
-            "name": "(gdb) Launch",
+            "name": "Valgrind (gdb) Launch Main",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/pipex",
-            "args": ["input.txt", "cat", "wc -l", "output.txt"],
+            "program": "/workspaces/minishell/minishell",
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "/usr/local/bin/gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
             "setupCommands": [
                 {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
+                    "description": "Connect to vgdb",
+                    "text": "target remote | vgdb --pid=18291",  // Replace YOUR_PID_HERE with the actual PID
+                    "ignoreFailures": false
                 }
             ]
-        },
+        },        
         {
             "name": "HOME (lldb) Launch Main",
             "type": "cppdbg",
@@ -40,18 +36,6 @@
             "MIMode": "lldb",
             //"autoAttachChildProcess": true
         },
-        {
-            "name": "EMPTY ENV HOME (lldb) Launch Main",
-            "type": "cppdbg",
-            "request": "launch",
-            "targetArchitecture": "arm64", // or "arm64" if you're using an Apple Silicon Mac
-            "program": "/usr/bin/env",
-            "args": ["-i", "${workspaceFolder}/minishell"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-        }
         {
             "name": "SCHOOL (gdb) Launch Main",
             "type": "cppdbg",
@@ -89,81 +73,7 @@
                     "ignoreFailures": true
                 }
             ]
-        },
-        // this launch option runs the executable but before executes "Makefile": "gcc build" (see tasks.json)
-        {
-            "name": "Makefile & Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            // "console": "internalConsole",
-            "program": "${workspaceFolder}/minishell",
-            // "args": ["in.txt", "ls", "wc -l", "vsout" ],
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            //"preLaunchTask": "Makefile",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "In this mode GDB will be attached to both processes after a call to fork() or vfork().",
-                    "text": "-gdb-set detach-on-fork off",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "The new process is debugged after a fork. The parent process runs unimpeded.",
-                    "text": "-gdb-set follow-fork-mode child",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        // this launch option just executes the program
-        {
-            "name": "Launch (no build)",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/minishell",
-            "args": [],
-            // "args": [""],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "In this mode GDB will be attached to both processes after a call to fork() or vfork().",
-                    "text": "-gdb-set detach-on-fork off",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "The new process is debugged after a fork. The parent process runs unimpeded.",
-                    "text": "-gdb-set follow-fork-mode child",
-                    "ignoreFailures": true
-                }
-            ]
-        },
+        }
 	]
 }
 

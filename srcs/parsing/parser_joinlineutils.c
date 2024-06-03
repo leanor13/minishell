@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_joinlineutils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 17:02:25 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:58:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-static void	print_string(const char *str)// DELETE
+/* static void	print_string(const char *str)// DELETE
 {
 	for (size_t i = 0; str[i] != '\0'; i++) 
 	{
@@ -39,7 +39,7 @@ static void	print_string(const char *str)// DELETE
 	}
 	printf("\n");
 }
-
+ */
 char	**ft_strjoinline_heredoc(t_arg *lst, int i)
 {
 	char	**s1;
@@ -54,8 +54,8 @@ char	**ft_strjoinline_heredoc(t_arg *lst, int i)
 		if (lst->type == GOING_HEREDOC)
 		{
 			s1[count] = put_word(lst->str);
-			printf("Content of heredoc s1[%d]: ", count);//DELETE
-			print_string(s1[count]);//DELETE
+			//printf("Content of heredoc s1[%d]: ", count);//DELETE
+			//print_string(s1[count]);//DELETE
 			count++;
 		}
 		lst = lst->next;
@@ -78,8 +78,8 @@ char	**ft_strjoinline_output(t_arg *lst, int i)
 		if (lst->type == GOING_OUTPUT)
 		{
 			s1[count] = put_word(lst->str);
-			printf("Content of output s1[%d]: ", count);//DELETE
-			print_string(s1[count]);//DELETE
+			//printf("Content of output s1[%d]: ", count);//DELETE
+			//print_string(s1[count]);//DELETE
 			count++;
 		}
 		lst = lst->next;
@@ -102,8 +102,8 @@ char	**ft_strjoinline_input(t_arg *lst, int i)
 		if (lst->type == GOING_INPUT)
 		{
 			s1[count] = put_word(lst->str);
-			printf("Content of input s1[%d]: ", count);//DELETE
-			print_string(s1[count]);//DELETE
+			//printf("Content of input s1[%d]: ", count);//DELETE
+			//print_string(s1[count]);//DELETE
 			count++;
 		}
 		lst = lst->next;

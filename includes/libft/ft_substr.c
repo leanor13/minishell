@@ -26,6 +26,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	res = (char *)malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
+	//printf("Allocated %zu bytes in ft_substr: %p\n", len + 1, res);
 	i = 0;
 	while (i < len)
 	{

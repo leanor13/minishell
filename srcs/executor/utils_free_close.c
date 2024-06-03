@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 12:34:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 16:41:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,10 @@ void	close_pipes(int *fd_pipe)
 {
 	if (fd_pipe[FD_IN] >= 0)
 	{
-		close(fd_pipe[FD_IN]);
-		fd_pipe[FD_IN] = -1;
+		ft_close(fd_pipe[FD_IN]);
 	}
 	if (fd_pipe[FD_OUT] >= 0)
 	{
-		close(fd_pipe[FD_OUT]);
-		fd_pipe[FD_OUT] = -1;
+		ft_close(fd_pipe[FD_OUT]);
 	}
 }

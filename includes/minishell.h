@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:23:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 17:08:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void				free_shell(t_shell *shell);
 void				free_string_array(char ***str_arr);
 void				free_command_list(t_arg **command_list);
 void				exit_pipe_error(int fd[2]);
+void				free_args(t_arg **args_list);
 
 /* handle commands */
 int					build_command_list(t_shell *shell);

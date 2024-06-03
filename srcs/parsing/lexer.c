@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/05/31 16:18:15 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:19:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	t_append	info;
 
 	j = 0;
+	// make sure if it's ok please :)
+	type = NONE_TYPE;
 	if (str[i] == '\0')
 		return (j);
 	if (str[i] == '>' && str[i + 1] != '>')
@@ -104,6 +106,7 @@ int	arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	int			start;
 	t_append	info;
 
+	
 	start = i;
 	j = 0;
 	type = ARG;
@@ -145,6 +148,11 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	if (!str || !*str)
 		return (NULL);
 	quote = ft_calloc(1, sizeof(t_sign));
+	if (!quote)
+	{
+		perror("Memory allocation for lexer failed");
+		return (NULL);
+	}
 	while (str[i])
 	{
 		i += skip_space(str, i);
@@ -159,8 +167,10 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	quote->quote_type == FIRST_DOUBLE_QUOTE)
 	{
 		free(head);
+		free(quote);
 		ft_printf("bash: syntax error: UNCLOSED_QUOTE\n");//return(EXIT_FAILURE) maybe shell->exit_status
 		return (NULL);
 	}
+	free(quote);
 	return (lst);
 }

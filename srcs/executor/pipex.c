@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:12:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/01 17:33:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 		result = command->built_in_fn(shell, command);
 		dup_close(original_stdin, STDIN_FILENO);
 		dup_close(original_stdout, STDOUT_FILENO);
+		shell->exit_status = result;
 		if (result != EXIT_SUCCESS)
 			return (result);
 		if (shell->should_exit && (command->next || command->prev))
@@ -89,18 +90,14 @@ void	execute_current_command(t_arg *current, t_shell *shell, int *fd_pipe,
 		return ;
 	if (current->next)
 	{
-		close(fd_pipe[FD_OUT]);
-		fd_pipe[FD_OUT] = -1;
+		ft_close(fd_pipe[FD_OUT]);
 		*fd_in = fd_pipe[FD_IN];
 	}
 	else
 	{
-		close(fd_pipe[FD_IN]);
-		close(fd_pipe[FD_OUT]);
-		fd_pipe[FD_IN] = -1;
-		fd_pipe[FD_OUT] = -1;
+		ft_close(fd_pipe[FD_IN]);
+		ft_close(fd_pipe[FD_OUT]);
 		ft_close(*fd_in);
-		*fd_in = -1;
 	}
 }
 
@@ -141,5 +138,5 @@ int	exec_pipe(t_shell *shell)
 	process_commands(shell, current, fd_pipe, &fd_in);
 	shell->exit_status = wait_for_children(count, shell);
 	close_all_protected(shell);
-	return (EXIT_SUCCESS);
+	return (shell->exit_status);
 }

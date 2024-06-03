@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 17:56:12 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:49:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int main_parsing(t_shell *shell)
 		}
 		add_history(command);
 		lst = ft_lexer(command, lst);
-		
-		t_arg *current = lst;
+		/* t_arg *current = lst;
 		int	lst_num = 0;
    	 	while (current)
     	{	
@@ -80,7 +79,7 @@ int main_parsing(t_shell *shell)
         	printf(" %s,", current->str);
         	printf("type %i\n", current->type);
         	current = current->next;
-   		}
+   		} */
 		lst = ft_parser(lst, shell);
 		shell->args_list = lst;
 		if (shell->args_list != NULL)
@@ -99,7 +98,9 @@ int main_parsing(t_shell *shell)
 		// 	shell->env_list = shell->env_list->next;
 		// }
 		//update_env_2d(shell);
-		free_stackfinal(&lst);
+		//free_args(&lst);
+		//free_command_list(&lst);
+		free_args(&shell->args_list);
 		free(command);
 		close_all_protected(shell);
 

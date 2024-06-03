@@ -6,7 +6,6 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 18:28:59 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +64,7 @@ int	handle_quotestring(t_arg **lst, t_sign **quote, char *str, int i)
 		if ((str[i] == 34 && str[i + 1] == 34) || \
 		(str[i] == 39 && str[i + 1] == 39))
 		{
-			*quote = ft_calloc(1, sizeof(t_sign));
+			ft_bzero(*quote, 1);
 			info.start = 0;
 			info.len = 0;
 			append_node(lst, "\0", info, ARG);
@@ -77,10 +76,10 @@ int	handle_quotestring(t_arg **lst, t_sign **quote, char *str, int i)
 	if ((*quote)->quote_type == SECOND_SINGLE_QUOTE || \
 	(*quote)->quote_type == SECOND_DOUBLE_QUOTE)
 	{
-		*quote = ft_calloc(1, sizeof(t_sign));
+		ft_bzero(*quote, 1);
 		return (1);
 	}
-	*quote = ft_calloc(1, sizeof(t_sign));
+	ft_bzero(*quote, 1);
 	if ((str[i] == 34 && str[i + 1] == 34) || \
 	(str[i] == 39 && str[i + 1] == 39))
 	{
