@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/04 15:13:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:50:26 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ typedef struct
 {
 	int		heredoc_active;
 	int		heredoc_fd;
+	int		exit_status;
 }			SignalState;
 
-SignalState	signal_state = {0, -1};
+SignalState	signal_state = {0, -1, 0};
 
 // Handler for SIGINT in the main and prompt context
 void	sigint_main_handler(int sig)
@@ -33,50 +34,38 @@ void	sigint_main_handler(int sig)
 // Handler for SIGINT in heredoc
 void	sigint_heredoc_handler(int sig)
 {
-	(void)sig;
-	if (signal_state.heredoc_active && signal_state.heredoc_fd != -1)
-	{
-		close(signal_state.heredoc_fd);
-	}
-	exit(130);
+    (void)sig;
+    if (signal_state.heredoc_active && signal_state.heredoc_fd != -1)
+    {
+        close(signal_state.heredoc_fd);
+    }
+	signal_state.exit_status = 130;
 }
 
 // Sets up different signal configurations
 void	setup_signals(int context)
 {
-	struct sigaction	sa;
-
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
+	signal(SIGQUIT, SIG_IGN);
 	if (context == MAIN)
 	{
-		sa.sa_handler = sigint_main_handler;
-		sigaction(SIGINT, &sa, NULL);
+		signal(SIGINT, sigint_main_handler);
 	}
-	else if (context == SIG_MAIN_PROMPT)
+	else if (context == SIG_MAIN_2)
 	{
-		sa.sa_handler = sigint_main_handler;
-		sigaction(SIGINT, &sa, NULL);
+		signal(SIGINT, sigint_main_handler);
 	}
 	else if (context == SIG_CHILD)
 	{
-		sa.sa_handler = SIG_DFL; // Default action for child
-		sigaction(SIGINT, &sa, NULL);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 	}
 	else if (context == SIG_HEREDOC)
 	{
-		sa.sa_handler = sigint_heredoc_handler;
-		sigaction(SIGINT, &sa, NULL);
+		signal(SIGINT, sigint_heredoc_handler);
 	}
 	else if (context == SIG_IGNORE)
 	{
-		sa.sa_handler = SIG_IGN;
-		sigaction(SIGINT, &sa, NULL);
-	}
-	else
-	{
-		sa.sa_handler = SIG_IGN;
-		sigaction(SIGQUIT, &sa, NULL);
+		signal(SIGINT, SIG_IGN);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/04 14:46:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:50:26 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_shell
 typedef enum e_signal
 {
     SIG_MAIN,
-    SIG_MAIN_PROMPT,
+    SIG_MAIN_2,
     SIG_CHILD,
     SIG_HEREDOC,
     SIG_IGNORE
@@ -112,3 +112,5 @@ void				ft_close(int fd);
 
 /* signals */
 void 				setup_signals(int context);
+t_shell				*get_shell(void);
+void 				set_shell(t_shell *shell);
