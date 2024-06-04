@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/04 14:18:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:46:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ typedef struct s_shell
 	int				here_doc_fd;
 	bool			should_exit;
 }					t_shell;
+
+typedef enum e_signal
+{
+    SIG_MAIN,
+    SIG_MAIN_PROMPT,
+    SIG_CHILD,
+    SIG_HEREDOC,
+    SIG_IGNORE
+}			t_signal;
 
 #define EXIT_CMD_NOT_FOUND 127
 #define EXIT_SIGNAL_OFFSET 128

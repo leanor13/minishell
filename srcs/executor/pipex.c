@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:57:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:19:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 		return (EXIT_FAILURE);
 	if (command->built_in_fn != NULL && !command->prev && !command->next)
 	{
+		setup_signals(SIG_IGNORE);
 		original_stdout = dup(STDOUT_FILENO);
 		original_stdin = dup(STDIN_FILENO);
 		dup_close(command->fd_in, STDIN_FILENO);
