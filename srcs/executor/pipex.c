@@ -39,6 +39,8 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 
 	if (!command)
 		return (EXIT_CMD_NOT_FOUND);
+	if (command->fd_in < 0 || command->fd_out < 0)
+		return (EXIT_FAILURE);
 	if (command->built_in_fn != NULL && !command->prev && !command->next)
 	{
 		original_stdout = dup(STDOUT_FILENO);
@@ -51,8 +53,6 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 		shell->exit_status = result;
 		if (result != EXIT_SUCCESS)
 			return (result);
-		//if (shell->should_exit && (command->next || command->prev))
-		//	shell->should_exit = false;
 		close_all_protected(shell);
 		return (EXIT_SUCCESS);
 	}

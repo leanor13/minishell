@@ -27,10 +27,7 @@ int	open_file(char *file, int type)
 		fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		if (type == INPUT_FILE)
-			perror("Failed opening input file");
-		else
-			perror("Failed opening output file");
+		perror(file);
 		return (NEG_ERROR);
 	}
 	return (fd);
@@ -50,8 +47,6 @@ static void	open_input_files(t_arg *command)
 	while (command->in_file[i])
 	{
 		command->fd_in = open_file(command->in_file[i], INPUT_FILE);
-		if (command->fd_in == -1)
-			perror("open input file");
 		i++;
 	}
 }
@@ -67,8 +62,6 @@ static void	open_output_files(t_arg *command)
 			command->fd_out = open_file(command->out_file[i], OUTPUT_APPEND);
 		else
 			command->fd_out = open_file(command->out_file[i], OUTPUT_REWRITE);
-		if (command->fd_out == -1)
-			perror("open output file");
 		i++;
 	}
 }
