@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_joinlineutils_args.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/02 14:27:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:03:30 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 	while (lst && count < i)
 	{
 		if (lst->type == GOING_ARG || lst->type == GOING_SINGLEQUOTE_DOLLAR)
+		{
 			s1[count] = put_word(lst->str);
+			count++;
+		}
 		if (lst->type == GOING_DOLLAR_SIGN)
 		{
 			if (lst->str[1] == '?')
@@ -73,11 +76,13 @@ char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
 					break ;
 			}
 			if (var_value && var_value[0])
+			{
 				s1[count] = put_word(var_value);
+				count++;
+			}
 		}
 		//printf("Content of args s1[%d]: ", count);//DELETE
 		//print_string(s1[count]);//DELETE
-		count++;
 		lst = lst->next;
 	}
 	s1[count] = NULL;

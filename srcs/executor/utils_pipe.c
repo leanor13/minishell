@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 18:22:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:04:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,26 @@
 
 void	handle_child_process(t_arg *command, t_shell *shell)
 {
-	if (dup2(command->fd_in, STDIN_FILENO) == -1)
-	{
-		perror("Failed to redirect standard input");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(command->fd_out, STDOUT_FILENO) == -1)
-	{
-		perror("Failed to redirect standard output");
-		exit(EXIT_FAILURE);
-	}
+	int	result;
+
+	dup_close(command->fd_in, STDIN_FILENO);
+	dup_close(command->fd_out, STDOUT_FILENO);
 	close_all_protected(shell);
-	if (execve(command->path, command->arguments, shell->env_2d) == -1)
+	if (command->built_in_fn)
+    {
+		result = command->built_in_fn(shell, command);
+		free_shell(shell);
+		close_all_unprotected();
+		exit(result);
+    }
+	else if (execve(command->path, command->arguments, shell->env_2d) == -1)
 	{
 		perror("Execve error");
+		free_shell(shell);
+		close_all_unprotected();
 		exit(EXIT_FAILURE);
 	}
+	exit(EXIT_SUCCESS);
 }
 
 pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
@@ -89,11 +93,16 @@ int	child_count(t_arg *args_list)
 {
 	int	i;
 
+	if (!args_list)
+		return (0);
+	if (args_list->built_in_fn && !args_list->next && !args_list->prev)
+		return (0);
 	i = 0;
 	while (args_list != NULL)
 	{
-		if (!args_list->built_in_fn)
-			i++;
+		//if (!args_list->built_in_fn)
+		//	i++;
+		i ++;
 		args_list = args_list->next;
 	}
 	return (i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/06/01 17:19:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/03 16:11:20 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	skip_space(char *str, int i)
 	if (str[i] == '\0')
 		return (j);
 	nospace = i;
-	while (str[i] == ' ')
+	while (str[i] == ' ' || str[i] == '\t')
 	{
 		i++;
 		j++;

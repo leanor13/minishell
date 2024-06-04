@@ -1,64 +1,45 @@
+export ""
+export ''
+export $USER - it opens
+export $okay=something - in bash this gives error
+echo '"$USER"'''" - UNCLOSED QUOTES
 
-
-Notes (29.05) while checking on 42evals:
+"$USER'''" this one maybe a changin on find_var
 1. Checking the exit status, sometimes -1 instead of 1, export spaces, export "" ? $ with special symbols
-thuy-ngu@c1r9s1:~/minishellfinal$ echo "okay
-> 
-bash: unexpected EOF while looking for matching `"'
-bash: syntax error: unexpected end of file
-thuy-ngu@c1r9s1:~/minishellfinal$ echo $?
-
 
 Notes (3.06):
 0. Many leaks: 
 cat Makefile > out | wc -l < in > out2 (in does not exist)
+1. cat Makefile > out | wc -l < out > in
+==587019== 2 bytes in 1 blocks are definitely lost in loss record 2 of 69
+==587019==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==587019==    by 0x406CCC: ft_itoa (ft_itoa.c:67)
+==587019==    by 0x406138: ft_strjoinline_args (parser_joinlineutils_args.c:63)
+==587019==    by 0x405558: ft_parser (parser.c:184)
+==587019==    by 0x404590: main_parsing (main_parsing.c:83)
+==587019==    by 0x404419: main (main_minishell.c:23)
+==587019== 
+==587019== 2 bytes in 1 blocks are definitely lost in loss record 3 of 69
+==587019==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==587019==    by 0x4067A9: ft_strdup (ft_strdup.c:24)
+==587019==    by 0x406159: ft_strjoinline_args (parser_joinlineutils_args.c:65)
+==587019==    by 0x405558: ft_parser (parser.c:184)
+==587019==    by 0x404590: main_parsing (main_parsing.c:83)
+==587019==    by 0x404419: main (main_minishell.c:23)
 
-1. need to fix this - when shell is empty
-==4100== Use of uninitialised value of size 8
-==4100==    at 0x10B540: ft_export (ft_export.c:70)
-==4100==    by 0x10C43F: empty_user (init.c:84)
-==4100==    by 0x10C57B: handle_env (init.c:120)
-==4100==    by 0x10C5A7: init_shell (init.c:126)
-==4100==    by 0x10C673: main (main_minishell.c:22)
-==4100==  Uninitialised value was created by a stack allocation
-==4100==    at 0x10C618: main (main_minishell.c:14)
-==4100== 
-==4100== 
-==4100== 1 errors in context 2 of 6:
-==4100== Use of uninitialised value of size 8
-==4100==    at 0x10B52C: ft_export (ft_export.c:70)
-==4100==    by 0x10C43F: empty_user (init.c:84)
-==4100==    by 0x10C57B: handle_env (init.c:120)
-==4100==    by 0x10C5A7: init_shell (init.c:126)
-==4100==    by 0x10C673: main (main_minishell.c:22)
-==4100==  Uninitialised value was created by a stack allocation
-==4100==    at 0x10C618: main (main_minishell.c:14)
-==4100== 
-
-2. Need to investigate. it's some malloc that is used and not freed
-==4100== 2 bytes in 1 blocks are definitely lost in loss record 2 of 89
-==4100==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
-==4100==    by 0x10F01F: ft_itoa (ft_itoa.c:67)
-==4100==    by 0x10E3C3: ft_strjoinline_args (parser_joinlineutils_args.c:63)
-==4100==    by 0x10D7BB: ft_parser (parser.c:184)
-==4100==    by 0x10C7EB: main_parsing (main_parsing.c:83)
-==4100==    by 0x10C67B: main (main_minishell.c:23)
-==4100== 
-==4100== 2 bytes in 1 blocks are definitely lost in loss record 3 of 89
-==4100==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
-==4100==    by 0x10EF9B: ft_itoa (ft_itoa.c:67)
-==4100==    by 0x10E3C3: ft_strjoinline_args (parser_joinlineutils_args.c:63)
-==4100==    by 0x10D7BB: ft_parser (parser.c:184)
-==4100==    by 0x10C7EB: main_parsing (main_parsing.c:83)
-==4100==    by 0x10C67B: main (main_minishell.c:23)
-==4100== 
-==4100== 4 bytes in 2 blocks are definitely lost in loss record 5 of 89
-==4100==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
-==4100==    by 0x10E9F3: ft_strdup (ft_strdup.c:24)
-==4100==    by 0x10E3E7: ft_strjoinline_args (parser_joinlineutils_args.c:65)
-==4100==    by 0x10D7BB: ft_parser (parser.c:184)
-==4100==    by 0x10C7EB: main_parsing (main_parsing.c:83)
-==4100==    by 0x10C67B: main (main_minishell.c:23)
+2. export anything
+==589452== 12 bytes in 2 blocks are definitely lost in loss record 5 of 72
+==589452==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==589452==    by 0x496E5CE: strndup (strndup.c:43)
+==589452==    by 0x403666: ft_export (ft_export.c:105)
+==589452==    by 0x401371: exec_command (pipex.c:48)
+==589452==    by 0x401568: execute_current_command (pipex.c:88)
+==589452==    by 0x401640: process_commands (pipex.c:116)
+==589452==    by 0x4016CC: exec_pipe (pipex.c:138)
+==589452==    by 0x406338: executor_main (executor_main.c:28)
+==589452==    by 0x4045B8: main_parsing (main_parsing.c:86)
+==589452==    by 0x404419: main (main_minishell.c:23)
+==589452== 
 
 3. here_doc with empty user.
 
@@ -71,37 +52,32 @@ MEMORY leaks tests:
 4. check open fds for children
 
 echo '$USERkoevkfvpojrvs'
+echo '$USER;;;'
 
 return(EXIT_FAILURE)
 
-1. OK Pressing tab few times shows all files - ASK FOR EXPLANATION
-2. (need to implement) Execute a simple command with an absolute path like /bin/ls, or any other command with arguments but without any quotes and double quotes. Then execute echo $?
-handle $, echo $?, expr $? + $?
-Notes: - PARSER: can take *shell as an input. And $? should be shell->exit_status.
-      -  PARSER: It would be good if PARSER also can write list right into shell->args_list.
-      - EXECUTOR: make sure to write all needed exit statuses to shell->exit_status. Check builtins and cases when no path etc.
-For export return error status for {export name = dmkdm}
-3. Signals - will do in the end. Don't forget to add signals to here_doc as well
-4. PARSER: echo '$USER' - EXPECTED: $USER. NOW it prints content of $USER with ' in the end. echo '"$USER"' should print "$USER", echo "$USER" should print username, now both work good.
-5. PARSER: We need to run more tests for single quotes. Also for '$?', some flags etc.
-6. (YULIA?) (minor) export should print alphabetically. We can do it if we want.
-7. (done YULIA) cd and pwd not yet tested. (for pwd testing we need cd). When cd is done, check how it works with empty env (env -i ./minishell)
-8. (TINA) export (only need to fix update and case with spaces)
-9. (minor) if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
-9. (TINA?)(minor) export $okay=something - in bash this gives error
-10. (YULIA) remove all TODO
-11. (TINA) ask seombody what it means on EVALUATION SHEET: Check if multiple tries of the same redirections fail.
-12. (YULIA) HEREDOC: once SIGNALS done - add signals there
-13. (Done - YULIA) ./minishell
-14. (TINA?) (minor) cat << f <<
+-  unset $USER, investigate what to protect - ASK FOR EXPLANATION
+- (TINA) ask seombody what it means on EVALUATION SHEET: Check if multiple tries of the same redirections fail.
+ -  PARSER: It would be good if PARSER also can write list right into shell->args_list.
+(test when Yulia fixes)For export return error status for {export name = dmkdm}
+- SIGNALS - will do in the end. Don't forget to add signals to here_doc as well
+- PARSER: We need to run more tests for single quotes. Also for '$?', some flags etc.
+- (YULIA?) (minor) export should print alphabetically. We can do it if we want.
+- (minor) if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
+- (YULIA) HEREDOC: once SIGNALS done - add signals there
+- (TINA?) (minor) cat << f <<
 expected behavior
 > f
 bash: syntax error near unexpected token `newline'
-15. Memory leaks
-16. (TINA) export without value (like {export r}) creates duplicates
-17. (YULIA) failed builtins don't give $? = 1, they return 0
+- (YULIA) failed builtins don't give $? = 1, they return 0
+- builtin inside a pipe
+- (minor) if it's Tab - now empty command
+- cat <<                 ola
+- (YULIA) NEG_ERROR get rid of it
+- (YULIA) export % | wc -l - don't see error message even though it's counted.
 
 
+TAB: ctrl-v + TAB
 
 testers help:
 2. https://github.com/MariaAguiar/minitester
@@ -120,3 +96,53 @@ To switch back to running VS Code on your local machine:
 Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Reopen Locally").
 VS Code will reload and open the folder on your local machine.
 Remember, you need to have Docker installed and running on your machine to use the "Remote - Containers" extension. If you don't have the extension installed, you can install it from the Extensions view (Ctrl+Shift+X).
+
+
+
+minishell$<<eof cat | wc | cat
+> ola
+> tudo bem
+> eof             
+==596565== Conditional jump or move depends on uninitialised value(s)
+==596565==    at 0x405656: free_string_array (main_cleanup.c:22)
+==596565==    by 0x405811: free_args (main_cleanup.c:73)
+==596565==    by 0x4058D2: free_shell (main_cleanup.c:94)
+==596565==    by 0x402242: here_doc (here_doc.c:92)
+==596565==    by 0x4065AC: handle_here_doc (open_fds.c:41)
+==596565==    by 0x4064D6: process_command_fds (open_fds.c:81)
+==596565==    by 0x406307: executor_main (executor_main.c:21)
+==596565==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==596565==    by 0x404429: main (main_minishell.c:23)
+==596565== 
+==596565== 
+==596565== HEAP SUMMARY:
+==596565==     in use at exit: 209,752 bytes in 301 blocks
+==596565==   total heap usage: 2,558 allocs, 2,257 frees, 305,804 bytes allocated
+==596565== 
+==596565== LEAK SUMMARY:
+==596565==    definitely lost: 18 bytes in 6 blocks
+==596565==    indirectly lost: 0 bytes in 0 blocks
+==596565==      possibly lost: 0 bytes in 0 blocks
+==596565==    still reachable: 209,734 bytes in 295 blocks
+==596565==         suppressed: 0 bytes in 0 blocks
+==596565== Rerun with --leak-check=full to see details of leaked memory
+==596565== 
+==596565== Use --track-origins=yes to see where uninitialised values come from
+==596565== For lists of detected and suppressed errors, rerun with: -s
+==596565== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==595723== Conditional jump or move depends on uninitialised value(s)
+==595723==    at 0x401756: build_command_list (build_command_list.c:103)
+==595723==    by 0x406310: executor_main (executor_main.c:22)
+==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==595723==    by 0x404429: main (main_minishell.c:23)
+==595723== 
+Syntax error: empty command
+      2       3      13
+==595723== Conditional jump or move depends on uninitialised value(s)
+==595723==    at 0x405656: free_string_array (main_cleanup.c:22)
+==595723==    by 0x405811: free_args (main_cleanup.c:73)
+==595723==    by 0x406358: executor_main (executor_main.c:30)
+==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==595723==    by 0x404429: main (main_minishell.c:23)
+==595723== 
+
