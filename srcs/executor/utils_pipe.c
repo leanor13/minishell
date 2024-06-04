@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 17:04:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:08:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,19 @@
 void	handle_child_process(t_arg *command, t_shell *shell)
 {
 	int	result;
+	struct sigaction sa;
 
+    // Set SIGINT to default or a custom handler if required
+    sa.sa_handler = SIG_DFL;  // Default action or use a custom child_sig_handler if defined
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGINT, &sa, NULL);
+
+    // Ignore SIGQUIT in child
+    sa.sa_handler = SIG_IGN;
+    sigaction(SIGQUIT, &sa, NULL);
 	dup_close(command->fd_in, STDIN_FILENO);
 	dup_close(command->fd_out, STDOUT_FILENO);
-	close_all_protected(shell);
 	if (command->built_in_fn)
     {
 		result = command->built_in_fn(shell, command);
@@ -38,7 +47,8 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 
 pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 {
-	pid_t	pid;
+	pid_t				pid;
+	struct sigaction	sa;
 
 	pid = fork();
 	if (pid < 0)
@@ -49,6 +59,10 @@ pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 	}
 	else
 	{
+		
+        sa.sa_handler = SIG_IGN;
+        sigaction(SIGINT, &sa, NULL);
+        sigaction(SIGQUIT, &sa, NULL);
 		if (fd_pipe[FD_OUT] != -1)
 		{
 			close(fd_pipe[FD_OUT]);

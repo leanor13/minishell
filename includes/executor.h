@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:23:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:17:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define INPUT_FILE 1
 # define OUTPUT_REWRITE 2
 # define OUTPUT_APPEND 3
+# define MAIN 4
 
 # define WRONG_ARG_NUM "Wrong number of arguments. \
 Usage: ./pipex file1 cmd1 cmd2 file2 or \

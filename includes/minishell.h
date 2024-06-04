@@ -6,13 +6,16 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:08:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:18:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include "lexer.h"
 #include <dirent.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <signal.h>
 
 typedef struct s_env
 {
@@ -97,3 +100,6 @@ void				close_all_unprotected(void);
 void				close_pipes(int *fd_pipe);
 void				dup_close(int fd, int reference);
 void				ft_close(int fd);
+
+/* signals */
+void 				setup_signals(int context);
