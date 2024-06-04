@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:46:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/04 09:38:41 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main_parsing(t_shell *shell)
 	int	exit_status = EXIT_SUCCESS;
 
 	lst = NULL;
-	signal(SIGINT, signal_handler);
+	//signal(SIGINT, signal_handler);
 	while (1)
 	{
 		//printf("saved_stdin: %d, STDIN:%d, shell->std_fds[0]: %d\n", saved_stdin, STDIN_FILENO, shell->std_fds[0]);
