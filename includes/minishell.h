@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/04 15:50:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:07:17 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ void				dup_close(int fd, int reference);
 void				ft_close(int fd);
 
 /* signals */
-void 				setup_signals(int context);
+//void 				setup_signals(int context);
 t_shell				*get_shell(void);
 void 				set_shell(t_shell *shell);

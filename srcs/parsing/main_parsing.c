@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 17:37:57 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:09:21 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,11 @@ int	main_parsing(t_shell *shell)
 
 	command = NULL;
 	exit_status = EXIT_SUCCESS;
-	setup_signals(SIG_MAIN);
+	//setup_signals(SIG_MAIN);
 	if (dup_std_fds(shell) != EXIT_SUCCESS)
+	{
 		return (EXIT_FAILURE);
+	}
 	lst = NULL;
 	while (1)
 	{

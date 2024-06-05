@@ -73,9 +73,6 @@ bash: syntax error near unexpected token `newline'
 - builtin inside a pipe
 - (minor) if it's Tab - now empty command
 - cat <<                 ola
-- (YULIA) NEG_ERROR get rid of it
-- (YULIA) export % | wc -l - don't see error message even though it's counted.
-
 
 TAB: ctrl-v + TAB
 

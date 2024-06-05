@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 17:39:56 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:06:08 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 	int	result;
 
     // Set SIGINT to default or a custom handler if required
-    setup_signals(SIG_CHILD);
+    //setup_signals(SIG_CHILD);
 	dup_close(command->fd_in, STDIN_FILENO);
 	dup_close(command->fd_out, STDOUT_FILENO);
 	if (command->built_in_fn)
@@ -51,7 +51,7 @@ pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 	else
 	{
 		
-        setup_signals(SIG_IGNORE);
+        //setup_signals(SIG_IGNORE);
 		if (fd_pipe[FD_OUT] != -1)
 		{
 			close(fd_pipe[FD_OUT]);

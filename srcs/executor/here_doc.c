@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/04 14:18:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:05:55 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	read_input(int fd[2], char **limiters, t_shell shell)
 	int		lim_count;
 	int		i;
 
-	setup_signals(HERE_DOC);
+	//setup_signals(HERE_DOC);
 	lim_count = count_limiters(limiters);
 	i = 0;
 	ft_close(fd[0]);
@@ -93,7 +93,7 @@ int	here_doc(t_arg *command, t_shell *shell)
 		free_shell(shell);
 		exit(EXIT_SUCCESS);
 	}
-	setup_signals(MAIN);
+	//setup_signals(SIG_MAIN);
 	close(fd[1]);
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
