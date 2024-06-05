@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 17:19:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:01:25 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 			char *var_name_test = ft_strdup(var_name);
 			if(!is_valid_varname(var_name_test))
 			{
-				ft_putstr_nl("not a valid identifier", STDERR_FILENO);
+				ft_putstr_fd("exit: not a valid identifier\n", STDERR_FILENO);
 				return(EXIT_FAILURE);
 			}
 			free(var_name_test);
@@ -103,7 +103,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 		{
 			if(!is_valid_varname(args[i]))
 			{
-				ft_printf("not a valid identifier\n");
+				ft_putstr_fd("exit: not a valid identifier\n", STDERR_FILENO);
 				return(EXIT_FAILURE);
 			}
 			size_t name_len = ft_strlen(args[i]);//NEW
