@@ -3,34 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 17:40:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 19:05:31 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	handle_quotes_and_special_chars(char *arg, int len_arg, int fd_out)
+static void	print_content(char *arg, int len_arg, int fd_out)
 {
-	bool	in_quote;
 	int		i;
 
 	i = 0;
-	in_quote = false;
 	while (i < len_arg)
 	{
-		if (arg[i] == '\'' && !in_quote)
-			in_quote = true;
-		else if (arg[i] == '\'' && in_quote)
-			in_quote = false;
-		else if (arg[i] == '"' && !in_quote)
-			in_quote = true;
-		else if (arg[i] == '"' && in_quote)
-			in_quote = false;
-		if (!in_quote && (arg[i] == '\\' || arg[i] == ';'))
-			continue ;
 		ft_putchar_fd(arg[i], fd_out);
 		i++;
 	}
@@ -49,7 +37,7 @@ static void	echo_arg(char *arg, int fd_out)
 		ft_putstr_fd(var_value, fd_out);
 	}
 	else */
-	handle_quotes_and_special_chars(arg, len_arg, fd_out);
+	print_content(arg, len_arg, fd_out);
 }
 
 static void	process_escape_sequences(char *str)
