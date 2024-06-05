@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 17:04:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:15:34 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 
 	dup_close(command->fd_in, STDIN_FILENO);
 	dup_close(command->fd_out, STDOUT_FILENO);
-	close_all_protected(shell);
+	//close_all_protected(shell);
 	if (command->built_in_fn)
     {
 		result = command->built_in_fn(shell, command);
