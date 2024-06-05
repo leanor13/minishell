@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:39:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 11:12:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:31:00 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	open_output_files(t_arg *command)
 	}
 }
 
-int	process_command_fds(t_arg *command, t_shell *shell)
+int	process_command_fds(t_arg *command, t_shell *shell)// TINA **out_file_append;**out_file_rewrite
 {
 	while (command)
 	{
@@ -76,6 +76,7 @@ int	process_command_fds(t_arg *command, t_shell *shell)
 			open_input_files(command);
 		if (command->out_file && command->out_file[0])
 			open_output_files(command);
+		// the last open file depends on the value of append flag :)
 		if (command->fd_in < 0 || command->fd_out < 0)
 		{
 			command->command = NULL;

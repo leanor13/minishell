@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 18:12:22 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:39:41 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	ft_export(t_shell *shell, t_arg *command)
 			if(!is_valid_varname(var_name_test))
 			{
 				ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
+				free(var_name);
+				free(var_name_test);
 				return(EXIT_FAILURE);
 			}
 			free(var_name_test);
@@ -122,8 +124,10 @@ int	ft_export(t_shell *shell, t_arg *command)
 			}
 			shell->env_list = env_lst_start;
 			if (sign == 0)
-			add_back_env(&shell->env_list, args[i], NULL);
-			free(var_name);	
+			{
+				add_back_env(&shell->env_list, args[i], NULL);
+				free(var_name);	
+			}
 		}
 		i++;
 	}

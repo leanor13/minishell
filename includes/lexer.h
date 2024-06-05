@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:14:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:28:26 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,17 @@ typedef struct s_arg
 	int					type;
 	char				**arguments;
 	char				**out_file;
+	//cat Makefile > out2.txt >> out2.txt
+	//cat Makefile >> out2.txt > out2.txt
+	//cat Makefile > out1.txt >> out3 > out4.txt >> out5.txt
+	//char				**out_file_append; out3, out5.txt
+	//char				**out_file_rewrite; out1.txt out4.txt//everything after >
+	//cat Makefile > out1.txt >> out3 > out4.txt > out5.txt // append is false
+	//char				**out_file_append; out3
+	//char				**out_file_rewrite; out1.txt out4.txt out5.txt//everything after >
 	char				**in_file;
 	char				**here_doc;
-	bool				append;
+	bool				append; // it is only true if the last one
 	char				*command;
 	char				*path;
 	int					fd_in;
