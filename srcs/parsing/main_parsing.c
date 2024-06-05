@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/04 15:50:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/05 17:37:57 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	sigint_heredoc_handler(int sig)
 void	setup_signals(int context)
 {
 	signal(SIGQUIT, SIG_IGN);
-	if (context == MAIN)
+	if (context == SIG_MAIN)
 	{
 		signal(SIGINT, sigint_main_handler);
 	}
@@ -94,11 +94,11 @@ int	main_parsing(t_shell *shell)
 	char	*command;
 	t_arg	*lst;
 	int		exit_status;
-	int		lst_num;
+	//int		lst_num;
 
 	command = NULL;
 	exit_status = EXIT_SUCCESS;
-	setup_signals(MAIN);
+	setup_signals(SIG_MAIN);
 	if (dup_std_fds(shell) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	lst = NULL;
