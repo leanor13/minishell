@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 18:28:26 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:38:47 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ char					**ft_strjoinline_args(t_arg *lst, int i,
 char					**ft_strjoinline_heredoc(t_arg *lst, int i);
 char					**ft_strjoinline_output(t_arg *lst, int i);
 char					**ft_strjoinline_input(t_arg *lst, int i);
+void	free_stackfinal2(t_arg **args_list);
 
 #endif

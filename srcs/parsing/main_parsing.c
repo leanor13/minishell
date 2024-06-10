@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 16:46:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:34:43 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ int main_parsing(t_shell *shell)
         	printf("type %i\n", current->type);
         	current = current->next;
    		} */
-		lst = ft_parser(lst, shell);
-		shell->args_list = lst;
+		if(lst)
+			lst = ft_parser(lst, shell);
+		if(lst)
+			shell->args_list = lst;
 		if (shell->args_list != NULL)
 			executor_main(shell);
 		// while (shell->env_list) // TEST IF ENV_LIST GET DIFFERENTOUTSIDE OF THE FUNCITON

@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/06/03 16:11:20 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:46:42 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 t_arg	*ft_lexer(char *str, t_arg *lst)
 {
 	int		i;
-	t_arg	*head;
+	int		k;
 	t_sign	*quote;
 
 	i = 0;
@@ -155,20 +155,23 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	}
 	while (str[i])
 	{
+		//printf("%i\n", quote->quote_type);
 		i += skip_space(str, i);
 		i += handle_quotestring(&lst, &quote, str, i);
+		k = i;
 		i += shellcommand_scan(&lst, str, i, &quote);
+		if(i > k)
+			i += handle_quotestring(&lst, &quote, str, i);
 		if (quote->quote_type == 0)
 			i += skip_space(str, i);
 		i += arg_scan(&lst, str, i, &quote);
 	}
-	head = lst;
-	if (quote->quote_type == FIRST_SINGLE_QUOTE || \
+	if (quote->quote_type == FIRST_SINGLE_QUOTE ||
 	quote->quote_type == FIRST_DOUBLE_QUOTE)
 	{
-		free(head);
 		free(quote);
-		ft_printf("bash: syntax error: UNCLOSED_QUOTE\n");//return(EXIT_FAILURE) maybe shell->exit_status
+		free_args(&lst);
+		ft_printf("bash: syntax error: unclosed quote\n");//return(EXIT_FAILURE) maybe shell->exit_status
 		return (NULL);
 	}
 	free(quote);

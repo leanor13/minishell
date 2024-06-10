@@ -1,8 +1,10 @@
+echo '"$USER"'''" - UNCLOSED QUOTES
+echo "USER'''''''" "'valami'"
+
 export ""
 export ''
 export $USER - it opens
 export $okay=something - in bash this gives error
-echo '"$USER"'''" - UNCLOSED QUOTES
 
 "$USER'''" this one maybe a changin on find_var
 echo '$USERkoevkfvpojrvs'
