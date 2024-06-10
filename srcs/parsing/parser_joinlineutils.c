@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 18:08:02 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:55:31 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ char	**ft_strjoinline_heredoc(t_arg *lst, int i)
 		if (lst->type == GOING_HEREDOC)
 		{
 			s1[count] = put_word(lst->str);
-			//printf("Content of heredoc s1[%d]: ", count);//DELETE
-			//print_string(s1[count]);//DELETE
 			count++;
 		}
 		lst = lst->next;
@@ -69,8 +67,6 @@ char	**ft_strjoinline_output(t_arg *lst, int i)
 		if (lst->type == GOING_OUTPUT)
 		{
 			s1[count] = put_word(lst->str);
-			//printf("Content of output s1[%d]: ", count);//DELETE
-			//print_string(s1[count]);//DELETE
 			count++;
 		}
 		lst = lst->next;
@@ -93,8 +89,6 @@ char	**ft_strjoinline_input(t_arg *lst, int i)
 		if (lst->type == GOING_INPUT)
 		{
 			s1[count] = put_word(lst->str);
-			//printf("Content of input s1[%d]: ", count);//DELETE
-			//print_string(s1[count]);//DELETE
 			count++;
 		}
 		lst = lst->next;
