@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 16:37:14 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:37:58 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -414,7 +414,6 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 			node->prev = nlast;
 		}
 	}
-
 	/* node_num = 0;//DELETE
  	t_arg *current = final;//DELETE
     while (current)//DELETE
