@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 17:19:48 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:25:12 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -476,8 +476,9 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
-					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
+					free_args(&final);
+					free_args(&temp_lst);
 					return(NULL);
 				}
 				lst = lst->next;
@@ -498,8 +499,9 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
-					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
+					free_args(&final);
+					free_args(&temp_lst);
 					return(NULL);
 				}
 				lst = lst->next;
@@ -515,8 +517,9 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
-					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
+					free_args(&final);
+					free_args(&temp_lst);
 					return(NULL);
 				}
 				lst = lst->next;
@@ -532,8 +535,9 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
-					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
+					free_args(&final);
+					free_args(&temp_lst);
 					return(NULL);
 				}
 				node->append = true;
@@ -553,8 +557,9 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 			}
 			else if(lst->type == DOUBLE_PIPE)
 			{
-				free_args(&temp_lst);
 				ft_printsyntaxerror(&lst);
+				free_args(&final);
+				free_args(&temp_lst);
 				return(NULL);
 			}
 			else if(lst->type == PIPE)
@@ -566,8 +571,9 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				}
 				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
 				{
-					free_args(&temp_lst);
 					ft_printsyntaxerror(&lst);
+					free_args(&final);
+					free_args(&temp_lst);
 					return(NULL);
 				}
 				lst = lst->next;

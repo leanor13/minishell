@@ -1,0 +1,95 @@
+touch something >> out 3 | cat
+
+echo '"$USER"'''" - UNCLOSED QUOTES
+echo "USER'''''''" "'valami'"
+
+export ""
+export ''
+export $USER - it opens
+export $okay=something - in bash this gives error
+
+"$USER'''" this one maybe a changin on find_var
+echo '$USERkoevkfvpojrvs'
+echo '$USER;;;'
+
+return(EXIT_FAILURE)
+
+- SIGNALS - will do in the end. Don't forget to add signals to here_doc as well
+- (YULIA?) (minor) export should print alphabetically. We can do it if we want.
+- (TINA) cat Makefile > out1.txt >> out2.txt: if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
+- (YULIA) HEREDOC: once SIGNALS done - add signals there
+
+- (TINA?) (minor) cat << f <<
+expected behavior
+> f
+bash: syntax error near unexpected token `newline'
+
+TAB: ctrl-v + TAB
+
+testers help:
+2. https://github.com/MariaAguiar/minitester
+3. check all buildins to make sure 1st argument is taken
+4. https://docs.google.com/spreadsheets/d/17linwSWODYO4O9Db0FohJYr_8shMTGvyo0MjToPrcAI/edit#gid=1305472556
+5. check empty and corrupted env
+
+
+To open VS Code in a Docker container:
+
+Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Open Folder in Container...").
+Select the folder you want to open in the container.
+VS Code will reload and open the folder inside the Docker container.
+To switch back to running VS Code on your local machine:
+
+Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Reopen Locally").
+VS Code will reload and open the folder on your local machine.
+Remember, you need to have Docker installed and running on your machine to use the "Remote - Containers" extension. If you don't have the extension installed, you can install it from the Extensions view (Ctrl+Shift+X).
+
+
+
+minishell$<<eof cat | wc | cat
+> ola
+> tudo bem
+> eof             
+==596565== Conditional jump or move depends on uninitialised value(s)
+==596565==    at 0x405656: free_string_array (main_cleanup.c:22)
+==596565==    by 0x405811: free_args (main_cleanup.c:73)
+==596565==    by 0x4058D2: free_shell (main_cleanup.c:94)
+==596565==    by 0x402242: here_doc (here_doc.c:92)
+==596565==    by 0x4065AC: handle_here_doc (open_fds.c:41)
+==596565==    by 0x4064D6: process_command_fds (open_fds.c:81)
+==596565==    by 0x406307: executor_main (executor_main.c:21)
+==596565==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==596565==    by 0x404429: main (main_minishell.c:23)
+==596565== 
+==596565== 
+==596565== HEAP SUMMARY:
+==596565==     in use at exit: 209,752 bytes in 301 blocks
+==596565==   total heap usage: 2,558 allocs, 2,257 frees, 305,804 bytes allocated
+==596565== 
+==596565== LEAK SUMMARY:
+==596565==    definitely lost: 18 bytes in 6 blocks
+==596565==    indirectly lost: 0 bytes in 0 blocks
+==596565==      possibly lost: 0 bytes in 0 blocks
+==596565==    still reachable: 209,734 bytes in 295 blocks
+==596565==         suppressed: 0 bytes in 0 blocks
+==596565== Rerun with --leak-check=full to see details of leaked memory
+==596565== 
+==596565== Use --track-origins=yes to see where uninitialised values come from
+==596565== For lists of detected and suppressed errors, rerun with: -s
+==596565== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==595723== Conditional jump or move depends on uninitialised value(s)
+==595723==    at 0x401756: build_command_list (build_command_list.c:103)
+==595723==    by 0x406310: executor_main (executor_main.c:22)
+==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==595723==    by 0x404429: main (main_minishell.c:23)
+==595723== 
+Syntax error: empty command
+      2       3      13
+==595723== Conditional jump or move depends on uninitialised value(s)
+==595723==    at 0x405656: free_string_array (main_cleanup.c:22)
+==595723==    by 0x405811: free_args (main_cleanup.c:73)
+==595723==    by 0x406358: executor_main (executor_main.c:30)
+==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
+==595723==    by 0x404429: main (main_minishell.c:23)
+==595723== 
+
