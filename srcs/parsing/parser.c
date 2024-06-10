@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 13:42:13 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:48:09 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_printsyntaxerror(t_arg **lst) //TAKE CARE OF EXIT STATUS
 		ft_printf("minishell: syntax error near unexpected token `>>'\n");
 	else
 		ft_printf("minishell: syntax error near unexpected token `|'\n");
-	free_stackfinal(lst);
+	free_args(lst);
 }
 
 // static int	handle_heredoc(t_arg **lst, t_arg **temp_lst)
@@ -419,6 +419,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
         printf("%iAPPEND\n", current->append);
         current = current->next;
     }//DELETE */
-	free_args(&temp_lst);
+	if(temp_lst)
+		free_args(&temp_lst);
 	return(final);
 }

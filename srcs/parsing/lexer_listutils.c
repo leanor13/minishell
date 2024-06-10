@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_listutils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:51:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:47:10 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ t_arg	*ft_stacklast(t_arg *lst)
 	return (lst);
 }
 
-void	free_stackfinal(t_arg **lst)
-{
-	t_arg	*tmp;
-	t_arg	*current;
+// void	free_stackfinal(t_arg **lst)
+// {
+// 	t_arg	*tmp;
+// 	t_arg	*current;
 
-	if (!lst)
-		return ;
-	current = *lst;
-	while (current)
-	{
-		tmp = current;
-		current = current->next;
-		free(tmp);
-	}
-	*lst = NULL;
-}
+// 	if (!lst)
+// 		return ;
+// 	current = *lst;
+// 	while (current)
+// 	{
+// 		tmp = current;
+// 		current = current->next;
+// 		free(tmp);
+// 	}
+// 	*lst = NULL;
+// }
 
 void	append_node(t_arg **lst, char *str, t_append info, int value)
 {
