@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 15:38:47 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:55:35 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,18 @@ typedef struct s_append
 	int					len;
 }						t_append;
 
+typedef struct s_heads 
+{
+	t_arg	*head_arg;
+	t_arg	*head_heredoc;
+	t_arg	*head_output;
+	t_arg	*head_input;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+}			t_heads;
+
 typedef struct s_sign
 {
 	int					quote_type;
@@ -87,7 +99,6 @@ t_arg					*ft_lexer(char *str, t_arg *lst);
 void					append_node(t_arg **lst, char *str, t_append info,
 							int value);
 t_arg					*ft_parser(t_arg *lst, t_shell *shell);
-void					free_stackfinal(t_arg **lst);
 t_arg					*ft_stacklast(t_arg *lst);
 void					ft_printsyntaxerror(t_arg **lst);
 int						find_quote(t_sign **lst, char *str, int i);
@@ -98,6 +109,5 @@ char					**ft_strjoinline_args(t_arg *lst, int i,
 char					**ft_strjoinline_heredoc(t_arg *lst, int i);
 char					**ft_strjoinline_output(t_arg *lst, int i);
 char					**ft_strjoinline_input(t_arg *lst, int i);
-void	free_stackfinal2(t_arg **args_list);
 
 #endif

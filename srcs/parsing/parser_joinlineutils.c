@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_joinlineutils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/03 11:58:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/10 18:08:02 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*put_word(char *s)
 {
-	char	*word;
 	int		len;
+	char	*word;
 
 	len = 0;
 	if (!s)
@@ -31,15 +31,6 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-/* static void	print_string(const char *str)// DELETE
-{
-	for (size_t i = 0; str[i] != '\0'; i++) 
-	{
-		printf("%c", str[i]);
-	}
-	printf("\n");
-}
- */
 char	**ft_strjoinline_heredoc(t_arg *lst, int i)
 {
 	char	**s1;

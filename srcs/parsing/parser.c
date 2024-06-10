@@ -6,13 +6,13 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 17:36:12 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:08:32 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_printsyntaxerror(t_arg **lst) //TAKE CARE OF EXIT STATUS
+void	ft_printsyntaxerror(t_arg **lst)
 {
 	if ((*lst)->type == DOUBLE_PIPE)
 		ft_printf("minishell: syntax error near unexpected token `|'\n");
@@ -28,175 +28,179 @@ void	ft_printsyntaxerror(t_arg **lst) //TAKE CARE OF EXIT STATUS
 		ft_printf("minishell: syntax error near unexpected token `|'\n");
 }
 
+void	initialize_heads(t_heads *heads, t_arg *lst)
+{
+	heads->head_arg = lst;
+	heads->head_heredoc = lst;
+	heads->head_output = lst;
+	heads->head_input = lst;
+	heads->i = 0;
+	heads->j = 0;
+	heads->k = 0;
+	heads->l = 0;
+}
+
 t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 {
 	t_arg	*final;
 	t_arg	*node;
 	t_arg	*nlast;
-	int		i;
-	int		j;
-	int		k;
-	int		l;
-	t_arg	*head_arg;
-	t_arg	*head_heredoc;
-	t_arg	*head_output;
-	t_arg	*head_input;
-	t_arg	*temp_lst = lst;
+	t_arg	*temp_lst;
+	t_heads	heads;
 
-	//int node_num = 0;//DELETE
 	final = NULL;
 	if (!lst)
 		return (NULL);
-	while(lst)
+	temp_lst = lst;
+	while (lst)
 	{
-		head_arg = lst;
-		head_heredoc = lst;
-		head_output = lst;
-		head_input = lst;
-		//node = lst;
+		initialize_heads(&heads, lst);
 		node = ft_calloc(1, sizeof(t_arg));
 		if (!node)
 		{
 			free_args(&temp_lst);
 			return (NULL);
 		}
-		i = 0;
-		j = 0;
-		k = 0;
-		l = 0;
-
-		while(lst)
+		while (lst)
 		{
-			if(lst->type == HEREDOC)
+			if (lst->type == HEREDOC)
 			{
-				if(lst->next == NULL)
+				if (lst->next == NULL)
 				{
 					lst = lst->next;
-					break;
+					break ;
 				}
-				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				if (lst->next->type == HEREDOC || lst->next->type == INPUT || \
+				lst->next->type == OUTPUT || lst->next->type == APPEND \
+				|| lst->next->type == PIPE)
 				{
 					ft_printsyntaxerror(&lst);
 					free_args(&final);
 					free_args(&node);
 					free_args(&temp_lst);
-					return(NULL);
+					return (NULL);
 				}
 				lst = lst->next;
-				i++;
+				heads.i++;
 				lst->type = GOING_HEREDOC;
 			}
-			else if(lst->type == ARG)
+			else if (lst->type == ARG)
 			{
-				j++;
+				heads.j++;
 				lst->type = GOING_ARG;
 			}
-			else if(lst->type == OUTPUT)
+			else if (lst->type == OUTPUT)
 			{
-				if(lst->next == NULL)
+				if (lst->next == NULL)
 				{
 					lst = lst->next;
-					break;
+					break ;
 				}
-				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				if (lst->next->type == HEREDOC || lst->next->type == INPUT || \
+				lst->next->type == OUTPUT || lst->next->type == APPEND \
+				|| lst->next->type == PIPE)
 				{
 					ft_printsyntaxerror(&lst);
 					free_args(&final);
 					free_args(&node);
 					free_args(&temp_lst);
-					return(NULL);
+					return (NULL);
 				}
 				lst = lst->next;
-				k++;
+				heads.k++;
 				lst->type = GOING_OUTPUT;
 			}
-			else if(lst->type == INPUT)
+			else if (lst->type == INPUT)
 			{
-				if(lst->next == NULL)
+				if (lst->next == NULL)
 				{
 					lst = lst->next;
-					break;
+					break ;
 				}
-				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				if (lst->next->type == HEREDOC || lst->next->type == INPUT || \
+				lst->next->type == OUTPUT || lst->next->type == APPEND \
+				|| lst->next->type == PIPE)
 				{
 					ft_printsyntaxerror(&lst);
 					free_args(&final);
 					free_args(&node);
 					free_args(&temp_lst);
-					return(NULL);
+					return (NULL);
 				}
 				lst = lst->next;
-				l++;
+				heads.l++;
 				lst->type = GOING_INPUT;
 			}
-			else if(lst->type == APPEND)
+			else if (lst->type == APPEND)
 			{
-				if(lst->next == NULL)
+				if (lst->next == NULL)
 				{
 					lst = lst->next;
-					break;
+					break ;
 				}
-				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
-				{	
+				if (lst->next->type == HEREDOC || lst->next->type == INPUT || \
+				lst->next->type == OUTPUT || lst->next->type == APPEND \
+				|| lst->next->type == PIPE)
+				{
 					ft_printsyntaxerror(&lst);
 					free_args(&final);
 					free_args(&node);
 					free_args(&temp_lst);
-					return(NULL);
+					return (NULL);
 				}
 				node->append = true;
 				lst = lst->next;
-				k++;
+				heads.k++;
 				lst->type = GOING_OUTPUT;
 			}
-			else if(lst->type == DOLLAR_SIGN)
+			else if (lst->type == DOLLAR_SIGN)
 			{
-				j++;
+				heads.j++;
 				lst->type = GOING_DOLLAR_SIGN;
 			}
-			else if(lst->type == SINGLEQUOTE_DOLLAR)
-			{	
-				j++;
+			else if (lst->type == SINGLEQUOTE_DOLLAR)
+			{
+				heads.j++;
 				lst->type = GOING_SINGLEQUOTE_DOLLAR;
 			}
-			else if(lst->type == DOUBLE_PIPE)
+			else if (lst->type == DOUBLE_PIPE)
 			{
 				ft_printsyntaxerror(&lst);
 				free_args(&final);
 				free_args(&node);
 				free_args(&temp_lst);
-				return(NULL);
+				return (NULL);
 			}
-			else if(lst->type == PIPE)
+			else if (lst->type == PIPE)
 			{
-				if(lst->next == NULL)
+				if (lst->next == NULL)
 				{
 					lst = lst->next;
-					break;
+					break ;
 				}
-				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
+				if (lst->next->type == HEREDOC || lst->next->type == INPUT || \
+				lst->next->type == OUTPUT || lst->next->type == APPEND \
+				|| lst->next->type == PIPE)
 				{
 					ft_printsyntaxerror(&lst);
 					free_args(&final);
 					free_args(&node);
 					free_args(&temp_lst);
-					return(NULL);
+					return (NULL);
 				}
 				lst = lst->next;
-				break;
+				break ;
 			}
 			lst = lst->next;
 		}
-		//node_num++;//DELETE
-		//printf("---NODE%i---\n", node_num);//DELETE
-		if(i != 0)
-			node->here_doc = ft_strjoinline_heredoc(head_heredoc, i);
-		if(j != 0)
-			node->arguments = ft_strjoinline_args(head_arg, j, shell);
-		if(k != 0)
-			node->out_file = ft_strjoinline_output(head_output, k);
-		if(l != 0)
-			node->in_file = ft_strjoinline_input(head_input, l);
+		if (heads.i != 0)
+			node->here_doc = ft_strjoinline_heredoc(heads.head_heredoc, heads.i);
+		if (heads.j != 0)
+			node->arguments = ft_strjoinline_args(heads.head_arg, heads.j, shell);
+		if (heads.k != 0)
+			node->out_file = ft_strjoinline_output(heads.head_output, heads.k);
+		if (heads.l != 0)
+			node->in_file = ft_strjoinline_input(heads.head_input, heads.l);
 		if (!(final))
 		{
 			final = node;
@@ -209,16 +213,6 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 			node->prev = nlast;
 		}
 	}
-
-	/* node_num = 0;//DELETE
- 	t_arg *current = final;//DELETE
-    while (current)//DELETE
-	{
-		node_num++;
-		printf("---NODE%i---\n", node_num);
-        printf("%iAPPEND\n", current->append);
-        current = current->next;
-    }//DELETE */
 	free_args(&temp_lst);
-	return(final);
+	return (final);
 }

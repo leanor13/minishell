@@ -3,7 +3,8 @@
 		"*.cpp": "cpp",
 		"*.hpp": "cpp",
 		"stdbool.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"minishell.h": "c"
 	},
 	"cmake.configureOnOpen": false
 }
