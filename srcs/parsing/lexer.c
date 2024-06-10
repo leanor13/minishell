@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/06/03 16:11:20 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:46:37 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 	{
 		free(head);
 		free(quote);
-		ft_printf("bash: syntax error: UNCLOSED_QUOTE\n");//return(EXIT_FAILURE) maybe shell->exit_status
+		ft_printf("bash: syntax error: unclosed quote\n");//return(EXIT_FAILURE) maybe shell->exit_status
 		return (NULL);
 	}
 	free(quote);
