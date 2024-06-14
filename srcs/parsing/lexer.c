@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/06/10 18:58:44 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:00:58 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,73 +31,6 @@ int	skip_space(char *str, int i)
 	return (j);
 }
 
-int	shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote)
-{
-	int			j;
-	int			h;
-	int			type;
-	t_append	info;
-
-	j = 0;
-	type = NONE_TYPE;
-	if (str[i] == '\0')
-		return (j);
-	if (str[i] == '>' && str[i + 1] != '>')
-	{
-		j = 1;
-		type = OUTPUT;
-	}
-	else if (str[i] == '<' && str[i + 1] != '<')
-	{
-		j = 1;
-		type = INPUT;
-	}
-	else if (str[i] == '|' && str[i + 1] != '|')
-	{
-		j = 1;
-		type = PIPE;
-	}
-	else if (str[i] == '|' && str[i + 1] == '|')
-	{
-		j = 2;
-		type = DOUBLE_PIPE;
-	}
-	else if (str[i] == '<' && str[i + 1] == '<')
-	{
-		j = 2;
-		type = HEREDOC;
-	}
-	else if (str[i] == '>' && str[i + 1] == '>')
-	{
-		j = 2;
-		type = APPEND;
-	}
-	else if (str[i] == '$')
-	{
-		h = i;
-		if ((*quote)->quote_type == FIRST_SINGLE_QUOTE)
-			type = SINGLEQUOTE_DOLLAR;
-		while (str[h] != ' ' && str[h])
-		{
-			if (find_quote(quote, str, h))
-				break ;
-			h++;
-			j++;
-		}
-		if (type != SINGLEQUOTE_DOLLAR)
-			type = DOLLAR_SIGN;
-	}
-	if (j > 0)
-	{
-		info.start = i;
-		info.len = j;
-		append_node(lst, str, info, type);
-		return (j);
-	}
-	else
-		return (0);
-}
-
 int	arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 {
 	int			j;
@@ -105,7 +38,6 @@ int	arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	int			start;
 	t_append	info;
 
-	
 	start = i;
 	j = 0;
 	type = ARG;
@@ -137,6 +69,26 @@ int	arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	return (j);
 }
 
+void	scan_string(char *str, t_arg **lst, t_sign **quote)
+{
+	int	i;
+	int	k;
+
+	i = 0;
+	while (str[i])
+	{
+		i += skip_space(str, i);
+		i += handle_quotestring(lst, quote, str, i);
+		k = i;
+		i += shellcommand_scan(lst, str, i, quote);
+		if (i > k)
+			i += handle_quotestring(lst, quote, str, i);
+		if ((*quote)->quote_type == 0)
+			i += skip_space(str, i);
+		i += arg_scan(lst, str, i, quote);
+	}
+}
+
 t_arg	*ft_lexer(char *str, t_arg *lst)
 {
 	int		i;
@@ -152,19 +104,8 @@ t_arg	*ft_lexer(char *str, t_arg *lst)
 		perror("Memory allocation for lexer failed");
 		return (NULL);
 	}
-	while (str[i])
-	{
-		i += skip_space(str, i);
-		i += handle_quotestring(&lst, &quote, str, i);
-		k = i;
-		i += shellcommand_scan(&lst, str, i, &quote);
-		if(i > k)
-			i += handle_quotestring(&lst, &quote, str, i);
-		if (quote->quote_type == 0)
-			i += skip_space(str, i);
-		i += arg_scan(&lst, str, i, &quote);
-	}
-	if (quote->quote_type == FIRST_SINGLE_QUOTE ||
+	scan_string(str, &lst, &quote);
+	if (quote->quote_type == FIRST_SINGLE_QUOTE || \
 	quote->quote_type == FIRST_DOUBLE_QUOTE)
 	{
 		free(quote);
