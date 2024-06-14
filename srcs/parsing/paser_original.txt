@@ -132,23 +132,7 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 				free_args(&temp_lst);
 				return(NULL);
 			}
-			else if(lst->type == PIPE)
-			{
-				if(lst->next == NULL)
-				{
-					lst = lst->next;
-					break;
-				}
-				if(lst->next->type == HEREDOC || lst->next->type == INPUT || lst->next->type == OUTPUT || lst->next->type == APPEND || lst->next->type == PIPE)//STDERROR
-				{
-					ft_printsyntaxerror(&lst);
-					free_args(&final);
-					free_args(&temp_lst);
-					return(NULL);
-				}
-				lst = lst->next;
-				break;
-			}
+			c
 			lst = lst->next;
 		}
 		//node_num++;//DELETE
