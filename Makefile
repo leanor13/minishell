@@ -8,7 +8,8 @@ FILES	= executor/pipex executor/build_command_list executor/utils_free_close exe
 	main_flow/init main_flow/main_minishell \
 	parsing/main_parsing parsing/lexer parsing/lexer_listutils parsing/parser cleanup/main_cleanup\
 	parsing/lexer_handle_quote parsing/lexer_find_quote parsing/parser_joinlineutils parsing/parser_joinlineutils_args \
-	parsing/parser_ifutils parsing/parser_ifutils_2 parsing/lexer_command_scan executor/executor_main executor/open_fds
+	parsing/parser_ifutils parsing/parser_ifutils_2 parsing/lexer_command_scan built_ins/ft_unset_util \
+	executor/executor_main executor/open_fds
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs

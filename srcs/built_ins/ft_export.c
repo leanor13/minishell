@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 17:52:39 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:57:31 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,10 @@ void	ft_changenode(t_env **env_list, char *copy_value)
 	(*env_list)->var_value = ft_strdup(copy_value);
 }
 
-int	ft_export(t_shell *shell, t_arg *command)
+int	no_export(t_shell *shell, char **args, t_env *env_lst_start )
 {
-	int		i;
-	char	**args;
-	t_env	*env_lst_start;
-	char	*equal_sign;
-	int		sign;
-
-	i = 1;
-	args = command->arguments;
 	env_lst_start = shell->env_list;
-	equal_sign = NULL;
-	sign = 0;
-	if (args[i] == NULL)
+	if (args[0] == NULL)
 	{
 		while (shell->env_list)
 		{
@@ -61,8 +51,26 @@ int	ft_export(t_shell *shell, t_arg *command)
 			shell->env_list = shell->env_list->next;
 		}
 		shell->env_list = env_lst_start;
-		return (EXIT_SUCCESS);
+		return (0);
 	}
+	return (1);
+}
+
+int	ft_export(t_shell *shell, t_arg *command)
+{
+	int		i;
+	char	**args;
+	char	*equal_sign;
+	int		sign;
+	t_env	*env_lst_start;
+
+	env_lst_start = shell->env_list;
+	i = 1;
+	args = command->arguments;
+	equal_sign = NULL;
+	sign = 0;
+	if(!no_export(shell, args, env_lst_start))
+		return (EXIT_SUCCESS);
 	while (args[i] != NULL) 
 	{
 		equal_sign = strchr(args[i], '=');

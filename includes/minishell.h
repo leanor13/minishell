@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:08:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/14 18:37:53 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int					ft_exit(t_shell *shell, t_arg *command);
 int					ft_cd(t_shell *shell, t_arg *command);
 int					ft_export(t_shell *shell, t_arg *command);
 char				*get_current_pwd(void);
+void				ft_delnode(t_env **env_list, int l);
 
 /* env handling */
 int					convert_env_lst_to_2d(t_env *env_lst, char ***env_2d);
