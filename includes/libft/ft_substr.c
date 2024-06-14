@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:05:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/26 12:19:21 by leanor           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:42:45 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	res = (char *)malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	//printf("Allocated %zu bytes in ft_substr: %p\n", len + 1, res);
 	i = 0;
 	while (i < len)
 	{

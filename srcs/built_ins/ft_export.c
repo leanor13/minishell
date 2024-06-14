@@ -6,13 +6,12 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 18:39:41 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:52:39 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// YULIA: let's chech that varname is valid by using this function
 int	is_valid_varname(const char *var_name)
 {
 	if (!ft_isalpha(*var_name) && *var_name != '_')
@@ -26,7 +25,7 @@ int	is_valid_varname(const char *var_name)
 	return (1);
 }
 
-void ft_changenode(t_env **env_list, char * copy_value)
+void	ft_changenode(t_env **env_list, char *copy_value)
 {
 	free((*env_list)->var_value);
 	(*env_list)->var_value = NULL;
@@ -35,11 +34,17 @@ void ft_changenode(t_env **env_list, char * copy_value)
 
 int	ft_export(t_shell *shell, t_arg *command)
 {
-	int		i = 1;
-	char 	**args = command->arguments;
-	t_env	*env_lst_start = shell->env_list;
-	char *equal_sign = NULL;
-	int	sign = 0;
+	int		i;
+	char	**args;
+	t_env	*env_lst_start;
+	char	*equal_sign;
+	int		sign;
+
+	i = 1;
+	args = command->arguments;
+	env_lst_start = shell->env_list;
+	equal_sign = NULL;
+	sign = 0;
 	if (args[i] == NULL)
 	{
 		while (shell->env_list)
@@ -58,13 +63,9 @@ int	ft_export(t_shell *shell, t_arg *command)
 		shell->env_list = env_lst_start;
 		return (EXIT_SUCCESS);
 	}
-	//if(*args[i] == '0' || *args[i] == '1' || *args[i] == '2' || *args[i] == '3' || *args[i] == '4' \
-			// || *args[i] == '5' || *args[i] == '6' || *args[i] == '7' || *args[i] == '8' || *args[i] == '9' \
-			// || *args[i] == '-' || *args[i] == '+' || *args[i] == '!' || *args[i] == '?' || *args[i] == '$' \
-			// || *args[i] == '=' || *args[i] == 34 || *args[i] == 39 || shell->args_list->type == WRONG)
 	while (args[i] != NULL) 
 	{
-        equal_sign = strchr(args[i], '=');
+		equal_sign = strchr(args[i], '=');
 		if (equal_sign)
 		{
 			size_t name_len = equal_sign - args[i];
@@ -103,22 +104,22 @@ int	ft_export(t_shell *shell, t_arg *command)
 		}
 		else
 		{
-			if(!is_valid_varname(args[i]))
+			if (!is_valid_varname(args[i]))
 			{
 				ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
-				return(EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			}
-			size_t name_len = ft_strlen(args[i]);//NEW
+			size_t name_len = ft_strlen(args[i]);
 			char *var_name = ft_strndup(args[i], name_len);
 			int k = ft_strlen(var_name);
 			t_env *env_lst_start = shell->env_list;
-			while(shell->env_list)
+			while (shell->env_list)
 			{
-				if(!ft_strncmp(shell->env_list->var_name, var_name, k))
+				if (!ft_strncmp(shell->env_list->var_name, var_name, k))
 				{
 					free(var_name);
 					sign = 1;
-					break;
+					break ;
 				}
 				shell->env_list = shell->env_list->next;
 			}
@@ -126,7 +127,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 			if (sign == 0)
 			{
 				add_back_env(&shell->env_list, args[i], NULL);
-				free(var_name);	
+				free(var_name);
 			}
 		}
 		i++;
