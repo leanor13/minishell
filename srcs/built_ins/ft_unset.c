@@ -6,11 +6,28 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 18:09:30 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:24:15 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	new_command(t_env **env_list, int l, t_env **current)
+{
+	t_env	*temp_del;
+
+	temp_del = NULL;
+	if (l == 0)
+	{
+		temp_del = (*current);
+		*env_list = (*current)->next;
+		free(temp_del->var_name);
+		free(temp_del->var_value);
+		free(temp_del);
+		return (0);
+	}
+	return (1);
+}
 
 void	ft_delnode(t_env **env_list, int l)
 {
@@ -23,15 +40,8 @@ void	ft_delnode(t_env **env_list, int l)
 	temp_del = NULL;
 	current = *env_list;
 	i = 0;
-	if (l == 0)
-	{
-		temp_del = current;
-		*env_list = current->next;
-		free(temp_del->var_name);
-		free(temp_del->var_value);
-		free(temp_del);
+	if (!new_command(env_list, l, &current))
 		return ;
-	}
 	while (i < l && current)
 	{
 		temp_prev = current;
@@ -75,14 +85,14 @@ t_env	*ft_findcommand(t_env *env_lst, t_shell *shell, char **args)
 		free(find_command);
 		i++;
 	}
-	return(env_lst);
+	return (env_lst);
 }
 
 int	ft_unset(t_shell *shell, t_arg *command)
 {
 	char	**args;
 	t_env	*env_lst;
-	
+
 	env_lst = NULL;
 	args = command->arguments;
 	if (args[0] == NULL)

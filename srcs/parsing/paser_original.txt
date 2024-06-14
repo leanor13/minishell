@@ -1,26 +1,24 @@
 int	ft_unset(t_shell *shell, t_arg *command)
 {
-	int		i;
-	int		l;
-	int		k;
-	char	**args;
-	char	*find_command;
+	int		i = 1;
+	int		l = 0;
+	int		k = 0;
+
+	char 	**args = command->arguments;
+	char	*find_command = NULL;
 	t_env	*env_lst;
 
-	i = 1;
-	l = 0;
-	k = 0;
-	args = command->arguments;
-
-	while (args[i])
+	if (args[i] == NULL)
+		return (EXIT_SUCCESS);
+	while(args[i])
 	{
 		l = 0;
 		env_lst = shell->env_list;
 		find_command = ft_strdup(args[i]);
 		k = ft_strlen(find_command);
-		while (shell->env_list)
+		while(shell->env_list)
 		{
-			if (!ft_strncmp(shell->env_list->var_name, find_command, k))
+			if(!ft_strncmp(shell->env_list->var_name, find_command, k))
 			{
 				ft_delnode(&env_lst, l);
 				break ;
@@ -34,4 +32,4 @@ int	ft_unset(t_shell *shell, t_arg *command)
 	shell->env_list = env_lst;
 	update_env_2d(shell);
 	return (EXIT_SUCCESS);
-} 
+}
