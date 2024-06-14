@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:30:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 17:47:35 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:09:30 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,15 @@ void	ft_delnode(t_env **env_list, int l)
 	free(temp_del);
 }
 
-int	ft_unset(t_shell *shell, t_arg *command)
+t_env	*ft_findcommand(t_env *env_lst, t_shell *shell, char **args)
 {
+	char	*find_command;
 	int		i;
 	int		l;
 	int		k;
-	char	**args;
-	char	*find_command;
-	t_env	*env_lst;
 
 	i = 1;
-	l = 0;
-	k = 0;
-	args = command->arguments;
 	find_command = NULL;
-	if (args[i] == NULL)
-		return (EXIT_SUCCESS);
 	while (args[i])
 	{
 		l = 0;
@@ -82,6 +75,19 @@ int	ft_unset(t_shell *shell, t_arg *command)
 		free(find_command);
 		i++;
 	}
+	return(env_lst);
+}
+
+int	ft_unset(t_shell *shell, t_arg *command)
+{
+	char	**args;
+	t_env	*env_lst;
+	
+	env_lst = NULL;
+	args = command->arguments;
+	if (args[0] == NULL)
+		return (EXIT_SUCCESS);
+	env_lst = ft_findcommand(env_lst, shell, args);
 	shell->env_list = env_lst;
 	update_env_2d(shell);
 	return (EXIT_SUCCESS);
