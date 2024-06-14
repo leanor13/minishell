@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 18:57:31 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:01:55 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_changenode(t_env **env_list, char *copy_value)
 int	no_export(t_shell *shell, char **args, t_env *env_lst_start )
 {
 	env_lst_start = shell->env_list;
-	if (args[0] == NULL)
+	if (args[1] == NULL)
 	{
 		while (shell->env_list)
 		{
@@ -74,42 +74,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 	while (args[i] != NULL) 
 	{
 		equal_sign = strchr(args[i], '=');
-		if (equal_sign)
-		{
-			size_t name_len = equal_sign - args[i];
-			char *var_name = ft_strndup(args[i], name_len);
-			char *var_name_test = ft_strdup(var_name);
-			if(!is_valid_varname(var_name_test))
-			{
-				ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
-				free(var_name);
-				free(var_name_test);
-				return(EXIT_FAILURE);
-			}
-			free(var_name_test);
-			char *var_value = ft_strdup(equal_sign + 1);
-			int k = ft_strlen(var_name);
-			t_env *env_lst_start = shell->env_list;
-			while(shell->env_list)
-			{
-				if(!ft_strncmp(shell->env_list->var_name, var_name, k))
-				{
-					ft_changenode(&shell->env_list, var_value);
-					free(var_name);	
-					free(var_value);
-					sign = 1;
-					break;
-				}
-				shell->env_list = shell->env_list->next;
-			}
-			shell->env_list = env_lst_start;
-			if (sign == 0)
-			{
-				add_back_env(&shell->env_list, var_name, var_value);
-				free(var_name);	
-				free(var_value);
-			}
-		}
+		if 
 		else
 		{
 			if (!is_valid_varname(args[i]))
