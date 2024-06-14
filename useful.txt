@@ -1,4 +1,5 @@
 touch something >> out 3 | cat
+w
 
 echo '"$USER"'''" - UNCLOSED QUOTES
 echo "USER'''''''" "'valami'"

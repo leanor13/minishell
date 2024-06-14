@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 14:23:01 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:01:35 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,107 +44,18 @@ void	more_parsing(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads)
 {
 	while (*lst)
 	{
-		if (if_heredoc(lst,node, temp_lst, heads))
+		if (!if_heredoc(lst,node, temp_lst, heads))
 			return ;
-		if (if_arg(lst,node, temp_lst, heads))
+		if_arg(lst, heads);
+		if (!if_output(lst,node, temp_lst, heads))
 			return ;
-		if ((*lst)->type == OUTPUT)
-		{
-			if ((*lst)->next == NULL)
-			{
-				*lst = (*lst)->next;
-				break;
-			}
-			if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
-			(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
-			|| (*lst)->next->type == PIPE)
-			{
-				ft_printsyntaxerror(lst);
-				free_args(node);
-				free_args(temp_lst);
-				return ;
-			}
-			*lst = (*lst)->next;
-			heads->k++;
-			(*lst)->type = GOING_OUTPUT;
-		}
-		else if ((*lst)->type == INPUT)
-		{
-			if ((*lst)->next == NULL)
-			{
-				*lst = (*lst)->next;
-				break;
-			}
-			if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
-			(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
-			|| (*lst)->next->type == PIPE)
-			{
-				ft_printsyntaxerror(lst);
-				free_args(node);
-				free_args(temp_lst);
-				return ;
-			}
-			*lst = (*lst)->next;
-			heads->l++;
-			(*lst)->type = GOING_INPUT;
-		}
-		else if ((*lst)->type == APPEND)
-		{
-			if ((*lst)->next == NULL)
-			{
-				*lst = (*lst)->next;
-				break;
-			}
-			if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
-			(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
-			|| (*lst)->next->type == PIPE)
-			{
-				ft_printsyntaxerror(lst);
-				free_args(node);
-				free_args(temp_lst);
-				return ;
-			}
-			(*node)->append = true;
-			*lst = (*lst)->next;
-			heads->k++;
-			(*lst)->type = GOING_OUTPUT;
-		}
-		else if ((*lst)->type == DOLLAR_SIGN)
-		{
-			heads->j++;
-			(*lst)->type = GOING_DOLLAR_SIGN;
-		}
-		else if ((*lst)->type == SINGLEQUOTE_DOLLAR)
-		{
-			heads->j++;
-			(*lst)->type = GOING_SINGLEQUOTE_DOLLAR;
-		}
-		else if ((*lst)->type == DOUBLE_PIPE)
-		{
-			ft_printsyntaxerror(lst);
-			free_args(node);
-			free_args(temp_lst);
+		if (!if_input(lst,node, temp_lst, heads))
 			return ;
-		}
-		else if ((*lst)->type == PIPE)
-		{
-			if ((*lst)->next == NULL)
-			{
-				*lst = (*lst)->next;
-				break;
-			}
-			if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
-			(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
-			|| (*lst)->next->type == PIPE)
-			{
-				ft_printsyntaxerror(lst);
-				free_args(node);
-				free_args(temp_lst);
-				return ;
-			}
-			*lst = (*lst)->next;
-			break;
-		}
+		if (!if_append(lst,node, temp_lst, heads))
+			return ;
+		if_dollarsign(lst, heads);
+		if (!if_pipe(lst,node, temp_lst))
+			return ;
 		*lst = (*lst)->next;
 	}
 }
