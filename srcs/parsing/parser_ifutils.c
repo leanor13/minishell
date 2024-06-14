@@ -6,13 +6,13 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 20:32:23 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:19:32 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	if_util1(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads)
+int	if_heredoc(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads)
 {
 	if ((*lst)->type == HEREDOC)
 	{
@@ -33,11 +33,18 @@ int	if_util1(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads)
 		*lst = (*lst)->next;
 		heads->i++;
 		(*lst)->type = GOING_HEREDOC;
+		return(1);
 	}
-	else if ((*lst)->type == ARG)
+	return (0);
+}
+
+int	if_arg(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads)
+{
+	if ((*lst)->type == ARG)
 	{
 		heads->j++;
 		(*lst)->type = GOING_ARG;
+		return(1);
 	}
-	return (1);
+	return (0);
 }

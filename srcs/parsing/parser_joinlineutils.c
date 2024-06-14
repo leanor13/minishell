@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 18:55:31 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:16:41 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-char	**ft_strjoinline_heredoc(t_arg *lst, int i)
+char	**ft_strjoin_heredoc(t_arg *lst, int i)
 {
 	char	**s1;
 	int		count;
@@ -53,7 +53,7 @@ char	**ft_strjoinline_heredoc(t_arg *lst, int i)
 	return (s1);
 }
 
-char	**ft_strjoinline_output(t_arg *lst, int i)
+char	**ft_strjoin_output(t_arg *lst, int i)
 {
 	char	**s1;
 	int		count;
@@ -75,7 +75,7 @@ char	**ft_strjoinline_output(t_arg *lst, int i)
 	return (s1);
 }
 
-char	**ft_strjoinline_input(t_arg *lst, int i)
+char	**ft_strjoin_input(t_arg *lst, int i)
 {
 	char	**s1;
 	int		count;

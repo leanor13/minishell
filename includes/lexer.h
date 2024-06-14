@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 20:32:38 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:19:52 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ typedef enum e_type
 	WRONG,
 }						t_type;
 
-int					if_util1(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
+int						if_heredoc(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
+int						if_arg(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
 t_arg					*ft_lexer(char *str, t_arg *lst);
 void					append_node(t_arg **lst, char *str, t_append info,
 							int value);
@@ -105,10 +106,10 @@ void					ft_printsyntaxerror(t_arg **lst);
 int						find_quote(t_sign **lst, char *str, int i);
 int						handle_quotestring(t_arg **lst, t_sign **quote,
 							char *str, int i);
-char					**ft_strjoinline_args(t_arg *lst, int i,
+char					**ft_strjoin_args(t_arg *lst, int i,
 							t_shell *shell);
-char					**ft_strjoinline_heredoc(t_arg *lst, int i);
-char					**ft_strjoinline_output(t_arg *lst, int i);
-char					**ft_strjoinline_input(t_arg *lst, int i);
+char					**ft_strjoin_heredoc(t_arg *lst, int i);
+char					**ft_strjoin_output(t_arg *lst, int i);
+char					**ft_strjoin_input(t_arg *lst, int i);
 
 #endif

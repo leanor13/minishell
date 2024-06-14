@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 18:54:24 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:16:05 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	handle_arg(t_arg *lst, char **s1, int count)
 	return (count);
 }
 
-char	**ft_strjoinline_args(t_arg *lst, int i, t_shell *shell)
+char	**ft_strjoin_args(t_arg *lst, int i, t_shell *shell)
 {
 	char	**s1;
 	int		count;

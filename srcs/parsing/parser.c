@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 20:31:53 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:21:10 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ void	more_parsing(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads)
 {
 	while (*lst)
 	{
-		if(!if_util1(lst,node, temp_lst, heads))
+		if (if_heredoc(lst,node, temp_lst, heads))
 			return ;
-		else if ((*lst)->type == OUTPUT)
+		if (if_arg(lst,node, temp_lst, heads))
+			return ;
+		if ((*lst)->type == OUTPUT)
 		{
 			if ((*lst)->next == NULL)
 			{
@@ -170,13 +172,13 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 		if(!temp_lst)
 			return(NULL);
 		if (heads.i != 0)
-			node->here_doc = ft_strjoinline_heredoc(heads.head_heredoc, heads.i);
+			node->here_doc = ft_strjoin_heredoc(heads.head_heredoc, heads.i);
 		if (heads.j != 0)
-			node->arguments = ft_strjoinline_args(heads.head_arg, heads.j, shell);
+			node->arguments = ft_strjoin_args(heads.head_arg, heads.j, shell);
 		if (heads.k != 0)
-			node->out_file = ft_strjoinline_output(heads.head_output, heads.k);
+			node->out_file = ft_strjoin_output(heads.head_output, heads.k);
 		if (heads.l != 0)
-			node->in_file = ft_strjoinline_input(heads.head_input, heads.l);
+			node->in_file = ft_strjoin_input(heads.head_input, heads.l);
 		if (!(final))
 		{
 			final = node;
