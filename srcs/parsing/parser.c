@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 15:12:15 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:46:19 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,50 +40,64 @@ void	initialize_heads(t_heads *heads, t_arg *lst)
 	heads->l = 0;
 }
 
-void	more_parsing(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads)
+void	more_parsing(t_arg **lst, t_arg **node, t_arg **temp_lst, \
+t_heads *heads)
 {
 	while (*lst)
 	{
-		if (!if_heredoc(lst,node, temp_lst, heads))
+		if (!if_heredoc(lst, node, temp_lst, heads))
 			return ;
 		if_arg(lst, heads);
-		if (!if_output(lst,node, temp_lst, heads))
+		if (!if_output(lst, node, temp_lst, heads))
 			return ;
-		if (!if_input(lst,node, temp_lst, heads))
+		if (!if_input(lst, node, temp_lst, heads))
 			return ;
-		if (!if_append(lst,node, temp_lst, heads))
+		if (!if_append(lst, node, temp_lst, heads))
 			return ;
 		if_dollarsign(lst, heads);
-		if ((*lst)->type == PIPE)
-		{
-			if ((*lst)->next == NULL)
-			{
-				*lst = (*lst)->next;
-				return ;
-			}
-			if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
-			(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
-			|| (*lst)->next->type == PIPE)
-			{
-				ft_printsyntaxerror(lst);
-				free_args(node);
-				free_args(temp_lst);
-				return ;
-			}
-			*lst = (*lst)->next;
+		if (!if_doublepipe(lst, node, temp_lst))
 			return ;
-		}
+		if (!if_pipe(lst, node, temp_lst))
+			return ;
 		*lst = (*lst)->next;
 	}
 }
 
+void	if_strjoin(t_heads heads, t_arg **node, t_shell *shell)
+{
+	if (heads.i != 0)
+		(*node)->here_doc = ft_strjoin_heredoc(heads.head_heredoc, heads.i);
+	if (heads.j != 0)
+		(*node)->arguments = ft_strjoin_args(heads.head_arg, heads.j, shell);
+	if (heads.k != 0)
+		(*node)->out_file = ft_strjoin_output(heads.head_output, heads.k);
+	if (heads.l != 0)
+		(*node)->in_file = ft_strjoin_input(heads.head_input, heads.l);
+}
+
+void	connect_last(t_arg **node, t_arg **final)
+{
+	t_arg	*nlast;
+
+	if (!(*final))
+	{
+		(*final) = (*node);
+		(*node)->prev = NULL;
+	}
+	else
+	{
+		nlast = ft_stacklast(*final);
+		nlast->next = (*node);
+		(*node)->prev = nlast;
+	}
+	return ;
+}
 t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 {
-	t_arg	*final;
 	t_arg	*node;
-	t_arg	*nlast;
 	t_arg	*temp_lst;
 	t_heads	heads;
+	t_arg	*final;
 
 	final = NULL;
 	temp_lst = lst;
@@ -97,27 +111,10 @@ t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 			return (NULL);
 		}
 		more_parsing(&lst, &node, &temp_lst, &heads);
-		if(!temp_lst)
-			return(NULL);
-		if (heads.i != 0)
-			node->here_doc = ft_strjoin_heredoc(heads.head_heredoc, heads.i);
-		if (heads.j != 0)
-			node->arguments = ft_strjoin_args(heads.head_arg, heads.j, shell);
-		if (heads.k != 0)
-			node->out_file = ft_strjoin_output(heads.head_output, heads.k);
-		if (heads.l != 0)
-			node->in_file = ft_strjoin_input(heads.head_input, heads.l);
-		if (!(final))
-		{
-			final = node;
-			node->prev = NULL;
-		}
-		else
-		{
-			nlast = ft_stacklast(final);
-			nlast->next = node;
-			node->prev = nlast;
-		}
+		if (!temp_lst)
+			return (NULL);
+		if_strjoin(heads, &node, shell);
+		connect_last(&node, &final);
 	}
 	free_args(&temp_lst);
 	return (final);

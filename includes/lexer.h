@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 15:01:39 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:19:43 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int			if_output(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
 int			if_input(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
 int			if_append(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
 void		if_dollarsign(t_arg **lst, t_heads *heads);
+int			if_doublepipe(t_arg **lst, t_arg **node, t_arg **temp_lst);
 int			if_pipe(t_arg **lst, t_arg **node, t_arg **temp_lst);
 t_arg		*ft_lexer(char *str, t_arg *lst);
 void		append_node(t_arg **lst, char *str, t_append info, int value);
