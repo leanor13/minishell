@@ -1,4 +1,4 @@
-touch something >> out 3 | cat
+touch something >> out3 | cat
 echo "valami" | echo "" ||
 w
 

@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 15:19:43 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:51:50 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef enum e_type
 	WRONG,
 }						t_type;
 
+void		if_strjoin(t_heads heads, t_arg **node, t_shell *shell);
 int			if_heredoc(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
 void		if_arg(t_arg **lst, t_heads *heads);
 int			if_output(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
@@ -114,5 +115,5 @@ char		**ft_strjoin_args(t_arg *lst, int i, t_shell *shell);
 char		**ft_strjoin_heredoc(t_arg *lst, int i);
 char		**ft_strjoin_output(t_arg *lst, int i);
 char		**ft_strjoin_input(t_arg *lst, int i);
-
+void		connect_last(t_arg **node, t_arg **final);
 #endif

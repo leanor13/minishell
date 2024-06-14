@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 15:47:10 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:52:33 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,9 @@ t_arg	*ft_stacklast(t_arg *lst)
 	return (lst);
 }
 
-// void	free_stackfinal(t_arg **lst)
-// {
-// 	t_arg	*tmp;
-// 	t_arg	*current;
-
-// 	if (!lst)
-// 		return ;
-// 	current = *lst;
-// 	while (current)
-// 	{
-// 		tmp = current;
-// 		current = current->next;
-// 		free(tmp);
-// 	}
-// 	*lst = NULL;
-// }
-
 void	append_node(t_arg **lst, char *str, t_append info, int value)
 {
 	t_arg	*node;
-	t_arg	*nlast;
 
 	if (!lst)
 		return ;
@@ -51,20 +33,10 @@ void	append_node(t_arg **lst, char *str, t_append info, int value)
 	node->next = NULL;
 	node->str = ft_substr(str, info.start, info.len);
 	if (!node->str) 
-	{  // Ensure that substr was successful
-		free(node);    // Free the node if substr fails
-		return;
+	{
+		free(node);
+		return ;
 	}
 	node->type = value;
-	if (!(*lst))
-	{
-		*lst = node;
-		node->prev = NULL;
-	}
-	else
-	{
-		nlast = ft_stacklast(*lst);
-		nlast->next = node;
-		node->prev = nlast;
-	}
+	connect_last(&node, lst);
 }

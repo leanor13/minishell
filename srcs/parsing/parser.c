@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 15:46:19 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:48:54 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,6 @@ t_heads *heads)
 	}
 }
 
-void	if_strjoin(t_heads heads, t_arg **node, t_shell *shell)
-{
-	if (heads.i != 0)
-		(*node)->here_doc = ft_strjoin_heredoc(heads.head_heredoc, heads.i);
-	if (heads.j != 0)
-		(*node)->arguments = ft_strjoin_args(heads.head_arg, heads.j, shell);
-	if (heads.k != 0)
-		(*node)->out_file = ft_strjoin_output(heads.head_output, heads.k);
-	if (heads.l != 0)
-		(*node)->in_file = ft_strjoin_input(heads.head_input, heads.l);
-}
-
 void	connect_last(t_arg **node, t_arg **final)
 {
 	t_arg	*nlast;
@@ -92,6 +80,7 @@ void	connect_last(t_arg **node, t_arg **final)
 	}
 	return ;
 }
+
 t_arg	*ft_parser(t_arg *lst, t_shell *shell)
 {
 	t_arg	*node;
