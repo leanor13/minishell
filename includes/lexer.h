@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 17:55:35 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:32:38 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef enum e_type
 	WRONG,
 }						t_type;
 
+int					if_util1(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
 t_arg					*ft_lexer(char *str, t_arg *lst);
 void					append_node(t_arg **lst, char *str, t_append info,
 							int value);
