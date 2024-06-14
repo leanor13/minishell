@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:05:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/06/14 17:00:58 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:10:16 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,44 +31,6 @@ int	skip_space(char *str, int i)
 	return (j);
 }
 
-int	arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
-{
-	int			j;
-	int			type;
-	int			start;
-	t_append	info;
-
-	start = i;
-	j = 0;
-	type = ARG;
-	if (str[i] == '\0')
-		return (j);
-	if (str[i] == '|' || str[i] == '<' || str[i] == '>')
-		return (shellcommand_scan(lst, str, i, quote));
-	while (str[i])
-	{
-		if ((*quote)->quote_type == 0)
-		{
-			if (skip_space(str, i))
-				break ;
-		}
-		if ((*quote)->quote_type == 0)
-		{
-			if (str[i] == '|' || str[i] == '<' || str[i] == '>')
-				break ;
-		}
-		if (find_quote(quote, str, i) == 1)
-			break ;
-		i++;
-		j++;
-	}
-	info.start = start;
-	info.len = j;
-	if (j > 0)
-		append_node(lst, str, info, type);
-	return (j);
-}
-
 void	scan_string(char *str, t_arg **lst, t_sign **quote)
 {
 	int	i;
@@ -89,13 +51,57 @@ void	scan_string(char *str, t_arg **lst, t_sign **quote)
 	}
 }
 
+int	scan_argument(char *str, int *i, t_sign **quote, \
+t_append *info)
+{
+	int	j;
+	int	start;
+
+	start = *i;
+	j = 0;
+	while (str[*i])
+	{
+		if ((*quote)->quote_type == 0)
+		{
+			if (skip_space(str, *i))
+				break;
+		}
+		if ((*quote)->quote_type == 0)
+		{
+			if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>')
+				break;
+		}
+		if (find_quote(quote, str, *i) == 1)
+			break;
+		(*i)++;
+		j++;
+	}
+	info->start = start;
+	info->len = j;
+	return (j);
+}
+
+int	arg_scan(t_arg **lst, char *str, int i, t_sign **quote)
+{
+	int			j;
+	int			type;
+	t_append	info;
+	
+	type = ARG;
+	if (str[i] == '\0')
+		return (0);
+	if (str[i] == '|' || str[i] == '<' || str[i] == '>')
+		return (shellcommand_scan(lst, str, i, quote));
+	j = scan_argument(str, &i, quote, &info);
+	if (j > 0)
+		append_node(lst, str, info, type);
+	return (j);
+}
+
 t_arg	*ft_lexer(char *str, t_arg *lst)
 {
-	int		i;
-	int		k;
 	t_sign	*quote;
 
-	i = 0;
 	if (!str || !*str)
 		return (NULL);
 	quote = ft_calloc(1, sizeof(t_sign));

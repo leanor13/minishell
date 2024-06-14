@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_command_scan.c                               :+:      :+:    :+:   */
+/*   lexer_scan.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 16:57:41 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:10:08 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,29 +98,3 @@ int	shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote)
 	else
 		return (0);
 }
-
-// 	else if (str[i] == '$')
-// 	{
-// 		h = i;
-// 		if ((*quote)->quote_type == FIRST_SINGLE_QUOTE)
-// 			type = SINGLEQUOTE_DOLLAR;
-// 		while (str[h] != ' ' && str[h])
-// 		{
-// 			if (find_quote(quote, str, h))
-// 				break ;
-// 			h++;
-// 			j++;
-// 		}
-// 		if (type != SINGLEQUOTE_DOLLAR)
-// 			type = DOLLAR_SIGN;
-// 	}
-// 	if (j > 0)
-// 	{
-// 		info.start = i;
-// 		info.len = j;
-// 		append_node(lst, str, info, type);
-// 		return (j);
-// 	}
-// 	else
-// 		return (0);
-// }

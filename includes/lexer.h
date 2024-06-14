@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 16:47:01 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:08:48 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,7 @@ char		**ft_strjoin_output(t_arg *lst, int i);
 char		**ft_strjoin_input(t_arg *lst, int i);
 void		connect_last(t_arg **node, t_arg **final);
 int			shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote);
+int			arg_scan(t_arg **lst, char *str, int i, t_sign **quote);
+int			skip_space(char *str, int i);
+
 #endif
