@@ -12,30 +12,38 @@
 
 #include "../../includes/minishell.h"
 
-int	add_var_nosign(char *var_name, t_shell *shell, int sign, int i, char **args)
+void	add_var_nosign_util(t_shell *shell, t_export info)
+{
+	if (info.sign == 0)
+		add_back_env(&shell->env_list, info.args[info.i], NULL);
+	return ;
+}
+
+int	add_var_nosign(t_shell *shell, t_export info)
 {
 	int		k;
 	t_env	*env_lst_start;
+	char	*var_name;
 
+	var_name = NULL;
+	info.name_len = ft_strlen(info.args[info.i]);
+	var_name = ft_strndup(info.args[info.i], info.name_len);
 	k = ft_strlen(var_name);
 	env_lst_start = shell->env_list;
 	while (shell->env_list)
 	{
 		if (!ft_strncmp(shell->env_list->var_name, var_name, k))
 		{
-			free(var_name);
-			sign = 1;
+			info.sign = 1;
 			break ;
 		}
 		shell->env_list = shell->env_list->next;
 	}
 	shell->env_list = env_lst_start;
-	if (sign == 0)
-	{
-		add_back_env(&shell->env_list, args[i], NULL);
+	add_var_nosign_util(shell, info);
+	if (var_name)
 		free(var_name);
-	}
-	return (sign);
+	return (info.sign);
 }
 
 void	add_var_free(int sign, char *var_value, t_shell *shell, char *var_name)
@@ -48,12 +56,15 @@ void	add_var_free(int sign, char *var_value, t_shell *shell, char *var_name)
 	}
 }
 
-int	add_var(int sign, char *equal_sign, t_shell *shell, char *var_name)
+int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info)
 {
 	char	*var_value;
 	int		k;
 	t_env	*env_lst_start;
+	char	*var_name;
 
+	info.name_len = info.equal_sign - info.args[info.i];
+	var_name = ft_strndup(info.args[info.i], info.name_len);
 	if (equal_sign)
 	{
 		var_value = ft_strdup(equal_sign + 1);
@@ -64,7 +75,6 @@ int	add_var(int sign, char *equal_sign, t_shell *shell, char *var_name)
 			if (!ft_strncmp(shell->env_list->var_name, var_name, k))
 			{
 				ft_changenode(&shell->env_list, var_value);
-				free(var_name);
 				free(var_value);
 				sign = 1;
 				break ;
@@ -74,24 +84,7 @@ int	add_var(int sign, char *equal_sign, t_shell *shell, char *var_name)
 		shell->env_list = env_lst_start;
 		add_var_free(sign, var_value, shell, var_name);
 	}
+	if (var_name)
+		free(var_name);
 	return (sign);
-}
-
-int	no_variable(char *equal_sign, char *var_name)
-{
-	char	*var_name_test;
-
-	if (equal_sign)
-	{
-		var_name_test = ft_strdup(var_name);
-		if (!is_valid_varname(var_name_test))
-		{
-			ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
-			free(var_name);
-			free(var_name_test);
-			return (1);
-		}
-		free(var_name_test);
-	}
-	return (0);
 }

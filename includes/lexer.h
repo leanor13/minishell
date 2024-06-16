@@ -52,6 +52,15 @@ typedef struct s_append
 	int					len;
 }						t_append;
 
+typedef struct s_export
+{
+	int					i;
+	int					sign;
+	size_t				name_len;
+	char					**args;
+	char					*equal_sign;
+}						t_export;
+
 typedef struct s_heads 
 {
 	t_arg	*head_arg;

@@ -32,8 +32,10 @@ void	ft_changenode(t_env **env_list, char *copy_value)
 	(*env_list)->var_value = ft_strdup(copy_value);
 }
 
-int	no_export(t_shell *shell, char **args, t_env *env_lst_start )
+int	no_export(t_shell *shell, char **args)
 {
+	t_env	*env_lst_start;
+
 	env_lst_start = shell->env_list;
 	if (args[1] != NULL)
 		return (0);
@@ -59,47 +61,29 @@ int	no_export(t_shell *shell, char **args, t_env *env_lst_start )
 
 int	ft_export(t_shell *shell, t_arg *command)
 {
-	int		i;
-	char	**args;
-	char	*equal_sign;
-	int		sign;
-	t_env	*env_lst_start;
-	char	*var_name;
-	size_t	name_len;
+	t_export	info;
 
-	env_lst_start = shell->env_list;
-	i = 1;
-	args = command->arguments;
-	equal_sign = NULL;
-	sign = 0;
-	if (no_export(shell, args, env_lst_start))
+	info.i = 1;
+	info.args = command->arguments;
+	if (no_export(shell, info.args))
 		return (EXIT_SUCCESS);
-	while (args[i] != NULL) 
+	while (info.args[info.i] != NULL) 
 	{
-		equal_sign = strchr(args[i], '=');
-		if (equal_sign)
+		info.equal_sign = strchr(info.args[info.i], '=');
+		if (info.equal_sign)
 		{
-			name_len = equal_sign - args[i];
-			var_name = ft_strndup(args[i], name_len);
-			if (no_variable(equal_sign, var_name))
+			if (no_variable(info.equal_sign, info))
 				return (EXIT_SUCCESS);
-			sign = add_var(sign, equal_sign, shell, var_name);
+			info.sign = add_var(info.sign, info.equal_sign, shell, info);
 		}
 		else
 		{
-			if (!is_valid_varname(args[i]))
-			{
-				ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
+			if (no_variable_novalue(info.args[info.i]))
 				return (EXIT_FAILURE);
-			}
-			name_len = ft_strlen(args[i]);
-			var_name = ft_strndup(args[i], name_len);
-			sign = (add_var_nosign(var_name, shell, sign, i, args));
+			info.sign = (add_var_nosign(shell, info));
 		}
-		i++;
+		info.i++;
 	}
-	if (equal_sign)
-		shell->env_list = env_lst_start;
 	update_env_2d(shell);
 	return (EXIT_SUCCESS);
 }
