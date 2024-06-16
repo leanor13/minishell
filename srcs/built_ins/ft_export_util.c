@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 16:15:12 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:30:17 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,21 @@ int	add_var_nosign(char *var_name, t_shell *shell, int sign, int i, char **args)
 	return (sign);
 }
 
-int	add_var(int sign, char *equal_sign, \
-t_env *env_lst_start, t_shell *shell, char *var_name)
+void	add_var_free(int sign, char *var_value, t_shell *shell, char *var_name)
+{
+	if (sign == 0)
+	{
+		add_back_env(&shell->env_list, var_name, var_value);
+		free(var_name);
+		free(var_value);
+	}
+}
+
+int	add_var(int sign, char *equal_sign, t_shell *shell, char *var_name)
 {
 	char	*var_value;
 	int		k;
+	t_env	*env_lst_start;
 
 	if (equal_sign)
 	{
@@ -62,12 +72,7 @@ t_env *env_lst_start, t_shell *shell, char *var_name)
 			shell->env_list = shell->env_list->next;
 		}
 		shell->env_list = env_lst_start;
-		if (sign == 0)
-		{
-			add_back_env(&shell->env_list, var_name, var_value);
-			free(var_name);
-			free(var_value);
-		}
+		add_var_free(sign, var_value, shell, var_name);
 	}
 	return (sign);
 }

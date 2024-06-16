@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 16:13:35 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:23:11 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 			var_name = ft_strndup(args[i], name_len);
 			if (no_variable(equal_sign, var_name))
 				return (EXIT_SUCCESS);
-			sign = add_var(sign, equal_sign, env_lst_start, shell, var_name);
+			sign = add_var(sign, equal_sign, shell, var_name);
 		}
 		else
 		{

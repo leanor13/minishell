@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 16:13:35 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:23:21 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int					ft_unset(t_shell *shell, t_arg *command);
 int					ft_exit(t_shell *shell, t_arg *command);
 int					ft_cd(t_shell *shell, t_arg *command);
 int					ft_export(t_shell *shell, t_arg *command);
-int					add_var(int sign, char *equal_sign, \
-					t_env *env_lst_start, t_shell *shell, char *var_name);
+int					add_var(int sign, char *equal_sign, t_shell *shell, char *var_name);
 int					no_variable(char *equal_sign, char *var_name);
 char				*get_current_pwd(void);
 void				ft_delnode(t_env **env_list, int l);
