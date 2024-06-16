@@ -12,6 +12,41 @@
 
 #include "../../includes/minishell.h"
 
+void	add_var_nosign_util(t_shell *shell, t_export info)
+{
+	if (info.sign == 0)
+		add_back_env(&shell->env_list, info.args[info.i], NULL);
+	return ;
+}
+
+int	add_var_nosign(t_shell *shell, t_export info)
+{
+	int		k;
+	t_env	*env_lst_start;
+	char	*var_name;
+
+	info.sign = 0;
+	var_name = NULL;
+	info.name_len = ft_strlen(info.args[info.i]);
+	var_name = ft_strndup(info.args[info.i], info.name_len);
+	k = ft_strlen(var_name);
+	env_lst_start = shell->env_list;
+	while (shell->env_list)
+	{
+		if (!ft_strncmp(shell->env_list->var_name, var_name, k))
+		{
+			info.sign = 1;
+			break ;
+		}
+		shell->env_list = shell->env_list->next;
+	}
+	shell->env_list = env_lst_start;
+	add_var_nosign_util(shell, info);
+	if (var_name)
+		free(var_name);
+	return (info.sign);
+}
+
 int	no_variable(char *equal_sign, t_export info)
 {
 	char	*var_name_test;
