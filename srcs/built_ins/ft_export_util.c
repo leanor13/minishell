@@ -29,6 +29,7 @@ int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info)
 	t_env	*env_lst_start;
 	char	*var_name;
 
+	info.sign = 0;
 	var_name = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
 	var_name = ft_strndup(info.args[info.i], info.name_len);

@@ -25,7 +25,7 @@ OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -g3 -Wall -Wextra -Werror
+CFLAGS	= -g3
 LDFLAGS = -lreadline
 
 INCL	= ./includes/executor.h ./includes/lexer.h ./includes/minishell.h
