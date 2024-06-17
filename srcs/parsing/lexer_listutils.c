@@ -32,7 +32,7 @@ void	append_node(t_arg **lst, char *str, t_append info, int value)
 		return ;
 	node->next = NULL;
 	node->str = ft_substr(str, info.start, info.len);
-	if (!node->str) 
+	if (!node->str)
 	{
 		free(node);
 		return ;
