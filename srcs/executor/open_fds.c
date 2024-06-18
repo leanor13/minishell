@@ -35,8 +35,10 @@ int	open_file(char *file, int type)
 
 static void	handle_here_doc(t_arg *command, t_shell *shell)
 {
+	heredoc_signal();
 	here_doc(command, shell);
 	command->fd_in = STDIN_FILENO;
+	child_signal();
 }
 
 static void	open_input_files(t_arg *command)

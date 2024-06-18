@@ -15,13 +15,13 @@
 #include <readline/history.h>
 #include <signal.h>
 
-volatile int	g_sig;
+volatile int	g_signal;
 
-void	heredoc_handler(int sig)
+void	heredoc_handler_function(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_sig = 1;
+		g_signal = 1;
 		write(1, "\n", 1);
 		rl_done = 1;
 		rl_on_new_line();
@@ -30,65 +30,65 @@ void	heredoc_handler(int sig)
 	}
 }
 
-void	set_heredoc_handler(void)
+void	heredoc_signal(void)
 {
-	struct sigaction	sa;
+	struct sigaction	signal;
 	struct sigaction	act;
 
-	sa.sa_flags = 0;
-	sa.sa_handler = &heredoc_handler;
+	signal.sa_flags = 0;
+	signal.sa_handler = &heredoc_handler_function;
 	act.sa_flags = 0;
 	act.sa_handler = SIG_IGN;
-	sigemptyset(&sa.sa_mask);
+	sigemptyset(&signal.sa_mask);
 	sigemptyset(&act.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGINT, &signal, NULL);
 	sigaction(SIGQUIT, &act, NULL);
 	sigaction(SIGTERM, &act, NULL);
 }
 
-void	child_handler(int sig)
+void	child_handler_function(int sig)
 {
 	rl_on_new_line();
 }
 
-void	prompt_handler(int sig)
+void	main_handler_function(int sig)
 {
 	write(1, "\n", 1);
 	if (sig == SIGINT)
-		g_sig = 1;
+		g_signal = 1;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void	set_child_handler(void)
+void	child_signal(void)
 {
-	struct sigaction	sa;
+	struct sigaction	signal;
 	struct sigaction	act;
 
 	act.sa_flags = 0;
 	act.sa_handler = SIG_IGN;
-	sa.sa_handler = &child_handler;
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
+	signal.sa_handler = &child_handler_function;
+	signal.sa_flags = SA_RESTART;
+	sigemptyset(&signal.sa_mask);
 	sigemptyset(&act.sa_mask);
-	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &signal, NULL);
+	sigaction(SIGINT, &signal, NULL);
 	sigaction(SIGTERM, &act, NULL);
 }
 
-void	set_prompt_handler(void)
+void	main_signal(void)
 {
-	struct sigaction	sa;
+	struct sigaction	signal;
 	struct sigaction	act;
 
-	sa.sa_handler = &prompt_handler;
-	sa.sa_flags = SA_RESTART;
+	signal.sa_handler = &main_handler_function;
+	signal.sa_flags = SA_RESTART;
 	act.sa_flags = SA_RESTART;
 	act.sa_handler = SIG_IGN;
 	sigemptyset(&act.sa_mask);
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
+	sigemptyset(&signal.sa_mask);
+	sigaction(SIGINT, &signal, NULL);
 	sigaction(SIGQUIT, &act, NULL);
 	sigaction(SIGTERM, &act, NULL);
 }
@@ -127,8 +127,8 @@ int	main_parsing(t_shell *shell)
 		}
 		lst = NULL;
 		command = NULL;
-		set_prompt_handler();
-		if (g_sig == 0)
+		main_signal();
+		if (g_signal == 0)
 			command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		else
 			command = readline("\n\033[1;36mminishell\033[1;32m$\033[0;0m");
@@ -146,7 +146,7 @@ int	main_parsing(t_shell *shell)
 			shell->args_list = lst;
 		if (shell->args_list != NULL)
 		{
-			set_child_handler();
+			child_signal();
 			executor_main(shell);
 		}
 		free_args(&shell->args_list);
