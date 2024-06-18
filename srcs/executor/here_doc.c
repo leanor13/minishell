@@ -92,7 +92,7 @@ int	here_doc(t_arg *command, t_shell *shell)
 		free_shell(shell);
 		exit(EXIT_SUCCESS);
 	}
-	close(fd[1]);
+	ft_close(fd[1]);
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)

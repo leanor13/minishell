@@ -19,6 +19,7 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 	dup_close(command->fd_in, STDIN_FILENO);
 	dup_close(command->fd_out, STDOUT_FILENO);
 	close_all_protected(shell);
+	printf("here\n");
 	if (command->built_in_fn)
     {
 		result = command->built_in_fn(shell, command);
@@ -49,6 +50,7 @@ pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 	}
 	else
 	{
+		printf("here2\n");
 		if (fd_pipe[FD_OUT] != -1)
 		{
 			close(fd_pipe[FD_OUT]);
@@ -59,6 +61,7 @@ pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 			close(fd_pipe[FD_IN]);
 			fd_pipe[FD_IN] = -1;
 		}
+		printf("here3\n");
 	}
 	return (pid);
 }

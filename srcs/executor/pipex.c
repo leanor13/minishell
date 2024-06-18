@@ -140,6 +140,7 @@ int	exec_pipe(t_shell *shell)
 	current = c_list;
 	count = child_count(c_list);
 	shell->exit_status = process_commands(shell, current, fd_pipe, &fd_in);
+	printf("her43\n");
 	if (count)
 		shell->exit_status = wait_for_children(count, shell);
 	close_all_protected(shell);

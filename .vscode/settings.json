@@ -65,4 +65,7 @@
 "explorer.confirmDragAndDrop": false,
 "workbench.startupEditor": "none",
 "github.copilot.editor.enableAutoCompletions": true,
+"files.associations": {
+	"dirent.h": "c"
+},
 }

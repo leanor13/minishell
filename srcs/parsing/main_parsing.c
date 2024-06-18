@@ -15,11 +15,82 @@
 #include <readline/history.h>
 #include <signal.h>
 
-void signal_handler(int sig) {
-    if (sig == SIGINT) {
-        printf("Signal SIGINT received, terminating process...\n");
-        exit(EXIT_FAILURE);
-    }
+volatile int	g_signal;
+
+void	heredoc_handler_function(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_signal = 1;
+		write(1, "\n", 1);
+		rl_done = 1;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		close(STDIN_FILENO);
+	}
+}
+
+void	heredoc_signal(void)
+{
+	struct sigaction	signal;
+	struct sigaction	act;
+
+	signal.sa_flags = 0;
+	signal.sa_handler = &heredoc_handler_function;
+	act.sa_flags = 0;
+	act.sa_handler = SIG_IGN;
+	sigemptyset(&signal.sa_mask);
+	sigemptyset(&act.sa_mask);
+	sigaction(SIGINT, &signal, NULL);
+	sigaction(SIGQUIT, &act, NULL);
+	sigaction(SIGTERM, &act, NULL);
+}
+
+void	child_handler_function(int sig)
+{
+	rl_on_new_line();
+}
+
+void	main_handler_function(int sig)
+{
+	write(1, "\n", 1);
+	if (sig == SIGINT)
+		g_signal = 1;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	child_signal(void)
+{
+	struct sigaction	signal;
+	struct sigaction	act;
+
+	act.sa_flags = 0;
+	act.sa_handler = SIG_IGN;
+	signal.sa_handler = &child_handler_function;
+	signal.sa_flags = SA_RESTART;
+	sigemptyset(&signal.sa_mask);
+	sigemptyset(&act.sa_mask);
+	sigaction(SIGQUIT, &signal, NULL);
+	sigaction(SIGINT, &signal, NULL);
+	sigaction(SIGTERM, &act, NULL);
+}
+
+void	main_signal(void)
+{
+	struct sigaction	signal;
+	struct sigaction	act;
+
+	signal.sa_handler = &main_handler_function;
+	signal.sa_flags = SA_RESTART;
+	act.sa_flags = SA_RESTART;
+	act.sa_handler = SIG_IGN;
+	sigemptyset(&act.sa_mask);
+	sigemptyset(&signal.sa_mask);
+	sigaction(SIGINT, &signal, NULL);
+	sigaction(SIGQUIT, &act, NULL);
+	sigaction(SIGTERM, &act, NULL);
 }
 
 int	main_parsing(t_shell *shell)
@@ -31,7 +102,6 @@ int	main_parsing(t_shell *shell)
 	exit_status = EXIT_SUCCESS;
 	command = NULL;
 	lst = NULL;
-	signal(SIGINT, signal_handler);
 	while (1)
 	{
 		if (dup2(shell->std_fds[0], STDIN_FILENO) == -1)
@@ -57,7 +127,11 @@ int	main_parsing(t_shell *shell)
 		}
 		lst = NULL;
 		command = NULL;
-		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
+		main_signal();
+		if (g_signal == 0)
+			command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
+		else
+			command = readline("\n\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
 			ft_putstr_nl("exit", STDERR_FILENO);
@@ -71,7 +145,10 @@ int	main_parsing(t_shell *shell)
 		if (lst)
 			shell->args_list = lst;
 		if (shell->args_list != NULL)
+		{
+			child_signal();
 			executor_main(shell);
+		}
 		free_args(&shell->args_list);
 		free(command);
 		close_all_protected(shell);
