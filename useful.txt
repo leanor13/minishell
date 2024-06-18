@@ -2,13 +2,13 @@ echo a'<'
 bash: syntax error: unclosed quote
 minishell$echo a'l'
 
-main?parsing I did not put dup2 into another function it is more than 25 lines now
+main parsing I did not put dup2 into another function it is more than 25 lines now
 touch something >> out3 | cat
 echo "valami" | echo "" ||
 w
 
 echo '"$USER"'''" - UNCLOSED QUOTES
-echo "USER'''''''" "'valami'"
+echo "USER'''''''" "'something'"
 
 export ""
 export ''

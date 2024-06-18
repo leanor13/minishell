@@ -52,7 +52,7 @@ int	handle_double_character(char *str, int i, int *type)
 	return (0);
 }
 
-int	handle_dollar_sign(char *str, int i, t_sign **quote, int *type)
+static int	handle_dollar_sign(char *str, int i, t_sign **quote, int *type)
 {
 	int	j;
 	int	h;

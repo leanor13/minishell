@@ -57,6 +57,10 @@ static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 		s1[count] = put_word(var_value);
 		count++;
 	}
+	if (res)
+		free(res);
+	if (var_value)
+		free(var_value);
 	return (count);
 }
 
