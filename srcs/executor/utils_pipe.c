@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:30:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 18:50:01 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:54:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 	dup_close(command->fd_in, STDIN_FILENO);
 	dup_close(command->fd_out, STDOUT_FILENO);
 	close_all_protected(shell);
-	printf("here\n");
 	if (command->built_in_fn)
     {
 		result = command->built_in_fn(shell, command);
@@ -50,7 +49,6 @@ pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 	}
 	else
 	{
-		printf("here2\n");
 		if (fd_pipe[FD_OUT] != -1)
 		{
 			close(fd_pipe[FD_OUT]);
@@ -61,7 +59,6 @@ pid_t	handle_parent_process(t_arg *command, t_shell *shell, int *fd_pipe)
 			close(fd_pipe[FD_IN]);
 			fd_pipe[FD_IN] = -1;
 		}
-		printf("here3\n");
 	}
 	return (pid);
 }
