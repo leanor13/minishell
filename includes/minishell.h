@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:08:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/16 16:23:21 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,15 @@ int					ft_unset(t_shell *shell, t_arg *command);
 int					ft_exit(t_shell *shell, t_arg *command);
 int					ft_cd(t_shell *shell, t_arg *command);
 int					ft_export(t_shell *shell, t_arg *command);
-char				*get_current_pwd(void);
-
+int					add_var(int sign, char *equal_sign, t_shell *shell, t_export info);
+int					no_variable(char *equal_sign, t_export info);
+int					no_variable_novalue(char *var_name);
+char					*get_current_pwd(void);
+void					ft_delnode(t_env **env_list, int l);
+int					is_valid_varname(const char *var_name);
+void					ft_changenode(t_env **env_list, char *copy_value);
+void					add_var_nosign_util(t_shell *shell, t_export info);
+int					add_var_nosign(t_shell *shell, t_export info);
 /* env handling */
 int					convert_env_lst_to_2d(t_env *env_lst, char ***env_2d);
 int					update_env_2d(t_shell *shell);

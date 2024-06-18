@@ -31,7 +31,7 @@ NAME = libft.a
 LIBC = ar rcs
 CC = cc
 RM = rm -f
-CFLAGS = -g3 -O3 -I. -Wall -Wextra -Werror 
+CFLAGS = -g3 -O3 -I.
 
 GREEN = \033[0;32m
 CYAN = \033[0;36m
