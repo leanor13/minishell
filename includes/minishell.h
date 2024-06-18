@@ -104,3 +104,7 @@ void				close_all_unprotected(void);
 void				close_pipes(int *fd_pipe);
 void				dup_close(int fd, int reference);
 void				ft_close(int fd);
+
+/* signals */
+void				set_child_handler(void);
+void				set_heredoc_handler(void);

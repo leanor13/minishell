@@ -81,6 +81,7 @@ int	here_doc(t_arg *command, t_shell *shell)
 
 	limiters = command->here_doc;
 	shell->here_doc = true;
+	set_heredoc_handler();
 	exit_pipe_error(fd);
 	pid = fork();
 	if (pid < 0)
@@ -95,6 +96,7 @@ int	here_doc(t_arg *command, t_shell *shell)
 	close(fd[1]);
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
+	set_child_handler();
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		return (close_all_protected(shell), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
