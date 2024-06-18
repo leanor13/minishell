@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:26:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 19:05:59 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:32:46 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 
 int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 {
-	if (!current->in_file || !current->in_file[0])
+	if (current->here_doc == NULL && (!current->in_file || !current->in_file[0]))
 		current->fd_in = fd_in;
 	if (current->next)
 	{
@@ -140,7 +140,6 @@ int	exec_pipe(t_shell *shell)
 	current = c_list;
 	count = child_count(c_list);
 	shell->exit_status = process_commands(shell, current, fd_pipe, &fd_in);
-	printf("her43\n");
 	if (count)
 		shell->exit_status = wait_for_children(count, shell);
 	close_all_protected(shell);

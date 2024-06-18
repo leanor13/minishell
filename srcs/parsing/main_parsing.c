@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/10 18:57:51 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:39:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,21 @@ volatile int	g_signal;
 
 void	heredoc_handler_function(int sig)
 {
+	int	dev_null;
+
 	if (sig == SIGINT)
 	{
+		dev_null = open("/dev/null", O_RDONLY);
+		if (dev_null != -1)
+		{
+			dup2(dev_null, STDIN_FILENO);
+			close(dev_null);
+		}
 		g_signal = 1;
-		write(1, "\n", 1);
+		//write(1, "\n", 1);
 		rl_done = 1;
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		close(STDIN_FILENO);
 	}
 }
 
@@ -48,6 +55,7 @@ void	heredoc_signal(void)
 
 void	child_handler_function(int sig)
 {
+	write(1, "\n", 1);
 	rl_on_new_line();
 }
 
@@ -128,10 +136,12 @@ int	main_parsing(t_shell *shell)
 		lst = NULL;
 		command = NULL;
 		main_signal();
-		if (g_signal == 0)
-			command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
-		else
-			command = readline("\n\033[1;36mminishell\033[1;32m$\033[0;0m");
+		if (g_signal)
+		{
+			//g_signal = 0;
+			write(1, "\n", 1);
+		}
+		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
 			ft_putstr_nl("exit", STDERR_FILENO);
