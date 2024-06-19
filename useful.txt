@@ -1,5 +1,7 @@
 June 19:
 
+0. clear cleans everything including prompt
+
 1.
 minishell$cat << $PWD
 > d
@@ -70,6 +72,7 @@ return(EXIT_FAILURE)
 - (YULIA?) (minor) export should print alphabetically. We can do it if we want.
 - (TINA) cat Makefile > out1.txt >> out2.txt: if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
 - (YULIA) HEREDOC: once SIGNALS done - add signals there
+- (minor) SHLVL parameter when calling ./minishell
 
 - (TINA?) (minor) cat << f <<
 expected behavior
