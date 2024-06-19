@@ -1,3 +1,48 @@
+June 19:
+
+1.
+minishell$cat << $PWD
+> d
+> $PWD
+d
+minishell$echo $PWD
+
+2.
+echo "$PWD''"
+this causes leaks!
+minishell$echo "$PWD''"
+
+minishell$echo $PWD
+/home/yioffe/Projects/minishell
+minishell$
+exit
+==2522985== Invalid free() / delete / delete[] / realloc()
+==2522985==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2522985==    by 0x40521D: free_env_lst (main_cleanup.c:47)
+==2522985==    by 0x4053B5: free_shell (main_cleanup.c:93)
+==2522985==    by 0x404680: main_parsing (main_parsing.c:148)
+==2522985==    by 0x4041D9: main (main_minishell.c:23)
+==2522985==  Address 0x4b2b740 is 0 bytes inside a block of size 32 free'd
+==2522985==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2522985==    by 0x405EFA: handle_dollar_sign (parser_joinlineutils_args.c:63)
+==2522985==    by 0x405D4C: ft_strjoin_args (parser_joinlineutils_args.c:86)
+==2522985==    by 0x406520: if_strjoin (parser_ifutils_2.c:20)
+==2522985==    by 0x4050D2: ft_parser (parser.c:105)
+==2522985==    by 0x4046BA: main_parsing (main_parsing.c:154)
+==2522985==    by 0x4041D9: main (main_minishell.c:23)
+==2522985==  Block was alloc'd at
+==2522985==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2522985==    by 0x4075F9: ft_strdup (ft_strdup.c:24)
+==2522985==    by 0x403A32: add_back_env (env_helper.c:85)
+==2522985==    by 0x403BC2: parse_env (env_helper.c:135)
+==2522985==    by 0x40408A: handle_env (init.c:112)
+==2522985==    by 0x404118: init_shell (init.c:127)
+==2522985==    by 0x4041D0: main (main_minishell.c:22)
+==2522985== 
+==2522985== 
+
+3. Shell level variable value
+
 echo a'<'
 bash: syntax error: unclosed quote
 minishell$echo a'l'
