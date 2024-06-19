@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/18 17:40:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/19 13:44:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	here_doc(t_arg *command, t_shell *shell)
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+	{
 		return (close_all_protected(shell), EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
