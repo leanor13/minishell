@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/19 18:10:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/19 19:53:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static char	*get_line(t_shell *shell)
 	line = get_next_line(STDIN_FILENO);
 	if (line == NULL)
 	{
+		write(STDOUT_FILENO, "\n", 1);
 		close_all_unprotected();
 		free_shell(shell);
 		perror("Error reading from standard input");
@@ -48,8 +49,14 @@ static void	read_input(int fd[2], char **limiters, t_shell shell)
 	ft_close(fd[0]);
 	while (true)
 	{
+		if (g_signal) break;
 		write(shell.std_fds[FD_OUT], "> ", 2);
 		line = get_line(&shell);
+		if (!line || g_signal)
+		{  // Check signal again after potentially blocking call
+         free(line);
+         break;
+      }
 		if (strncmp(line, limiters[i], strlen(limiters[i])) == 0
 			&& strlen(line) == strlen(limiters[i]) + 1)
 		{
@@ -90,14 +97,26 @@ int	here_doc(t_arg *command, t_shell *shell)
 		ft_error_forking();
 	else if (pid == 0)
 	{
+		if (g_signal) 
+		{  // Early exit if signal received
+			close(fd[1]);
+			exit(EXIT_FAILURE);
+      }
 		read_input(fd, limiters, *shell);
 		close_all_unprotected();
 		free_shell(shell);
 		exit(EXIT_SUCCESS);
 	}
 	ft_close(fd[1]);
+	if (g_signal) 
+	{  // Check signal and clean up if needed
+        close(fd[0]);
+        wait(NULL);  // Ensure child process is reaped
+        return EXIT_FAILURE;
+   }
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
+	g_signal = 0;
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 	{
 		return (close_all_protected(shell), EXIT_FAILURE);

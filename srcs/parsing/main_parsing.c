@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/19 12:26:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/19 19:47:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,12 @@
 
 volatile int	g_signal;
 
-void	heredoc_handler_function(int sig)
+void heredoc_handler_function(int sig)
 {
-	int	dev_null;
-
 	if (sig == SIGINT)
 	{
-		dev_null = open("/dev/null", O_RDONLY);
-		if (dev_null != -1)
-		{
-			dup2(dev_null, STDIN_FILENO);
-			close(dev_null);
-		}
-		g_signal = 1;
-		//write(1, "\n", 1);
-		rl_done = 1;
+		g_signal = 1;  // Signal that an interrupt has occurred
+		rl_done = 1;   // Prepare readline to complete
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
@@ -64,12 +55,13 @@ void	child_handler_function(int sig)
 
 void	main_handler_function(int sig)
 {
-	write(1, "\n", 1);
-	if (sig == SIGINT)
-		g_signal = 1;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT) 
+	{
+		rl_replace_line("", 0);  // Clear the readline buffer
+		rl_on_new_line();        // Move to a new line
+		rl_redisplay();          // Redraw the prompt
+		g_signal = 1;            // Set the global signal indicator
+	}
 }
 
 void	child_signal(void)
@@ -139,8 +131,11 @@ int	main_parsing(t_shell *shell)
 		lst = NULL;
 		command = NULL;
 		main_signal();
-		if (g_signal == 1)
+		if (g_signal)
+		{
 			write(1, "\n", 1);
+			g_signal = 0;
+		}
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
@@ -162,6 +157,7 @@ int	main_parsing(t_shell *shell)
 		free_args(&shell->args_list);
 		free(command);
 		close_all_protected(shell);
+		//rl_redisplay();
 	}
 	return (EXIT_SUCCESS);
 }
