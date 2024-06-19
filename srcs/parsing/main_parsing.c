@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/18 18:39:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/19 12:26:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	heredoc_signal(void)
 
 void	child_handler_function(int sig)
 {
-	write(1, "\n", 1);
+	if (sig == SIGINT)
+	{
+		g_signal = 1;  // Ensuring the new line is printed to STDOUT
+	}
 	rl_on_new_line();
 }
 
@@ -136,11 +139,8 @@ int	main_parsing(t_shell *shell)
 		lst = NULL;
 		command = NULL;
 		main_signal();
-		if (g_signal)
-		{
-			//g_signal = 0;
+		if (g_signal == 1)
 			write(1, "\n", 1);
-		}
 		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
 		if (command == NULL)
 		{
