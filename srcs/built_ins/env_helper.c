@@ -25,29 +25,6 @@ int	env_len_count(t_env *env_lst)
 	return (i);
 }
 
-int	setup_env_2d_array(t_env *env_lst, char ***env_2d)
-{
-	free_string_array(env_2d);
-	*env_2d = ft_calloc((env_len_count(env_lst) + 1), sizeof(char *));
-	if (!*env_2d)
-	{
-		perror("calloc error");
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
-int	protect_malloc(char *str, char ***env_2d)
-{
-	if (!str)
-	{
-		free_string_array(env_2d);
-		perror("malloc error");
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 {
 	char	*temp;

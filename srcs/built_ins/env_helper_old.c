@@ -37,6 +37,17 @@ int	setup_env_2d_array(t_env *env_lst, char ***env_2d)
 	return (EXIT_SUCCESS);
 }
 
+int	protect_malloc(char *str, char ***env_2d)
+{
+	if (!str)
+	{
+		free_string_array(env_2d);
+		perror("malloc error");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
 int	convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 {
 	char	*temp;
@@ -47,26 +58,18 @@ int	convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 	i = 0;
 	while (env_lst)
 	{
-		if (!env_lst->var_name || !env_lst->var_value)
-		{
-			(*env_2d)[i] = NULL;
-			temp = NULL;
-		}
-		if (env_lst->var_name)
+		temp = NULL;
+		if (env_lst->var_value && env_lst->var_name)
 		{
 			temp = ft_strjoin(env_lst->var_name, "=");
-			if (!temp)
-			{
-				free_string_array(env_2d);
-				return (perror("malloc error"), EXIT_FAILURE);
-			}
+			if (protect_malloc(temp, env_2d) != EXIT_SUCCESS)
+				return (EXIT_FAILURE);
 			(*env_2d)[i] = ft_strjoin(temp, env_lst->var_value);
-			if (!**env_2d)
-			{
-				free_string_array(env_2d);
-				return (perror("malloc error"), EXIT_FAILURE);
-			}
+			if (protect_malloc((*env_2d)[i], env_2d) != EXIT_SUCCESS)
+				return (free(temp), EXIT_FAILURE);
 		}
+		else
+			(*env_2d)[i] = ft_strdup(env_lst->var_name);
 		i++;
 		free(temp);
 		env_lst = env_lst->next;

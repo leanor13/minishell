@@ -31,6 +31,7 @@ int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info)
 
 	info.sign = 0;
 	var_name = NULL;
+	var_value = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
 	var_name = ft_strndup(info.args[info.i], info.name_len);
 	if (equal_sign)
