@@ -1,3 +1,5 @@
+## This project is in a draft, non-final state. Will be updated once done
+
 # MiniShell
 
 ## Overview
