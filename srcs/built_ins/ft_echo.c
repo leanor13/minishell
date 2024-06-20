@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:46:27 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/05 19:05:31 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:43:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_content(char *arg, int len_arg, int fd_out)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < len_arg)
@@ -26,7 +26,7 @@ static void	print_content(char *arg, int len_arg, int fd_out)
 
 static void	echo_arg(char *arg, int fd_out)
 {
-	int		len_arg;
+	int	len_arg;
 
 	len_arg = ft_strlen(arg);
 	if (!arg || !arg[0])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 16:23:11 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:14:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 	info.args = command->arguments;
 	if (no_export(shell, info.args))
 		return (EXIT_SUCCESS);
-	while (info.args[info.i] != NULL) 
+	while (info.args[info.i] != NULL)
 	{
 		info.equal_sign = strchr(info.args[info.i], '=');
 		if (info.equal_sign)

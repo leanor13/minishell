@@ -3,7 +3,14 @@
 FROM ubuntu:latest
 
 # Update and install gcc, g++, make, and valgrind
-RUN apt-get update && apt-get install -y gcc g++ make valgrind libreadline-dev git x11-apps xterm
+RUN apt-get update && apt-get install -y gcc g++ make valgrind libreadline-dev git x11-apps xterm 
+
+# Install Python, pipx, and norminette
+RUN apt update
+RUN apt install -y python3-setuptools
+RUN apt install -y pipx
+RUN pipx install norminette
+RUN pipx ensurepath
 
 # Set the working directory in the container to /app
 WORKDIR /app

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:21:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 14:23:42 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:41:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ typedef struct s_arg
 	int					type;
 	char				**arguments;
 	char				**out_file;
-	//cat Makefile > out2.txt >> out2.txt
-	//cat Makefile >> out2.txt > out2.txt
-	//cat Makefile > out1.txt >> out3 > out4.txt >> out5.txt
-	//char				**out_file_append; out3, out5.txt
-	//char				**out_file_rewrite; out1.txt out4.txt//everything after >
-	//cat Makefile > out1.txt >> out3 > out4.txt > out5.txt // append is false
-	//char				**out_file_append; out3
-	//char				**out_file_rewrite; out1.txt out4.txt out5.txt//everything after >
+	// cat Makefile > out2.txt >> out2.txt
+	// cat Makefile >> out2.txt > out2.txt
+	// cat Makefile > out1.txt >> out3 > out4.txt >> out5.txt
+	// char				**out_file_append; out3, out5.txt
+	// char				**out_file_rewrite; out1.txt out4.txt//everything after >
+	// cat Makefile > out1.txt >> out3 > out4.txt > out5.txt // append is false
+	// char				**out_file_append; out3
+	// char				**out_file_rewrite; out1.txt out4.txt out5.txt//everything after >
 	char				**in_file;
 	char				**here_doc;
 	bool				append; // it is only true if the last one
@@ -57,21 +57,21 @@ typedef struct s_export
 	int					i;
 	int					sign;
 	size_t				name_len;
-	char					**args;
-	char					*equal_sign;
+	char				**args;
+	char				*equal_sign;
 }						t_export;
 
-typedef struct s_heads 
+typedef struct s_heads
 {
-	t_arg	*head_arg;
-	t_arg	*head_heredoc;
-	t_arg	*head_output;
-	t_arg	*head_input;
-	int		i;
-	int		j;
-	int		k;
-	int		l;
-}			t_heads;
+	t_arg				*head_arg;
+	t_arg				*head_heredoc;
+	t_arg				*head_output;
+	t_arg				*head_input;
+	int					i;
+	int					j;
+	int					k;
+	int					l;
+}						t_heads;
 
 typedef struct s_sign
 {
@@ -104,29 +104,37 @@ typedef enum e_type
 	WRONG,
 }						t_type;
 
-void		if_strjoin(t_heads heads, t_arg **node, t_shell *shell);
-int			if_heredoc(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
-void		if_arg(t_arg **lst, t_heads *heads);
-int			if_output(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
-int			if_input(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
-int			if_append(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
-void		if_dollarsign(t_arg **lst, t_heads *heads);
-int			if_doublepipe(t_arg **lst, t_arg **node, t_arg **temp_lst);
-int			if_pipe(t_arg **lst, t_arg **node, t_arg **temp_lst);
-t_arg		*ft_lexer(char *str, t_arg *lst);
-void		append_node(t_arg **lst, char *str, t_append info, int value);
-t_arg		*ft_parser(t_arg *lst, t_shell *shell);
-t_arg		*ft_stacklast(t_arg *lst);
-void		ft_printsyntaxerror(t_arg **lst);
-int			find_quote(t_sign **lst, char *str, int i);
-int			handle_quotestring(t_arg **lst, t_sign **quote, char *str, int i);
-char		**ft_strjoin_args(t_arg *lst, int i, t_shell *shell);
-char		**ft_strjoin_heredoc(t_arg *lst, int i);
-char		**ft_strjoin_output(t_arg *lst, int i);
-char		**ft_strjoin_input(t_arg *lst, int i);
-void		connect_last(t_arg **node, t_arg **final);
-int			shellcommand_scan(t_arg **lst, char *str, int i, t_sign **quote);
-int			arg_scan(t_arg **lst, char *str, int i, t_sign **quote);
-int			skip_space(char *str, int i);
+void					if_strjoin(t_heads heads, t_arg **node, t_shell *shell);
+int						if_heredoc(t_arg **lst, t_arg **node, t_arg **temp_lst,
+							t_heads *heads);
+void					if_arg(t_arg **lst, t_heads *heads);
+int						if_output(t_arg **lst, t_arg **node, t_arg **temp_lst,
+							t_heads *heads);
+int						if_input(t_arg **lst, t_arg **node, t_arg **temp_lst,
+							t_heads *heads);
+int						if_append(t_arg **lst, t_arg **node, t_arg **temp_lst,
+							t_heads *heads);
+void					if_dollarsign(t_arg **lst, t_heads *heads);
+int						if_doublepipe(t_arg **lst, t_arg **node,
+							t_arg **temp_lst);
+int						if_pipe(t_arg **lst, t_arg **node, t_arg **temp_lst);
+t_arg					*ft_lexer(char *str, t_arg *lst);
+void					append_node(t_arg **lst, char *str, t_append info,
+							int value);
+t_arg					*ft_parser(t_arg *lst, t_shell *shell);
+t_arg					*ft_stacklast(t_arg *lst);
+void					ft_printsyntaxerror(t_arg **lst);
+int						find_quote(t_sign **lst, char *str, int i);
+int						handle_quotestring(t_arg **lst, t_sign **quote,
+							char *str, int i);
+char					**ft_strjoin_args(t_arg *lst, int i, t_shell *shell);
+char					**ft_strjoin_heredoc(t_arg *lst, int i);
+char					**ft_strjoin_output(t_arg *lst, int i);
+char					**ft_strjoin_input(t_arg *lst, int i);
+void					connect_last(t_arg **node, t_arg **final);
+int						shellcommand_scan(t_arg **lst, char *str, int i,
+							t_sign **quote);
+int						arg_scan(t_arg **lst, char *str, int i, t_sign **quote);
+int						skip_space(char *str, int i);
 
 #endif
