@@ -1,5 +1,7 @@
 June 19:
 
+-W flags are missing in makefile. We need to put them back before evaluation :)
+
 0. clear cleans everything including prompt
 
 1.
