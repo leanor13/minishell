@@ -117,13 +117,13 @@ int	parse_env(t_shell *shell, char **env)
 	shell->env_list = NULL;
 	while (env[i])
 	{
-		env_copy = strdup(env[i]);
+		env_copy = ft_strdup(env[i]);
 		if (!env_copy)
 		{
 			free_shell(shell);
 			exit(EXIT_FAILURE);
 		}
-		equal = strchr(env_copy, '=');
+		equal = ft_strchr(env_copy, '=');
 		if (equal != NULL)
 		{
 			*equal = '\0';
