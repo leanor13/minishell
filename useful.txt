@@ -92,6 +92,41 @@ int	no_variable_novalue(char *var_name)
 		ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
 ...
 }
+
+5. export a=3
+==6412== Conditional jump or move depends on uninitialised value(s)
+==6412==    at 0x10ED38: add_var_free (ft_export_util.c:17)
+==6412==    by 0x10EE9B: add_var (ft_export_util.c:53)
+==6412==    by 0x10B437: ft_export (ft_export.c:77)
+==6412==    by 0x10935F: exec_command (pipex.c:50)
+==6412==    by 0x109527: execute_current_command (pipex.c:89)
+==6412==    by 0x109617: process_commands (pipex.c:119)
+==6412==    by 0x1096C7: exec_pipe (pipex.c:142)
+==6412==    by 0x10EF27: executor_main (executor_main.c:28)
+==6412==    by 0x10C5FF: main_parsing (main_parsing.c:160)
+==6412==    by 0x10C0A7: main (main_minishell.c:23)
+==6412==  Uninitialised value was created by a stack allocation
+==6412==    at 0x10B360: ft_export (ft_export.c:63)
+==6412== 
+at least what I saw - var_value in add_var is not initialized if no equal sign. 
+and probably some issue with int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info) 
+if the goal is to update info.sign, info has to be passed as pointer.
+also info.sign = add_var(info.sign, info.equal_sign, shell, info); - info.sign not initialized here, but is passed as argument 
+
+6. int	ft_export(t_shell *shell, t_arg *command)
+{
+	t_export	info;
+
+	info.i = 1;
+	info.args = command->arguments;
+	if (no_export(shell, info.args))
+		return (EXIT_SUCCESS);
+	while (info.args[info.i] != NULL) 
+	{
+		info.equal_sign = strchr(info.args[info.i], '=');
+	
+	NEED TO CHANGE strchr to ft_strchr!!!
+	also in parse_env! 		equal = strchr(env_copy, '=');
 -----------------------
 echo a'<'
 bash: syntax error: unclosed quote
