@@ -45,8 +45,40 @@ exit
 ==2522985== 
 ==2522985== 
 
-3. Shell level variable value
+3. when running with no User (empty env):
+==5005== 10 bytes in 1 blocks are definitely lost in loss record 8 of 79
+==5005==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
+==5005==    by 0x10F643: ft_strdup (ft_strdup.c:24)
+==5005==    by 0x10EDEF: add_var (ft_export_util.c:38)
+==5005==    by 0x10B437: ft_export (ft_export.c:77)
+==5005==    by 0x10BE6B: empty_user (init.c:84)
+==5005==    by 0x10BFA7: handle_env (init.c:120)
+==5005==    by 0x10BFDB: init_shell (init.c:127)
+==5005==    by 0x10C09F: main (main_minishell.c:22)
+==5005== 
+==5005== LEAK SUMMARY:
+==5005==    definitely lost: 10 bytes in 1 blocks
+==5005==    indirectly lost: 0 bytes in 0 blocks
+==5005==      possibly lost: 0 bytes in 0 blocks
+==5005==    still reachable: 0 bytes in 0 blocks
+==5005==         suppressed: 232,874 bytes in 238 blocks
+==5005== 
+==5005== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==5005== 
+==5005== 1 errors in context 1 of 2:
+==5005== Conditional jump or move depends on uninitialised value(s)
+==5005==    at 0x10ED38: add_var_free (ft_export_util.c:17)
+==5005==    by 0x10EE9B: add_var (ft_export_util.c:53)
+==5005==    by 0x10B437: ft_export (ft_export.c:77)
+==5005==    by 0x10BE6B: empty_user (init.c:84)
+==5005==    by 0x10BFA7: handle_env (init.c:120)
+==5005==    by 0x10BFDB: init_shell (init.c:127)
+==5005==    by 0x10C09F: main (main_minishell.c:22)
+==5005==  Uninitialised value was created by a stack allocation
+==5005==    at 0x10B360: ft_export (ft_export.c:63)
+==5005== 
 
+-----------------------
 echo a'<'
 bash: syntax error: unclosed quote
 minishell$echo a'l'
