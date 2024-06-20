@@ -78,6 +78,20 @@ exit
 ==5005==    at 0x10B360: ft_export (ft_export.c:63)
 ==5005== 
 
+4. small: here it's probably "export", not "exit" :)
+int	no_variable(char *equal_sign, t_export info)
+{
+...
+			ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
+....
+}
+
+int	no_variable_novalue(char *var_name)
+{
+...
+		ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
+...
+}
 -----------------------
 echo a'<'
 bash: syntax error: unclosed quote

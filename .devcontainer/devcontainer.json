@@ -1,16 +1,22 @@
 {
-    "name": "C Development",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
-    },
-    "runArgs": [
-        "-v", "${localWorkspaceFolder}:/workspace"
-    ],
-    "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
-    },
-    "extensions": [
-        "ms-vscode.cpptools"
-    ]
-}
+	"name": "C Development",
+	"build": {
+		 "dockerfile": "Dockerfile",
+		 "context": ".."
+	},
+	"runArgs": [
+		 "-v", "${localWorkspaceFolder}:/workspace"
+	],
+	"customizations": {
+		 "vscode": {
+			  "settings": {
+					"terminal.integrated.defaultProfile.linux": "bash"
+			  },
+			  "extensions": [
+				"ms-vscode.cpptools"
+		  ]
+		 }
+	}
+	
+  }
+  
