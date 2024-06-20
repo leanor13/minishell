@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/18 17:40:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/19 18:10:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,13 @@ static void	ft_error_forking(void)
 int	here_doc(t_arg *command, t_shell *shell)
 {
 	pid_t	pid;
-	int		fd[2];
-	int		status;
+	int	fd[2];
+	int	status;
 	char	**limiters;
 
+	fd[0] = -1;
+	fd[1] = -1;
+	status = 0;
 	limiters = command->here_doc;
 	shell->here_doc = true;
 	exit_pipe_error(fd);
@@ -96,6 +99,8 @@ int	here_doc(t_arg *command, t_shell *shell)
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+	{
 		return (close_all_protected(shell), EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

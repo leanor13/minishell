@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:09:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/31 12:45:38 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/19 18:01:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	free_command_list(t_arg **command_list)
 
 void	dup_close(int fd, int reference)
 {
-	if (fd != reference)
+	if (fd != reference && fd >= 0 && reference >= 0)
 	{
 		if (dup2(fd, reference) == -1)
 			perror("dup_close failure");
