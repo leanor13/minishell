@@ -2,13 +2,9 @@ June 19:
 
 -W flags are missing in makefile. We need to put them back before evaluation :)
 
-0. clear cleans everything including prompt
+0. clear cleans everything including prompt 
 
 1.
-minishell$cat << $PWD
-> d
-> $PWD
-d
 minishell$echo $PWD
 
 2.
@@ -78,21 +74,6 @@ exit
 ==5005==    at 0x10B360: ft_export (ft_export.c:63)
 ==5005== 
 
-4. small: here it's probably "export", not "exit" :)
-int	no_variable(char *equal_sign, t_export info)
-{
-...
-			ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
-....
-}
-
-int	no_variable_novalue(char *var_name)
-{
-...
-		ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
-...
-}
-
 5. export a=3
 ==6412== Conditional jump or move depends on uninitialised value(s)
 ==6412==    at 0x10ED38: add_var_free (ft_export_util.c:17)
@@ -131,7 +112,6 @@ here: no leak like that: git checkout dfb184d (see https://github.com/leanor13/m
 
 7. minishell$cat << k | << s
 minishell: syntax error near unexpected token `<<'
-
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 echo a'<'
