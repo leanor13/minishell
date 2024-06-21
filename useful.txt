@@ -1,10 +1,10 @@
-June 19:
+June 21 (updated):
 
 -W flags are missing in makefile. We need to put them back before evaluation :)
 
 0. clear cleans everything including prompt
 
-3. when running with no User (empty env):
+1. when running with no User (empty env):
 ==5005== 10 bytes in 1 blocks are definitely lost in loss record 8 of 79
 ==5005==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
 ==5005==    by 0x10F643: ft_strdup (ft_strdup.c:24)
@@ -35,9 +35,11 @@ June 19:
 ==5005==    by 0x10C09F: main (main_minishell.c:22)
 ==5005==  Uninitialised value was created by a stack allocation
 ==5005==    at 0x10B360: ft_export (ft_export.c:63)
-==5005== 
+==5005==
 
 7. minishell$cat << k | << s
+cat << okay | << something
+
 minishell: syntax error near unexpected token `<<'
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------

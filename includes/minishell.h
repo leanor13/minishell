@@ -33,7 +33,7 @@ typedef struct s_shell
 	int				exit_status;
 	int				here_doc_fd;
 	bool			should_exit;
-	struct s_shell *tmp;
+	struct s_shell	*tmp;//should we leave this here?
 }					t_shell;
 
 #define EXIT_CMD_NOT_FOUND 127
@@ -42,8 +42,8 @@ typedef struct s_shell
 /* main flow */
 int					init_shell(t_shell *shell, char **env);
 int					main_util(t_shell *shell);
-void					start_minishell(t_arg *lst, char *command, \
-						t_shell *shell, int exit_status);
+void				start_minishell(t_arg *lst, char *command, \
+							t_shell *shell, int exit_status);
 
 /* execution */
 int					executor_main(t_shell *shell);
@@ -57,14 +57,15 @@ int					ft_unset(t_shell *shell, t_arg *command);
 int					ft_exit(t_shell *shell, t_arg *command);
 int					ft_cd(t_shell *shell, t_arg *command);
 int					ft_export(t_shell *shell, t_arg *command);
-int					add_var(int sign, char *equal_sign, t_shell *shell, t_export info);
+int					add_var(int sign, char *equal_sign, \
+t_shell *shell, t_export info);
 int					no_variable(char *equal_sign, t_export info);
 int					no_variable_novalue(char *var_name);
-char					*get_current_pwd(void);
-void					ft_delnode(t_env **env_list, int l);
+char				*get_current_pwd(void);
+void				ft_delnode(t_env **env_list, int l);
 int					is_valid_varname(const char *var_name);
-void					ft_changenode(t_env **env_list, char *copy_value);
-void					add_var_nosign_util(t_shell *shell, t_export info);
+void				ft_changenode(t_env **env_list, char *copy_value);
+void				add_var_nosign_util(t_shell *shell, t_export info);
 int					add_var_nosign(t_shell *shell, t_export info);
 /* env handling */
 int					convert_env_lst_to_2d(t_env *env_lst, char ***env_2d);

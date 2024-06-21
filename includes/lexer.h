@@ -57,8 +57,8 @@ typedef struct s_export
 	int					i;
 	int					sign;
 	size_t				name_len;
-	char					**args;
-	char					*equal_sign;
+	char				**args;
+	char				*equal_sign;
 }						t_export;
 
 typedef struct s_heads 
@@ -105,11 +105,15 @@ typedef enum e_type
 }						t_type;
 
 void		if_strjoin(t_heads heads, t_arg **node, t_shell *shell);
-int			if_heredoc(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
+int			if_heredoc(t_arg **lst, t_arg **node, \
+t_arg **temp_lst, t_heads *heads);
 void		if_arg(t_arg **lst, t_heads *heads);
-int			if_output(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
-int			if_input(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
-int			if_append(t_arg **lst, t_arg **node, t_arg **temp_lst, t_heads *heads);
+int			if_output(t_arg **lst, t_arg **node, \
+t_arg **temp_lst, t_heads *heads);
+int			if_input(t_arg **lst, t_arg **node, \
+t_arg **temp_lst, t_heads *heads);
+int			if_append(t_arg **lst, t_arg **node, \
+t_arg **temp_lst, t_heads *heads);
 void		if_dollarsign(t_arg **lst, t_heads *heads);
 int			if_doublepipe(t_arg **lst, t_arg **node, t_arg **temp_lst);
 int			if_pipe(t_arg **lst, t_arg **node, t_arg **temp_lst);
