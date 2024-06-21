@@ -5,10 +5,6 @@ June 19:
 0. clear cleans everything including prompt
 
 1.
-minishell$cat << $PWD
-> d
-> $PWD
-d
 minishell$echo $PWD
 
 2.
@@ -78,21 +74,6 @@ exit
 ==5005==    at 0x10B360: ft_export (ft_export.c:63)
 ==5005== 
 
-4. small: here it's probably "export", not "exit" :)
-int	no_variable(char *equal_sign, t_export info)
-{
-...
-			ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
-....
-}
-
-int	no_variable_novalue(char *var_name)
-{
-...
-		ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
-...
-}
-
 5. export a=3
 ==6412== Conditional jump or move depends on uninitialised value(s)
 ==6412==    at 0x10ED38: add_var_free (ft_export_util.c:17)
@@ -132,19 +113,16 @@ here: no leak like that: git checkout dfb184d (see https://github.com/leanor13/m
 7. minishell$cat << k | << s
 minishell: syntax error near unexpected token `<<'
 
-
------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 echo a'<'
 bash: syntax error: unclosed quote
 minishell$echo a'l'
 
 main parsing I did not put dup2 into another function it is more than 25 lines now
 touch something >> out3 | cat
-echo "valami" | echo "" ||
-w
+echo "valami" | echo "" || make valgrind
 
-echo '"$USER"'''" - UNCLOSED QUOTES
-echo "USER'''''''" "'something'"
+w
 
 export ""
 export ''
@@ -152,8 +130,6 @@ export $USER - it opens
 export $okay=something - in bash this gives error
 
 "$USER'''" this one maybe a changin on find_var
-echo '$USERkoevkfvpojrvs'
-echo '$USER;;;'
 
 return(EXIT_FAILURE)
 
@@ -187,53 +163,3 @@ To switch back to running VS Code on your local machine:
 Click on the green icon in the lower-left corner of the status bar (or use the command palette F1 and search for "Remote-Containers: Reopen Locally").
 VS Code will reload and open the folder on your local machine.
 Remember, you need to have Docker installed and running on your machine to use the "Remote - Containers" extension. If you don't have the extension installed, you can install it from the Extensions view (Ctrl+Shift+X).
-
-
-
-minishell$<<eof cat | wc | cat
-> ola
-> tudo bem
-> eof             
-==596565== Conditional jump or move depends on uninitialised value(s)
-==596565==    at 0x405656: free_string_array (main_cleanup.c:22)
-==596565==    by 0x405811: free_args (main_cleanup.c:73)
-==596565==    by 0x4058D2: free_shell (main_cleanup.c:94)
-==596565==    by 0x402242: here_doc (here_doc.c:92)
-==596565==    by 0x4065AC: handle_here_doc (open_fds.c:41)
-==596565==    by 0x4064D6: process_command_fds (open_fds.c:81)
-==596565==    by 0x406307: executor_main (executor_main.c:21)
-==596565==    by 0x4045C8: main_parsing (main_parsing.c:86)
-==596565==    by 0x404429: main (main_minishell.c:23)
-==596565== 
-==596565== 
-==596565== HEAP SUMMARY:
-==596565==     in use at exit: 209,752 bytes in 301 blocks
-==596565==   total heap usage: 2,558 allocs, 2,257 frees, 305,804 bytes allocated
-==596565== 
-==596565== LEAK SUMMARY:
-==596565==    definitely lost: 18 bytes in 6 blocks
-==596565==    indirectly lost: 0 bytes in 0 blocks
-==596565==      possibly lost: 0 bytes in 0 blocks
-==596565==    still reachable: 209,734 bytes in 295 blocks
-==596565==         suppressed: 0 bytes in 0 blocks
-==596565== Rerun with --leak-check=full to see details of leaked memory
-==596565== 
-==596565== Use --track-origins=yes to see where uninitialised values come from
-==596565== For lists of detected and suppressed errors, rerun with: -s
-==596565== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-==595723== Conditional jump or move depends on uninitialised value(s)
-==595723==    at 0x401756: build_command_list (build_command_list.c:103)
-==595723==    by 0x406310: executor_main (executor_main.c:22)
-==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
-==595723==    by 0x404429: main (main_minishell.c:23)
-==595723== 
-Syntax error: empty command
-      2       3      13
-==595723== Conditional jump or move depends on uninitialised value(s)
-==595723==    at 0x405656: free_string_array (main_cleanup.c:22)
-==595723==    by 0x405811: free_args (main_cleanup.c:73)
-==595723==    by 0x406358: executor_main (executor_main.c:30)
-==595723==    by 0x4045C8: main_parsing (main_parsing.c:86)
-==595723==    by 0x404429: main (main_minishell.c:23)
-==595723== 
-
