@@ -110,8 +110,9 @@ int	no_variable_novalue(char *var_name)
 ==6412== 
 at least what I saw - var_value in add_var is not initialized if no equal sign. 
 and probably some issue with int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info) 
-if the goal is to update info.sign, info has to be passed as pointer.
+if the goal is to update info.sign, info has to be passed as pointer
 also info.sign = add_var(info.sign, info.equal_sign, shell, info); - info.sign not initialized here, but is passed as argument 
+here: no leak like that: git checkout dfb184d (see https://github.com/leanor13/minishell/commit/dfb184dea3a3cafcce81ea29af5b8a9b77487c12)
 
 6. int	ft_export(t_shell *shell, t_arg *command)
 {
