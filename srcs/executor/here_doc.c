@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 20:21:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 20:27:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@ static char	*get_line(t_shell *shell)
 	char	*line;
 
 	line = readline("> ");
-	if (line == NULL)
-	{
-		printf("LEX\n");
-		// close_all_unprotected();
-		free_shell(shell);
-		ft_putstr_fd("error", 2);
-		// perror("Error reading from standard input");
-		exit(EXIT_FAILURE);
-	}
 	return (line);
 }
 
@@ -71,8 +62,9 @@ static void	read_input(int fd[2], char **limiters, t_shell shell)
 	{
 		// write(shell.std_fds[FD_OUT], "> ", 2);
 		line = get_line(&shell);
-		if (strncmp(line, limiters[i], strlen(limiters[i])) == 0
-			&& strlen(line) == strlen(limiters[i]))
+		
+		if (line == NULL || (strncmp(line, limiters[i], strlen(limiters[i])) == 0
+			&& strlen(line) == strlen(limiters[i])))
 		{
 			free(line);
 			i++;
