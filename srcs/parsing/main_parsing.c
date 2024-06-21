@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/19 12:26:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 18:53:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	heredoc_handler_function(int sig)
 		dev_null = open("/dev/null", O_RDONLY);
 		if (dev_null != -1)
 		{
+			//printf("here\n");
 			dup2(dev_null, STDIN_FILENO);
 			close(dev_null);
 		}

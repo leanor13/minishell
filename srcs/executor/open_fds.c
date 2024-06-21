@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:39:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/19 13:44:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 19:51:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	open_file(char *file, int type)
 
 static void	handle_here_doc(t_arg *command, t_shell *shell)
 {
-	heredoc_signal();
+	// heredoc_signal();
 	here_doc(command, shell);
 	command->fd_in = STDIN_FILENO;
 	child_signal();
