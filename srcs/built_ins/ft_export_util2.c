@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export_util.c                                   :+:      :+:    :+:   */
+/*   ft_export_util2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 16:30:17 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:41:35 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	no_variable(char *equal_sign, t_export info)
 		var_name_test = ft_strdup(var_name);
 		if (!is_valid_varname(var_name_test))
 		{
-			ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
+			ft_putstr_nl("export: not a valid identifier", STDERR_FILENO);
 			free(var_name);
 			free(var_name_test);
 			return (1);
@@ -76,7 +76,7 @@ int	no_variable_novalue(char *var_name)
 {
 	if (!is_valid_varname(var_name))
 	{
-		ft_putstr_nl("exit: not a valid identifier", STDERR_FILENO);
+		ft_putstr_nl("export: not a valid identifier", STDERR_FILENO);
 		return (1);
 	}
 	return (0);

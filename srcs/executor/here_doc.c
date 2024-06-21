@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/19 18:10:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:19:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ static void	ft_error_forking(void)
 	exit(EXIT_FAILURE);
 }
 
+void	init_here_doc_variables(int *fd_in, int *fd_out, int *status)
+{
+	return ;
+}
+
 int	here_doc(t_arg *command, t_shell *shell)
 {
 	pid_t	pid;
@@ -99,8 +104,6 @@ int	here_doc(t_arg *command, t_shell *shell)
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
-	{
 		return (close_all_protected(shell), EXIT_FAILURE);
-	}
 	return (EXIT_SUCCESS);
 }

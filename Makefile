@@ -18,14 +18,13 @@ NAME_PARSING	= parsing
 
 SRCS_PARSING	= $(addprefix srcs/,$(addsuffix .c, $(FILES_PARSING)))
 FILES_PARSING	= parsing/main_parsing parsing/lexer parsing/lexer_listutils
-# parsing/parser
 
 OBJS_PARSING		= $(addprefix $(OBJS_DIR_PARSING)/,$(SRCS_PARSING:srcs/%.c=%.o))
 OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -g3
+CFLAGS	= -g3 
 LDFLAGS = -lreadline
 
 INCL	= ./includes/executor.h ./includes/lexer.h ./includes/minishell.h

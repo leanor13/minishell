@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/01 17:32:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:10:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	executor_main(t_shell *shell)
 		return (EXIT_FAILURE);
 	}
 	status = exec_pipe(shell);
-	//free_command_list(&shell->args_list);
 	free_args(&shell->args_list);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
