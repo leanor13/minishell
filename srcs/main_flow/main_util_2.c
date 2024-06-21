@@ -12,7 +12,8 @@
 
 #include "../../includes/minishell.h"
 
-void	start_minishell(t_arg *lst, char *command, t_shell *shell, int exit_status)
+void	start_minishell(t_arg *lst, char *command, \
+t_shell *shell, int exit_status)
 {
 	lst = NULL;
 	command = NULL;
