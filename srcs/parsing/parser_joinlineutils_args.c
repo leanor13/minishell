@@ -43,6 +43,8 @@ static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 		res = ft_itoa(shell->exit_status);
 		ft_strcat(res, &lst->str[2]);
 		var_value = ft_strdup(res);
+		if (res)
+			free(res);
 	}
 	else
 	{
@@ -57,8 +59,6 @@ static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 		s1[count] = put_word(var_value);
 		count++;
 	}
-	if (res)
-		free(res);
 	if (var_value)
 		free(var_value);
 	return (count);
