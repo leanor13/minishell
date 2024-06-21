@@ -17,7 +17,6 @@ void	add_var_free(int sign, char *var_value, t_shell *shell, char *var_name)
 	if (sign == 0)
 	{
 		add_back_env(&shell->env_list, var_name, var_value);
-		free(var_name);
 		free(var_value);
 	}
 }
@@ -52,7 +51,6 @@ int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info)
 		shell->env_list = env_lst_start;
 		add_var_free(sign, var_value, shell, var_name);
 	}
-	if (var_name)
-		free(var_name);
+	free(var_name);
 	return (sign);
 }

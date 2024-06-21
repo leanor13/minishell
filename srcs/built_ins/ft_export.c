@@ -65,6 +65,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 
 	info.i = 1;
 	info.args = command->arguments;
+	info.sign = 0;// It has to be here
 	if (no_export(shell, info.args))
 		return (EXIT_SUCCESS);
 	while (info.args[info.i] != NULL) 
