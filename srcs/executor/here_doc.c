@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 20:27:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 21:09:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void alex(int code)
 	{
 		// printf("alex\n");
 		free_shell(var()->tmp);
-		exit(55);
+		exit(128 + SIGINT);
 	}
 	// return(0);
 }
@@ -113,12 +113,12 @@ int	here_doc(t_arg *command, t_shell *shell)
 	ft_close(fd[1]);
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
-	if (WEXITSTATUS(status) == 55)
+	if (WEXITSTATUS(status) == 128 + SIGINT)
 	{
 		free_args(&shell->args_list);
-		return (close_all_protected(shell), EXIT_FAILURE);
+		return (close_all_protected(shell), 128 + SIGINT);
 	}
-	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+	if (WEXITSTATUS(status) == EXIT_FAILURE)
 	{
 		free_args(&shell->args_list);
 		return (close_all_protected(shell), EXIT_FAILURE);

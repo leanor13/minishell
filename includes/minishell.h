@@ -6,13 +6,14 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 19:19:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 20:58:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include "lexer.h"
 #include <dirent.h>
+#include <signal.h>
 
 typedef struct s_env
 {

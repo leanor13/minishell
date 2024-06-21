@@ -6,14 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 18:53:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 20:58:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <signal.h>
 
 volatile int	g_signal;
 
