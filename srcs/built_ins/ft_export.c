@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 16:23:11 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:44:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 		return (EXIT_SUCCESS);
 	while (info.args[info.i] != NULL) 
 	{
-		info.equal_sign = strchr(info.args[info.i], '=');
+		info.equal_sign = ft_strchr(info.args[info.i], '=');
 		if (info.equal_sign)
 		{
 			if (no_variable(info.equal_sign, info))

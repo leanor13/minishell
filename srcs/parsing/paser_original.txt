@@ -29,7 +29,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 			// || *args[i] == '=' || *args[i] == 34 || *args[i] == 39 || shell->args_list->type == WRONG)
 	while (args[i] != NULL) 
 	{
-        equal_sign = strchr(args[i], '=');
+        equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign)
 		{
 			size_t name_len = equal_sign - args[i];
