@@ -128,6 +128,11 @@ here: no leak like that: git checkout dfb184d (see https://github.com/leanor13/m
 	
 	NEED TO CHANGE strchr to ft_strchr!!!
 	also in parse_env! 		equal = strchr(env_copy, '=');
+
+7. minishell$cat << k | << s
+minishell: syntax error near unexpected token `<<'
+
+
 -----------------------
 echo a'<'
 bash: syntax error: unclosed quote
