@@ -106,5 +106,10 @@ void				dup_close(int fd, int reference);
 void				ft_close(int fd);
 
 /* signals */
-void				child_signal(void);
 void				heredoc_signal(void);
+void				heredoc_handler_function(int sig);
+void				child_signal(void);
+void				child_handler_function(int sig);
+void				heredoc_signal(void);
+void				main_handler_function(int sig);
+void				main_signal(void);

@@ -23,12 +23,10 @@ void	heredoc_handler_function(int sig)
 		dev_null = open("/dev/null", O_RDONLY);
 		if (dev_null != -1)
 		{
-			//printf("here\n");
 			dup2(dev_null, STDIN_FILENO);
 			close(dev_null);
 		}
 		g_signal = 1;
-		//write(1, "\n", 1);
 		rl_done = 1;
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -54,9 +52,7 @@ void	heredoc_signal(void)
 void	child_handler_function(int sig)
 {
 	if (sig == SIGINT)
-	{
-		g_signal = 1;  // Ensuring the new line is printed to STDOUT
-	}
+		g_signal = 1;
 	rl_on_new_line();
 }
 
@@ -68,38 +64,6 @@ void	main_handler_function(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-}
-
-void	child_signal(void)
-{
-	struct sigaction	signal;
-	struct sigaction	act;
-
-	act.sa_flags = 0;
-	act.sa_handler = SIG_IGN;
-	signal.sa_handler = &child_handler_function;
-	signal.sa_flags = SA_RESTART;
-	sigemptyset(&signal.sa_mask);
-	sigemptyset(&act.sa_mask);
-	sigaction(SIGQUIT, &signal, NULL);
-	sigaction(SIGINT, &signal, NULL);
-	sigaction(SIGTERM, &act, NULL);
-}
-
-void	main_signal(void)
-{
-	struct sigaction	signal;
-	struct sigaction	act;
-
-	signal.sa_handler = &main_handler_function;
-	signal.sa_flags = SA_RESTART;
-	act.sa_flags = SA_RESTART;
-	act.sa_handler = SIG_IGN;
-	sigemptyset(&act.sa_mask);
-	sigemptyset(&signal.sa_mask);
-	sigaction(SIGINT, &signal, NULL);
-	sigaction(SIGQUIT, &act, NULL);
-	sigaction(SIGTERM, &act, NULL);
 }
 
 int	main_util(t_shell *shell)

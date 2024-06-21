@@ -5,8 +5,8 @@ FILES	= executor/pipex executor/build_command_list executor/utils_free_close exe
 	executor/utils_misc executor/here_doc executor/free_command_list executor/check_builtin \
 	built_ins/ft_cd built_ins/ft_pwd built_ins/ft_env built_ins/ft_echo \
 	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset built_ins/env_helper built_ins/env_helper_2\
-	main_flow/init main_flow/main_minishell \
-	main_flow/main_util parsing/lexer parsing/lexer_listutils parsing/parser cleanup/main_cleanup\
+	main_flow/init main_flow/main_minishell main_flow/signals main_flow/main_util\
+	parsing/lexer parsing/lexer_listutils parsing/parser cleanup/main_cleanup\
 	parsing/lexer_handle_quote parsing/lexer_find_quote parsing/parser_joinlineutils parsing/parser_joinlineutils_args \
 	parsing/parser_ifutils parsing/parser_ifutils_2 parsing/lexer_command_scan built_ins/ft_unset_util built_ins/ft_export_util\
 	executor/executor_main executor/open_fds built_ins/ft_export_util2
