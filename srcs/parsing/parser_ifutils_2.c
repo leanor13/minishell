@@ -60,14 +60,17 @@ int	if_pipe(t_arg **lst, t_arg **node, t_arg **temp_lst)
 			*lst = (*lst)->next;
 			return (0);
 		}
-		if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
-		(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
-		|| (*lst)->next->type == PIPE)
+		if((*lst)->prev == NULL)
 		{
-			ft_printsyntaxerror(lst);
-			free_args(node);
-			free_args(temp_lst);
-			return (0);
+			if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
+			(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
+			|| (*lst)->next->type == PIPE)
+			{
+				ft_printsyntaxerror(lst);
+				free_args(node);
+				free_args(temp_lst);
+				return (0);
+			}
 		}
 		*lst = (*lst)->next;
 		return (0);
