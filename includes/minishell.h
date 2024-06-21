@@ -42,6 +42,8 @@ typedef struct s_shell
 /* main flow */
 int					init_shell(t_shell *shell, char **env);
 int					main_util(t_shell *shell);
+void					start_minishell(t_arg *lst, char *command, \
+						t_shell *shell, int exit_status);
 
 /* execution */
 int					executor_main(t_shell *shell);

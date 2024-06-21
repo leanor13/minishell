@@ -73,8 +73,6 @@ int	main_util(t_shell *shell)
 	int		exit_status;
 
 	exit_status = EXIT_SUCCESS;
-	command = NULL;
-	lst = NULL;
 	while (1)
 	{
 		if (dup2(shell->std_fds[0], STDIN_FILENO) == -1)
@@ -98,32 +96,10 @@ int	main_util(t_shell *shell)
 			free_shell(shell);
 			exit(exit_status);
 		}
-		lst = NULL;
-		command = NULL;
-		main_signal();
-		if (g_signal == 1)
+		main_signal();//we have to leave this from here*
+		if (g_signal == 1) //WE HAVE TO LEAVE THIS HERE BECAUSE OF THE GLOBAL VARIABLE
 			write(1, "\n", 1);
-		command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
-		if (command == NULL)
-		{
-			ft_putstr_nl("exit", STDERR_FILENO);
-			free_shell(shell);
-			exit(exit_status);
-		}
-		add_history(command);
-		lst = ft_lexer(command, lst);
-		if (lst)
-			lst = ft_parser(lst, shell);
-		if (lst)
-			shell->args_list = lst;
-		if (shell->args_list != NULL)
-		{
-			child_signal();
-			executor_main(shell);
-		}
-		free_args(&shell->args_list);
-		free(command);
-		close_all_protected(shell);
+		start_minishell(lst, command, shell, exit_status);
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);// *until here
 }

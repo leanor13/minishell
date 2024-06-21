@@ -12,34 +12,29 @@
 
 #include "../../includes/minishell.h"
 
-void	child_signal(void)
+void	start_minishell(t_arg *lst, char *command, t_shell *shell, int exit_status)
 {
-	struct sigaction	signal;
-	struct sigaction	act;
-
-	act.sa_flags = 0;
-	act.sa_handler = SIG_IGN;
-	signal.sa_handler = &child_handler_function;
-	signal.sa_flags = SA_RESTART;
-	sigemptyset(&signal.sa_mask);
-	sigemptyset(&act.sa_mask);
-	sigaction(SIGQUIT, &signal, NULL);
-	sigaction(SIGINT, &signal, NULL);
-	sigaction(SIGTERM, &act, NULL);
-}
-
-void	main_signal(void)
-{
-	struct sigaction	signal;
-	struct sigaction	act;
-
-	signal.sa_handler = &main_handler_function;
-	signal.sa_flags = SA_RESTART;
-	act.sa_flags = SA_RESTART;
-	act.sa_handler = SIG_IGN;
-	sigemptyset(&act.sa_mask);
-	sigemptyset(&signal.sa_mask);
-	sigaction(SIGINT, &signal, NULL);
-	sigaction(SIGQUIT, &act, NULL);
-	sigaction(SIGTERM, &act, NULL);
+	lst = NULL;
+	command = NULL;
+	command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");
+	if (command == NULL)
+	{
+		ft_putstr_nl("exit", STDERR_FILENO);
+		free_shell(shell);
+		exit(exit_status);
+	}
+	add_history(command);
+	lst = ft_lexer(command, lst);
+	if (lst)
+		lst = ft_parser(lst, shell);
+	if (lst)
+		shell->args_list = lst;
+	if (shell->args_list != NULL)
+	{
+		child_signal();
+		executor_main(shell);
+	}
+	free_args(&shell->args_list);
+	free(command);
+	close_all_protected(shell);
 }
