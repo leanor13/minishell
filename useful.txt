@@ -49,7 +49,6 @@ expected behavior
 > f
 bash: syntax error near unexpected token `newline'
 
-
 echo "$PWD''"
 echo $USER something
 echo "$USER something"
