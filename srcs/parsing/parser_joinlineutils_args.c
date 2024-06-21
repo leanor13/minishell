@@ -33,7 +33,7 @@ static char	*put_word(char *s)
 
 static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 {
-	int	i;
+	int		i;
 	t_env	*list;
 	char	*var_value;
 

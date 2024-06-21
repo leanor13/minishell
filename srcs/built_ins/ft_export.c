@@ -65,7 +65,6 @@ int	ft_export(t_shell *shell, t_arg *command)
 
 	info.i = 1;
 	info.args = command->arguments;
-	info.sign = 0;// It has to be here
 	if (no_export(shell, info.args))
 		return (EXIT_SUCCESS);
 	while (info.args[info.i] != NULL) 
@@ -75,7 +74,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 		{
 			if (no_variable(info.equal_sign, info))
 				return (EXIT_SUCCESS);
-			info.sign = add_var(info.sign, info.equal_sign, shell, info);
+			info.sign = add_var(shell, info);
 		}
 		else
 		{

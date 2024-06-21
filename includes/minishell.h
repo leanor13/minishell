@@ -57,8 +57,7 @@ int					ft_unset(t_shell *shell, t_arg *command);
 int					ft_exit(t_shell *shell, t_arg *command);
 int					ft_cd(t_shell *shell, t_arg *command);
 int					ft_export(t_shell *shell, t_arg *command);
-int					add_var(int sign, char *equal_sign, \
-t_shell *shell, t_export info);
+int					add_var(t_shell *shell, t_export info);
 int					no_variable(char *equal_sign, t_export info);
 int					no_variable_novalue(char *var_name);
 char				*get_current_pwd(void);

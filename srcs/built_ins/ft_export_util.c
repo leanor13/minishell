@@ -21,7 +21,7 @@ void	add_var_free(int sign, char *var_value, t_shell *shell, char *var_name)
 	}
 }
 
-int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info)
+int	add_var(t_shell *shell, t_export info)
 {
 	char	*var_value;
 	int		k;
@@ -32,9 +32,9 @@ int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info)
 	var_name = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
 	var_name = ft_strndup(info.args[info.i], info.name_len);
-	if (equal_sign)
+	if (info.equal_sign)
 	{
-		var_value = ft_strdup(equal_sign + 1);
+		var_value = ft_strdup(info.equal_sign + 1);
 		k = ft_strlen(var_name);
 		env_lst_start = shell->env_list;
 		while (shell->env_list)
@@ -43,14 +43,14 @@ int	add_var(int sign, char *equal_sign, t_shell *shell, t_export info)
 			{
 				ft_changenode(&shell->env_list, var_value);
 				free(var_value);
-				sign = 1;
+				info.sign = 1;
 				break ;
 			}
 			shell->env_list = shell->env_list->next;
 		}
 		shell->env_list = env_lst_start;
-		add_var_free(sign, var_value, shell, var_name);
+		add_var_free(info.sign, var_value, shell, var_name);
 	}
 	free(var_name);
-	return (sign);
+	return (info.sign);
 }
