@@ -66,6 +66,8 @@
 "workbench.startupEditor": "none",
 "github.copilot.editor.enableAutoCompletions": true,
 "files.associations": {
-	"dirent.h": "c"
+	"dirent.h": "c",
+	"minishell.h": "c",
+	"readline.h": "c"
 },
 }

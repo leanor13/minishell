@@ -6,24 +6,23 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/19 18:10:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 21:09:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <signal.h>
 
+t_shell* var()
+{
+	static t_shell tmp;
+	return(&tmp);
+}
 static char	*get_line(t_shell *shell)
 {
 	char	*line;
 
-	line = get_next_line(STDIN_FILENO);
-	if (line == NULL)
-	{
-		close_all_unprotected();
-		free_shell(shell);
-		perror("Error reading from standard input");
-		exit(EXIT_FAILURE);
-	}
+	line = readline("> ");
 	return (line);
 }
 
@@ -37,21 +36,35 @@ static int	count_limiters(char **limiters)
 	return (lim_count);
 }
 
+void alex(int code)
+{
+	if (code == SIGINT)
+	{
+		// printf("alex\n");
+		free_shell(var()->tmp);
+		exit(128 + SIGINT);
+	}
+	// return(0);
+}
+
 static void	read_input(int fd[2], char **limiters, t_shell shell)
 {
 	char	*line;
 	int		lim_count;
 	int		i;
 
+	signal(SIGINT, alex);
+	var()->tmp = &shell;
 	lim_count = count_limiters(limiters);
 	i = 0;
 	ft_close(fd[0]);
 	while (true)
 	{
-		write(shell.std_fds[FD_OUT], "> ", 2);
+		// write(shell.std_fds[FD_OUT], "> ", 2);
 		line = get_line(&shell);
-		if (strncmp(line, limiters[i], strlen(limiters[i])) == 0
-			&& strlen(line) == strlen(limiters[i]) + 1)
+		
+		if (line == NULL || (strncmp(line, limiters[i], strlen(limiters[i])) == 0
+			&& strlen(line) == strlen(limiters[i])))
 		{
 			free(line);
 			i++;
@@ -59,8 +72,10 @@ static void	read_input(int fd[2], char **limiters, t_shell shell)
 				break ;
 			continue ;
 		}
+
 		if (i == lim_count - 1)
-			write(fd[1], line, ft_strlen(line));
+			ft_putstr_nl(line, fd[1]);
+		
 		free(line);
 	}
 	ft_close(fd[1]);
@@ -98,8 +113,14 @@ int	here_doc(t_arg *command, t_shell *shell)
 	ft_close(fd[1]);
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
-	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+	if (WEXITSTATUS(status) == 128 + SIGINT)
 	{
+		free_args(&shell->args_list);
+		return (close_all_protected(shell), 128 + SIGINT);
+	}
+	if (WEXITSTATUS(status) == EXIT_FAILURE)
+	{
+		free_args(&shell->args_list);
 		return (close_all_protected(shell), EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

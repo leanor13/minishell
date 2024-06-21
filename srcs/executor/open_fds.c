@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:39:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/19 13:44:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/21 21:32:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,17 @@ int	open_file(char *file, int type)
 	return (fd);
 }
 
-static void	handle_here_doc(t_arg *command, t_shell *shell)
+static int	handle_here_doc(t_arg *command, t_shell *shell)
 {
-	heredoc_signal();
-	here_doc(command, shell);
+	// heredoc_signal();
+	if (here_doc(command, shell) == (128 + SIGINT))
+	{
+		child_signal();
+		return (128 + SIGINT);
+	}
 	command->fd_in = STDIN_FILENO;
 	child_signal();
+	return (EXIT_SUCCESS);
 }
 
 static void	open_input_files(t_arg *command)
@@ -73,18 +78,26 @@ int	process_command_fds(t_arg *command, t_shell *shell)// TINA **out_file_append
 	while (command)
 	{
 		if (command->here_doc != NULL)
-			handle_here_doc(command, shell);
+		{
+			if (handle_here_doc(command, shell) == 128 + SIGINT)
+			{
+				close_all_protected(shell);
+				shell->exit_status = 128 + SIGINT;
+				return (128 + SIGINT);
+			}
+		}
 		else if (command->in_file && command->in_file[0])
 			open_input_files(command);
-		if (command->out_file && command->out_file[0])
+		if (command && command->out_file && command->out_file[0])
 			open_output_files(command);
 		// the last open file depends on the value of append flag :)
-		if (command->fd_in < 0 || command->fd_out < 0)
+		if (command && (command->fd_in < 0 || command->fd_out < 0))
 		{
 			command->command = NULL;
 			return (EXIT_FAILURE);
 		}
-		command = command->next;
+		if (command)
+			command = command->next;
 	}
 	return (EXIT_SUCCESS);
 }

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/16 16:23:21 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:58:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include "lexer.h"
 #include <dirent.h>
+#include <signal.h>
 
 typedef struct s_env
 {
@@ -32,6 +33,7 @@ typedef struct s_shell
 	int				exit_status;
 	int				here_doc_fd;
 	bool			should_exit;
+	struct s_shell *tmp;
 }					t_shell;
 
 #define EXIT_CMD_NOT_FOUND 127
