@@ -4,41 +4,6 @@ June 19:
 
 0. clear cleans everything including prompt
 
-1.
-minishell$echo $PWD
-
-2.
-echo "$PWD''"
-this causes leaks!
-minishell$echo "$PWD''"
-
-minishell$echo $PWD
-/home/yioffe/Projects/minishell
-minishell$
-exit
-==2522985== Invalid free() / delete / delete[] / realloc()
-==2522985==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2522985==    by 0x40521D: free_env_lst (main_cleanup.c:47)
-==2522985==    by 0x4053B5: free_shell (main_cleanup.c:93)
-==2522985==    by 0x404680: main_parsing (main_parsing.c:148)
-==2522985==    by 0x4041D9: main (main_minishell.c:23)
-==2522985==  Address 0x4b2b740 is 0 bytes inside a block of size 32 free'd
-==2522985==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2522985==    by 0x405EFA: handle_dollar_sign (parser_joinlineutils_args.c:63)
-==2522985==    by 0x405D4C: ft_strjoin_args (parser_joinlineutils_args.c:86)
-==2522985==    by 0x406520: if_strjoin (parser_ifutils_2.c:20)
-==2522985==    by 0x4050D2: ft_parser (parser.c:105)
-==2522985==    by 0x4046BA: main_parsing (main_parsing.c:154)
-==2522985==    by 0x4041D9: main (main_minishell.c:23)
-==2522985==  Block was alloc'd at
-==2522985==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2522985==    by 0x4075F9: ft_strdup (ft_strdup.c:24)
-==2522985==    by 0x403A32: add_back_env (env_helper.c:85)
-==2522985==    by 0x403BC2: parse_env (env_helper.c:135)
-==2522985==    by 0x40408A: handle_env (init.c:112)
-==2522985==    by 0x404118: init_shell (init.c:127)
-==2522985==    by 0x4041D0: main (main_minishell.c:22)
-==2522985== 
 ==2522985== 
 
 3. when running with no User (empty env):
@@ -95,25 +60,15 @@ if the goal is to update info.sign, info has to be passed as pointer
 also info.sign = add_var(info.sign, info.equal_sign, shell, info); - info.sign not initialized here, but is passed as argument 
 here: no leak like that: git checkout dfb184d (see https://github.com/leanor13/minishell/commit/dfb184dea3a3cafcce81ea29af5b8a9b77487c12)
 
-6. int	ft_export(t_shell *shell, t_arg *command)
-{
-	t_export	info;
-
-	info.i = 1;
-	info.args = command->arguments;
-	if (no_export(shell, info.args))
-		return (EXIT_SUCCESS);
-	while (info.args[info.i] != NULL) 
-	{
-		info.equal_sign = strchr(info.args[info.i], '=');
-	
-	NEED TO CHANGE strchr to ft_strchr!!!
-	also in parse_env! 		equal = strchr(env_copy, '=');
-
 7. minishell$cat << k | << s
 minishell: syntax error near unexpected token `<<'
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+echo "$PWD''"
+echo $USER something
+echo "$USER something"
+
 echo a'<'
 bash: syntax error: unclosed quote
 minishell$echo a'l'
