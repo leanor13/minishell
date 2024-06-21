@@ -33,18 +33,15 @@ static char	*put_word(char *s)
 
 static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 {
-	char	*res;
+	int	i;
 	t_env	*list;
 	char	*var_value;
 
-	res = NULL;
+	i = 0;
 	if (lst->str[1] == '?')
 	{
-		res = ft_itoa(shell->exit_status);
-		ft_strcat(res, &lst->str[2]);
-		var_value = ft_strdup(res);
-		if (res)
-			free(res);
+		var_value = ft_itoa(shell->exit_status);
+		i = 1;
 	}
 	else
 	{
@@ -59,8 +56,8 @@ static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 		s1[count] = put_word(var_value);
 		count++;
 	}
-	if (var_value)
-		free(var_value);
+	if (i == 1)
+		free (var_value);
 	return (count);
 }
 
