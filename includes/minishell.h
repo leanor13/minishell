@@ -41,9 +41,7 @@ typedef struct s_shell
 
 /* main flow */
 int					init_shell(t_shell *shell, char **env);
-
-/* parsing */
-int					main_parsing(t_shell *shell);
+int					main_util(t_shell *shell);
 
 /* execution */
 int					executor_main(t_shell *shell);

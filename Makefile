@@ -6,22 +6,13 @@ FILES	= executor/pipex executor/build_command_list executor/utils_free_close exe
 	built_ins/ft_cd built_ins/ft_pwd built_ins/ft_env built_ins/ft_echo \
 	built_ins/ft_exit built_ins/ft_export built_ins/ft_unset built_ins/env_helper built_ins/env_helper_2\
 	main_flow/init main_flow/main_minishell \
-	parsing/main_parsing parsing/lexer parsing/lexer_listutils parsing/parser cleanup/main_cleanup\
+	main_flow/main_util parsing/lexer parsing/lexer_listutils parsing/parser cleanup/main_cleanup\
 	parsing/lexer_handle_quote parsing/lexer_find_quote parsing/parser_joinlineutils parsing/parser_joinlineutils_args \
 	parsing/parser_ifutils parsing/parser_ifutils_2 parsing/lexer_command_scan built_ins/ft_unset_util built_ins/ft_export_util\
 	executor/executor_main executor/open_fds built_ins/ft_export_util2
 
 OBJS		= $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 OBJS_DIR	= objs
-
-NAME_PARSING	= parsing
-
-SRCS_PARSING	= $(addprefix srcs/,$(addsuffix .c, $(FILES_PARSING)))
-FILES_PARSING	= parsing/main_parsing parsing/lexer parsing/lexer_listutils
-# parsing/parser
-
-OBJS_PARSING		= $(addprefix $(OBJS_DIR_PARSING)/,$(SRCS_PARSING:srcs/%.c=%.o))
-OBJS_DIR_PARSING	= objs_parsing
 
 CC		= cc
 RM		= rm -f
@@ -52,19 +43,6 @@ $(NAME): $(OBJS) $(LIBS) $(INCL)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
-
-
-parsing: $(NAME_PARSING)
-
-$(OBJS_DIR_PARSING)/%.o: srcs/%.c
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "✅ $(GREEN)$@ created $(NC)"
-
-$(NAME_PARSING): $(OBJS_PARSING) $(LIBS)
-	@echo "$(CYAN)Creating $(NAME_PARSING) ..."
-	@$(CC) $(CFLAGS) -o $(NAME_PARSING) $(OBJS_PARSING) $(LIBS) $(LDFLAGS)
-	@echo "✅ $(GREEN)$(NAME_PARSING) created $(NC)"
 
 clean:
 	@$(RM) -r $(OBJS_DIR) $(OBJS_DIR_PARSING)

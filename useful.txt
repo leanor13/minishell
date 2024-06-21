@@ -4,8 +4,6 @@ June 19:
 
 0. clear cleans everything including prompt
 
-==2522985== 
-
 3. when running with no User (empty env):
 ==5005== 10 bytes in 1 blocks are definitely lost in loss record 8 of 79
 ==5005==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
@@ -43,6 +41,11 @@ June 19:
 minishell: syntax error near unexpected token `<<'
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- (TINA?) (minor) cat << f <<
+expected behavior
+> f
+bash: syntax error near unexpected token `newline'
+
 
 echo "$PWD''"
 echo $USER something
@@ -56,8 +59,6 @@ main parsing I did not put dup2 into another function it is more than 25 lines n
 touch something >> out3 | cat
 echo "valami" | echo "" || make valgrind
 
-w
-
 export ""
 export ''
 export $USER - it opens
@@ -67,16 +68,10 @@ export $okay=something - in bash this gives error
 
 return(EXIT_FAILURE)
 
-- SIGNALS - will do in the end. Don't forget to add signals to here_doc as well
 - (YULIA?) (minor) export should print alphabetically. We can do it if we want.
 - (TINA) cat Makefile > out1.txt >> out2.txt: if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.
 - (YULIA) HEREDOC: once SIGNALS done - add signals there
 - (minor) SHLVL parameter when calling ./minishell
-
-- (TINA?) (minor) cat << f <<
-expected behavior
-> f
-bash: syntax error near unexpected token `newline'
 
 TAB: ctrl-v + TAB
 

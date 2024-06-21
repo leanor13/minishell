@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
 volatile int	g_signal;
 
@@ -104,7 +102,7 @@ void	main_signal(void)
 	sigaction(SIGTERM, &act, NULL);
 }
 
-int	main_parsing(t_shell *shell)
+int	main_util(t_shell *shell)
 {
 	char	*command;
 	t_arg	*lst;
