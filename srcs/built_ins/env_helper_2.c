@@ -20,8 +20,6 @@ t_env	*env_find_var(t_env *env_lst, char *var_name)
 	{
 		if (ft_strcmp(env_lst->var_name, var_name) == 0)
 			return (env_lst);
-		// else
-		// 	return(NULL);
 		env_lst = env_lst->next;
 	}
 	return (NULL);

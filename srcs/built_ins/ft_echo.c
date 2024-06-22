@@ -31,12 +31,6 @@ static void	echo_arg(char *arg, int fd_out)
 	len_arg = ft_strlen(arg);
 	if (!arg || !arg[0])
 		return ;
-	/* if (arg[0] == '$')
-	{
-		var_value = env_find_var(env_lst, arg + 1)->var_value;
-		ft_putstr_fd(var_value, fd_out);
-	}
-	else */
 	print_content(arg, len_arg, fd_out);
 }
 
@@ -73,11 +67,9 @@ int	ft_echo(t_shell *shell, t_arg *command)
 	bool	new_line;
 	int		i;
 	char	**args;
-	int		fd_out;
 
 	args = command->arguments;
 	(void)shell;
-	fd_out = STDOUT_FILENO;
 	new_line = true;
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
 	{
@@ -88,12 +80,12 @@ int	ft_echo(t_shell *shell, t_arg *command)
 	while (args[i] != NULL)
 	{
 		process_escape_sequences(args[i]);
-		echo_arg(args[i], fd_out);
+		echo_arg(args[i], STDOUT_FILENO);
 		i++;
 		if (args[i] != NULL)
-			ft_putchar_fd(' ', fd_out);
+			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (new_line)
-		ft_putchar_fd('\n', fd_out);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }

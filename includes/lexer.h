@@ -26,17 +26,9 @@ typedef struct s_arg
 	int					type;
 	char				**arguments;
 	char				**out_file;
-	//cat Makefile > out2.txt >> out2.txt
-	//cat Makefile >> out2.txt > out2.txt
-	//cat Makefile > out1.txt >> out3 > out4.txt >> out5.txt
-	//char				**out_file_append; out3, out5.txt
-	//char				**out_file_rewrite; out1.txt out4.txt//everything after >
-	//cat Makefile > out1.txt >> out3 > out4.txt > out5.txt // append is false
-	//char				**out_file_append; out3
-	//char				**out_file_rewrite; out1.txt out4.txt out5.txt//everything after >
 	char				**in_file;
 	char				**here_doc;
-	bool				append; // it is only true if the last one
+	bool				append;
 	char				*command;
 	char				*path;
 	int					fd_in;
@@ -61,7 +53,7 @@ typedef struct s_export
 	char				*equal_sign;
 }						t_export;
 
-typedef struct s_heads 
+typedef struct s_heads
 {
 	t_arg	*head_arg;
 	t_arg	*head_heredoc;
