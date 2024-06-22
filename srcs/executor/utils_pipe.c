@@ -20,12 +20,12 @@ void	handle_child_process(t_arg *command, t_shell *shell)
 	dup_close(command->fd_out, STDOUT_FILENO);
 	close_all_protected(shell);
 	if (command->built_in_fn)
-    {
+	{
 		result = command->built_in_fn(shell, command);
 		free_shell(shell);
 		close_all_unprotected();
 		exit(result);
-    }
+	}
 	else if (execve(command->path, command->arguments, shell->env_2d) == -1)
 	{
 		perror("Execve error");
@@ -100,8 +100,6 @@ int	child_count(t_arg *args_list)
 	i = 0;
 	while (args_list != NULL)
 	{
-		//if (!args_list->built_in_fn)
-		//	i++;
 		i ++;
 		args_list = args_list->next;
 	}

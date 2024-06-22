@@ -38,6 +38,7 @@ typedef struct s_shell
 
 #define EXIT_CMD_NOT_FOUND 127
 #define EXIT_SIGNAL_OFFSET 128
+#define EXIT_HEREDOC_BREAK 128+SIGINT
 
 /* main flow */
 int					init_shell(t_shell *shell, char **env);

@@ -67,7 +67,7 @@ int	ft_export(t_shell *shell, t_arg *command)
 	info.args = command->arguments;
 	if (no_export(shell, info.args))
 		return (EXIT_SUCCESS);
-	while (info.args[info.i] != NULL) 
+	while (info.args[info.i] != NULL)
 	{
 		info.equal_sign = ft_strchr(info.args[info.i], '=');
 		if (info.equal_sign)

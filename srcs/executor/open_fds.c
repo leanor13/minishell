@@ -35,11 +35,10 @@ int	open_file(char *file, int type)
 
 static int	handle_here_doc(t_arg *command, t_shell *shell)
 {
-	// heredoc_signal();
-	if (here_doc(command, shell) == (128 + SIGINT))
+	if (here_doc(command, shell) == (EXIT_HEREDOC_BREAK))
 	{
 		child_signal();
-		return (128 + SIGINT);
+		return (EXIT_HEREDOC_BREAK);
 	}
 	command->fd_in = STDIN_FILENO;
 	child_signal();
@@ -79,11 +78,11 @@ int	process_command_fds(t_arg *command, t_shell *shell)
 	{
 		if (command->here_doc != NULL)
 		{
-			if (handle_here_doc(command, shell) == 128 + SIGINT)
+			if (handle_here_doc(command, shell) == EXIT_HEREDOC_BREAK)
 			{
 				close_all_protected(shell);
-				shell->exit_status = 128 + SIGINT;
-				return (128 + SIGINT);
+				shell->exit_status = EXIT_HEREDOC_BREAK;
+				return (EXIT_HEREDOC_BREAK);
 			}
 		}
 		else if (command->in_file && command->in_file[0])
