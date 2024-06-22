@@ -58,30 +58,29 @@ bash: syntax error near unexpected token `newline'
 ==5005==
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-echo something || echo okay
+Tina:
 
 export team="okay";
 
-echo "$PWD''"
-echo $USER something
-echo "$USER something"
+echo "$USER something" - this is working
+echo "$USERsomething" - this is not working
+
+echo something || echo okay
 
 echo a'<'
 bash: syntax error: unclosed quote
 minishell$echo a'l'
 
-main parsing I did not put dup2 into another function it is more than 25 lines now
 touch something >> out3 | cat
 echo "valami" | echo "" || make valgrind
 
 export ""
 export ''
-export $USER - it opens
+export $USER - bash: export: `thuy-ngu': not a valid identifier
 export $okay=something - in bash this gives error
 
-"$USER'''" this one maybe a changin on find_var
 
-return(EXIT_FAILURE)
+return(EXIT_FAILURE) - take a look through if all of them are good
 
 - (YULIA?) (minor) export should print alphabetically. We can do it if we want.
 - (TINA) cat Makefile > out1.txt >> out2.txt: if we do both > and >> redirections, we always do what command->append says. What we can do: not sure... maybe have few lists files_to_append and files_to_rewrite. And put the flag whichever is last.

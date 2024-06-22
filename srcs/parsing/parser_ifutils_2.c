@@ -41,7 +41,7 @@ void	if_dollarsign(t_arg **lst, t_heads *heads)
 
 int	if_doublepipe(t_arg **lst, t_arg **node, t_arg **temp_lst)
 {
-	if((*lst)->prev == NULL)
+	if ((*lst)->prev == NULL)
 	{
 		if ((*lst)->type == DOUBLE_PIPE)
 		{
@@ -51,7 +51,7 @@ int	if_doublepipe(t_arg **lst, t_arg **node, t_arg **temp_lst)
 			return (0);
 		}
 	}
-	else if ((*lst)->type == DOUBLE_PIPE)// CHANGE IT
+	if ((*lst)->type == DOUBLE_PIPE)// CHANGE IT
 	{
 		free_args(node);
 		free_args(temp_lst);
@@ -69,7 +69,7 @@ int	if_pipe(t_arg **lst, t_arg **node, t_arg **temp_lst)
 			*lst = (*lst)->next;
 			return (0);
 		}
-		if((*lst)->prev == NULL)
+		if ((*lst)->prev == NULL)
 		{
 			if ((*lst)->next->type == HEREDOC || (*lst)->next->type == INPUT || \
 			(*lst)->next->type == OUTPUT || (*lst)->next->type == APPEND \
