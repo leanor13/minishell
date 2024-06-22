@@ -42,7 +42,7 @@ void alex(int code)
 	{
 		// printf("alex\n");
 		free_shell(var()->tmp);
-		exit(128 + SIGINT);
+		exit(EXIT_HEREDOC_BREAK);
 	}
 	// return(0);
 }
@@ -113,10 +113,10 @@ int	here_doc(t_arg *command, t_shell *shell)
 	ft_close(fd[1]);
 	dup_close(fd[0], STDIN_FILENO);
 	wait(&status);
-	if (WEXITSTATUS(status) == 128 + SIGINT)
+	if (WEXITSTATUS(status) == EXIT_HEREDOC_BREAK)
 	{
 		free_args(&shell->args_list);
-		return (close_all_protected(shell), 128 + SIGINT);
+		return (close_all_protected(shell), EXIT_HEREDOC_BREAK);
 	}
 	if (WEXITSTATUS(status) == EXIT_FAILURE)
 	{

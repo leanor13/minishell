@@ -26,7 +26,6 @@ int	executor_main(t_shell *shell)
 		return (EXIT_FAILURE);
 	}
 	status = exec_pipe(shell);
-	//free_command_list(&shell->args_list);
 	free_args(&shell->args_list);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		return (EXIT_FAILURE);

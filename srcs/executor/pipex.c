@@ -62,7 +62,8 @@ int	exec_command(t_arg *command, t_shell *shell, int *fd_pipe)
 
 int	setup_pipe(t_arg *current, int *fd_pipe, int fd_in)
 {
-	if (current->here_doc == NULL && (!current->in_file || !current->in_file[0]))
+	if (current->here_doc == NULL
+		&& (!current->in_file || !current->in_file[0]))
 		current->fd_in = fd_in;
 	if (current->next)
 	{
@@ -107,6 +108,7 @@ int	process_commands(t_shell *shell, t_arg *current, int *fd_pipe,
 		int *fd_in)
 {
 	int	result;
+
 	while (current)
 	{
 		if (current->command)
