@@ -73,7 +73,7 @@ static void	open_output_files(t_arg *command)
 	}
 }
 
-int	process_command_fds(t_arg *command, t_shell *shell)// TINA **out_file_append;**out_file_rewrite
+int	process_command_fds(t_arg *command, t_shell *shell)
 {
 	while (command)
 	{
@@ -90,7 +90,6 @@ int	process_command_fds(t_arg *command, t_shell *shell)// TINA **out_file_append
 			open_input_files(command);
 		if (command && command->out_file && command->out_file[0])
 			open_output_files(command);
-		// the last open file depends on the value of append flag :)
 		if (command && (command->fd_in < 0 || command->fd_out < 0))
 		{
 			command->command = NULL;

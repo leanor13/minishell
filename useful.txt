@@ -17,7 +17,23 @@ cat << f <<
 > 
 > d
 > f
+
 bash: syntax error near unexpected token `newline'
+Is it a big change on your side? If not - let’s add error in parser? It will be a bit different from bash, 
+but I think we can argument it on the defence.
+If it's a big change for you - we can leave as is maybe?
+How we have it all now - I don’t really have a way now to know if you sent me 
+[“f”, NULL, NULL] (linke in example above), or [“f”, NULL].
+I don’t have an end of the array, when I see NULL, I assume it’s ended.
+If we decide to have error on my side, we can add one more field in our shell, something like here_doc_counter, 
+and you will send me there how many limiters we have, and if I get to NULL in the middle, I will throw error. 
+I would say - we can do this if we fail first eval.
+
+for example 
+cat << f << << d
+this gives error right away. I think we can say that 
+cat << f << 
+is similar
 
 
 -W flags are missing in makefile. We need to put them back before evaluation :)
