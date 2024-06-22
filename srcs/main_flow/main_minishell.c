@@ -5,6 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/22 12:40:00 by yioffe            #+#    #+#             */
+/*   Updated: 2024/06/22 12:42:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +19,13 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	if (argc > 1)
-		return (ft_putstr_nl("No arguments allowed for minishell", STDERR_FILENO), EXIT_FAILURE);
+	{
+		ft_putstr_nl("No arguments allowed for minishell", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	(void)env;
 	init_shell(&shell, env);
 	status = main_util(&shell);
 	free_shell(&shell);
-	//ft_clean(); - this function will use free_stackfinal as well
 	return (status);
 }

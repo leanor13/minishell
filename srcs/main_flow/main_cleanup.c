@@ -76,8 +76,6 @@ void	free_args(t_arg **args_list)
 		free_string_array(&curr_arg->here_doc);
 		curr_arg->command = NULL;
 		curr_arg->built_in_fn = NULL;
-		//if (curr_arg->command)
-		//	free(curr_arg->command);
 		ft_free(&curr_arg->path);
 		free(curr_arg);
 		curr_arg = next_arg;
@@ -92,7 +90,6 @@ void	free_shell(t_shell *shell)
 	free_string_array(&shell->env_2d);
 	free_env_lst(shell->env_list);
 	free_args(&shell->args_list);
-	//free_stackfinal(&shell->args_list);
 	close_all_protected(shell);
 	dup2(shell->std_fds[0], STDIN_FILENO);
 	dup2(shell->std_fds[1], STDOUT_FILENO);
@@ -100,6 +97,5 @@ void	free_shell(t_shell *shell)
 	ft_close(shell->std_fds[0]);
 	ft_close(shell->std_fds[1]);
 	ft_close(shell->std_fds[2]);
-	// clean env_list, including all nodes, + all names and values.
 	return ;
 }
