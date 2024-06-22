@@ -1,12 +1,24 @@
 June 21 (updated):
 
-0.
+0. it is not supposed to give syntax error
 echo okay | >> okay.txt
 echo okay | > okay.txt
 echo okay | < okay.txt
 echo okay | << okay
 
 Syntax error: empty command
+
+1. it supposed to be something like if NULL after then it is giving this syntax error
+I can not do syntax error in my part because it is supposed to get into heredoc and giving error only
+when it reaches the end with empty command
+cat << f <<
+> 
+> 
+> 
+> d
+> f
+bash: syntax error near unexpected token `newline'
+
 
 -W flags are missing in makefile. We need to put them back before evaluation :)
 
@@ -47,10 +59,6 @@ Syntax error: empty command
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 echo something || echo okay
-- (TINA?) (minor) cat << f <<
-expected behavior
-> f
-bash: syntax error near unexpected token `newline'
 
 export team="okay";
 

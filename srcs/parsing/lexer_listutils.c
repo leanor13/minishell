@@ -24,7 +24,9 @@ t_arg	*ft_stacklast(t_arg *lst)
 void	append_node(t_arg **lst, char *str, t_append info, int value)
 {
 	t_arg	*node;
+	t_arg	*novalue;
 
+	novalue = NULL;
 	if (!lst)
 		return ;
 	node = ft_calloc(1, sizeof(t_arg));
