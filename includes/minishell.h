@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 13:44:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 14:10:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ void				dup_close(int fd, int reference);
 void				ft_close(int fd);
 
 /* signals */
-void				heredoc_signal(void);
 void				child_signal(void);
 void				child_handler_function(int sig);
-void				heredoc_signal(void);
 void				main_handler_function(int sig);
 void				main_signal(void);
+void				heredoc_sig(int code);
+t_shell				*var(void);
