@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 16:25:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 16:42:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,25 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
+static int	if_questionmark(t_arg *lst, char **var_value, t_shell *shell)
+{
+	if (lst->str[1] == '?')
+	{
+		(*var_value) = ft_itoa(shell->exit_status);
+		return (1);
+	}
+	return (0);
+}
+
+static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 {
 	int		i;
 	t_env	*list;
 	char	*var_value;
 
 	i = 0;
-	if (lst->str[1] == '?')
-	{
-		var_value = ft_itoa(shell->exit_status);
-		i = 1;
-	}
-	else
+	i = if_questionmark(lst, &var_value, shell);
+	if (i == 0)
 	{
 		list = env_find_var(shell->env_list, &lst->str[1]);
 		if (list)
