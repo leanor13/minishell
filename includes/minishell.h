@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 20:58:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 11:16:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ typedef struct s_shell
 	int				exit_status;
 	int				here_doc_fd;
 	bool			should_exit;
-	struct s_shell	*tmp;//should we leave this here?
+	struct s_shell	*tmp;
 }					t_shell;
 
 #define EXIT_CMD_NOT_FOUND 127
 #define EXIT_SIGNAL_OFFSET 128
-#define EXIT_HEREDOC_BREAK 128+SIGINT
+#define EXIT_HEREDOC_BREAK 130
 
 /* main flow */
 int					init_shell(t_shell *shell, char **env);
@@ -110,7 +110,6 @@ void				ft_close(int fd);
 
 /* signals */
 void				heredoc_signal(void);
-void				heredoc_handler_function(int sig);
 void				child_signal(void);
 void				child_handler_function(int sig);
 void				heredoc_signal(void);

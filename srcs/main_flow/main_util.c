@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_parsing.c                                     :+:      :+:    :+:   */
+/*   main_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 20:58:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 11:22:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,26 @@ void	main_handler_function(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+}
+
+int	dup_stdinp(t_shell *shell)
+{
+	if (dup2(shell->std_fds[0], STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		return (EXIT_FAILURE);
+	}
+	if (dup2(shell->std_fds[1], STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		return (EXIT_FAILURE);
+	}
+	if (dup2(shell->std_fds[2], STDERR_FILENO) == -1)
+	{
+		perror("dup2");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	main_util(t_shell *shell)

@@ -6,45 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:14:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/05/30 17:08:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 10:53:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	save_2d_env(char **arr, char ***dest)
-{
-	int	len_arr;
-	int	i;
-
-	i = 0;
-	len_arr = 0;
-	if (!arr)
-	{
-		*dest = ft_calloc(1, sizeof(char *));
-		if (!*dest)
-			return (ft_putstr_nl("malloc failure", STDERR_FILENO),
-				EXIT_FAILURE);
-		**dest = NULL;
-		return (EXIT_SUCCESS);
-	}
-	while (arr[len_arr])
-		len_arr++;
-	*dest = ft_calloc((len_arr + 1), sizeof(char *));
-	if (!*dest)
-		return (ft_putstr_nl("malloc failure", STDERR_FILENO), EXIT_FAILURE);
-	while (arr[i])
-	{
-		(*dest)[i] = ft_strdup(arr[i]);
-		if (!(*dest)[i])
-		{
-			ft_putstr_nl("malloc failure", STDERR_FILENO);
-			return (free_string_array(dest), EXIT_FAILURE);
-		}
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
 
 void	new_env(t_shell *shell)
 {
