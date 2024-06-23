@@ -59,7 +59,4 @@ re: fclean all
 # valgrind:
 # 		valgrind --suppressions=valgrind.supp ./minishell
 
-valgrind:
-		valgrind --suppressions=valgrind.supp --trace-children=yes  --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=all --read-var-info=yes ./minishell
-
 .PHONY: all fclean clean re valgrind parsing
