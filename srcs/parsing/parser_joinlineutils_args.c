@@ -31,7 +31,15 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-static int
+static int	if_questionmark(t_arg *lst, char **var_value, t_shell *shell)
+{
+	if (lst->str[1] == '?')
+	{
+		(*var_value) = ft_itoa(shell->exit_status);
+		return (1);
+	}
+	return (0);
+}
 
 static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 {
@@ -40,13 +48,8 @@ static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 	char	*var_value;
 
 	i = 0;
-	i = 
-	if (lst->str[1] == '?')
-	{
-		var_value = ft_itoa(shell->exit_status);
-		i = 1;
-	}
-	else
+	i = if_questionmark(lst, &var_value, shell);
+	if (i == 0)
 	{
 		list = env_find_var(shell->env_list, &lst->str[1]);
 		if (list)
