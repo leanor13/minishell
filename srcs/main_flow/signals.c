@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_parsing.c                                     :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 20:58:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 14:04:40 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,20 @@ void	main_signal(void)
 	sigaction(SIGINT, &signal, NULL);
 	sigaction(SIGQUIT, &act, NULL);
 	sigaction(SIGTERM, &act, NULL);
+}
+
+t_shell	*var(void)
+{
+	static t_shell	tmp;
+
+	return (&tmp);
+}
+
+void	heredoc_sig(int code)
+{
+	if (code == SIGINT)
+	{
+		free_shell(var()->tmp);
+		exit(EXIT_HEREDOC_BREAK);
+	}
 }
