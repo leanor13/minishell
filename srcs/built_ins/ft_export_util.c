@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 13:45:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 15:42:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@ void	add_var_free(int sign, char *var_value, t_shell *shell, char *var_name)
 int	add_var(t_shell *shell, t_export info)
 {
 	char	*var_value;
-	int		k;
 	t_env	*env_lst_start;
-	char	*var_name;
+	char	*name;
 
 	info.sign = 0;
-	var_name = NULL;
+	name = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
-	var_name = ft_strndup(info.args[info.i], info.name_len);
+	name = ft_strndup(info.args[info.i], info.name_len);
+	if (!name)
+		return (??);
 	if (info.equal_sign)
 	{
 		var_value = ft_strdup(info.equal_sign + 1);
-		k = ft_strlen(var_name);
 		env_lst_start = shell->env_list;
 		while (shell->env_list)
 		{
-			if (!ft_strncmp(shell->env_list->var_name, var_name, k))
+			if (!ft_strncmp(shell->env_list->var_name, name, ft_strlen(name)))
 			{
 				ft_changenode(&shell->env_list, var_value);
 				free(var_value);
@@ -49,10 +49,9 @@ int	add_var(t_shell *shell, t_export info)
 			shell->env_list = shell->env_list->next;
 		}
 		shell->env_list = env_lst_start;
-		add_var_free(info.sign, var_value, shell, var_name);
+		add_var_free(info.sign, var_value, shell, name);
 	}
-	free(var_name);
-	return (info.sign);
+	return (free(name), info.sign);
 }
 
 int	update_env_2d(t_shell *shell)
