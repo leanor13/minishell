@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:55:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 10:54:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 13:25:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,17 @@ int	save_2d_env(char **arr, char ***dest)
 	}
 	return (EXIT_SUCCESS);
 }
+
+int	env_len_count(t_env *env_lst)
+{
+	int	i;
+
+	i = 0;
+	while (env_lst != NULL)
+	{
+		i++;
+		env_lst = env_lst->next;
+	}
+	return (i);
+}
+

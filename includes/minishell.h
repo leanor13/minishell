@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 11:16:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 13:26:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int					add_back_env(t_env **head, char *var_name, char *var_value);
 int					parse_env(t_shell *shell, char **env);
 t_env				*env_find_var(t_env *env_lst, char *var_name);
 int					save_2d_env(char **arr, char ***dest);
+int					env_len_count(t_env *env_lst);
 
 /* executor functions */
 int					exec_pipe(t_shell *shell);
