@@ -21,41 +21,46 @@ void	add_var_free(int sign, char *var_value, t_shell *shell, char *var_name)
 	}
 }
 
+static int	is_variable(t_shell *shell, t_export *info, \
+char **var_value, char **name)
+{
+	if (!ft_strncmp(shell->env_list->var_name, (*name), \
+	ft_strlen(*name)))
+	{
+		ft_changenode(&shell->env_list, *var_value);
+		free(*var_value);
+		(info->sign) = 1;
+		return (1);
+	}
+	return (0);
+}
+
 int	add_var(t_shell *shell, t_export info)
 {
 	char	*var_value;
-	int		k;
 	t_env	*env_lst_start;
-	char	*var_name;
+	char	*name;
 
 	info.sign = 0;
-	var_name = NULL;
+	name = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
-	var_name = ft_strndup(info.args[info.i], info.name_len);
-	if (!var_name)
-		return (0);
+	name = ft_strndup(info.args[info.i], info.name_len);
 	if (info.equal_sign)
 	{
 		var_value = ft_strdup(info.equal_sign + 1);
 		if (!var_value)
 			return (0);
-		k = ft_strlen(var_name);
 		env_lst_start = shell->env_list;
 		while (shell->env_list)
 		{
-			if (!ft_strncmp(shell->env_list->var_name, var_name, k))
-			{
-				ft_changenode(&shell->env_list, var_value);
-				free(var_value);
-				info.sign = 1;
+			if (is_variable(shell, &info, &var_value, &name))
 				break ;
-			}
 			shell->env_list = shell->env_list->next;
 		}
 		shell->env_list = env_lst_start;
-		add_var_free(info.sign, var_value, shell, var_name);
+		add_var_free(info.sign, var_value, shell, name);
 	}
-	free(var_name);
+	free(name);
 	return (info.sign);
 }
 
