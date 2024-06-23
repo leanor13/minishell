@@ -32,9 +32,13 @@ int	add_var(t_shell *shell, t_export info)
 	var_name = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
 	var_name = ft_strndup(info.args[info.i], info.name_len);
+	if (!var_name)
+		return (0);
 	if (info.equal_sign)
 	{
 		var_value = ft_strdup(info.equal_sign + 1);
+		if (!var_value)
+			return (0);
 		k = ft_strlen(var_name);
 		env_lst_start = shell->env_list;
 		while (shell->env_list)
