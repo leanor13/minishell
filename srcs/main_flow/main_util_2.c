@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 16:23:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 16:34:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	start_minishell(t_shell *shell, int exit_status)
 	lst = ft_lexer(command, lst);
 	if (lst)
 		lst = ft_parser(lst, shell);
-	if (lst)
-		shell->args_list = lst;
+	shell->args_list = lst;
 	if (shell->args_list != NULL)
 	{
 		child_signal();
