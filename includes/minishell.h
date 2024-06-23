@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:31:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 14:10:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 16:22:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ typedef struct s_shell
 /* main flow */
 int					init_shell(t_shell *shell, char **env);
 int					main_util(t_shell *shell);
-void				start_minishell(t_arg *lst, char *command, \
-							t_shell *shell, int exit_status);
+void				start_minishell(t_shell *shell, int exit_status);
 
 /* execution */
 int					executor_main(t_shell *shell);
@@ -117,3 +116,18 @@ void				main_handler_function(int sig);
 void				main_signal(void);
 void				heredoc_sig(int code);
 t_shell				*var(void);
+
+/* {
+   readline_and_history_leaks
+   Memcheck:Leak
+   ...
+   fun:readline
+   ...
+}
+{
+   add_history_leaks
+   Memcheck:Leak
+   ...
+   fun:add_history
+   ...
+} */

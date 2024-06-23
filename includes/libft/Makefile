@@ -6,7 +6,7 @@
 #    By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2024/06/02 10:59:48 by yioffe           ###   ########.fr        #
+#    Updated: 2024/06/23 16:15:18 by yioffe           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ NAME = libft.a
 LIBC = ar rcs
 CC = cc
 RM = rm -f
-CFLAGS = -g3 -O3 -I.
+CFLAGS = -Wall -Wextra -Werror -g3 -O3 -I.
 
 GREEN = \033[0;32m
 CYAN = \033[0;36m

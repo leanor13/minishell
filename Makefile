@@ -16,7 +16,7 @@ OBJS_DIR	= objs
 
 CC		= cc
 RM		= rm -f
-CFLAGS	= -g3
+CFLAGS	= -Wall -Wextra -Werror -g3
 LDFLAGS = -lreadline
 
 INCL	= ./includes/executor.h ./includes/lexer.h ./includes/minishell.h

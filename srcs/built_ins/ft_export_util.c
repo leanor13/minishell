@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:07:17 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 15:42:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 16:12:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ int	add_var(t_shell *shell, t_export info)
 	char	*name;
 
 	info.sign = 0;
-	name = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
 	name = ft_strndup(info.args[info.i], info.name_len);
 	if (!name)
-		return (??);
+		return (0);
 	if (info.equal_sign)
 	{
 		var_value = ft_strdup(info.equal_sign + 1);
+		if (!var_value)
+			return (0);
 		env_lst_start = shell->env_list;
 		while (shell->env_list)
 		{

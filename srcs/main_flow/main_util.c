@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 11:26:45 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 16:20:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int	dup_stds(t_shell *shell)
 
 int	main_util(t_shell *shell)
 {
-	char	*command;
-	t_arg	*lst;
 	int		exit_status;
 
 	exit_status = EXIT_SUCCESS;
@@ -71,7 +69,7 @@ int	main_util(t_shell *shell)
 		main_signal();
 		if (g_signal == 1)
 			write(1, "\n", 1);
-		start_minishell(lst, command, shell, exit_status);
+		start_minishell(shell, exit_status);
 	}
 	return (EXIT_SUCCESS);
 }

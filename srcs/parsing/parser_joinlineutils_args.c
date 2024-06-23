@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_joinlineutils_args.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/14 14:16:05 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:25:26 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*put_word(char *s)
 	return (word);
 }
 
-static int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
+int	handle_dollar_sign(t_arg *lst, t_shell *shell, char **s1, int count)
 {
 	int		i;
 	t_env	*list;
@@ -74,6 +74,8 @@ char	**ft_strjoin_args(t_arg *lst, int i, t_shell *shell)
 	int		count;
 
 	s1 = (char **)malloc((i + 1) * sizeof(char *));
+	if (!s1)
+		return (NULL);
 	count = 0;
 	while (lst && count < i)
 	{

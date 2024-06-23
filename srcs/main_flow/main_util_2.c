@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_parsing.c                                     :+:      :+:    :+:   */
+/*   main_util_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:42:21 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/21 20:58:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 16:23:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	start_minishell(t_arg *lst, char *command, \
-t_shell *shell, int exit_status)
+void	start_minishell(t_shell *shell, int exit_status)
 {
+	t_arg	*lst;
+	char	*command;
+
 	lst = NULL;
 	command = NULL;
 	command = readline("\033[1;36mminishell\033[1;32m$\033[0;0m");

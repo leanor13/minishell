@@ -41,18 +41,9 @@ void	if_dollarsign(t_arg **lst, t_heads *heads)
 
 int	if_doublepipe(t_arg **lst, t_arg **node, t_arg **temp_lst)
 {
-	if ((*lst)->prev == NULL)
+	if ((*lst)->type == DOUBLE_PIPE)
 	{
-		if ((*lst)->type == DOUBLE_PIPE)
-		{
-			ft_printsyntaxerror(lst);
-			free_args(node);
-			free_args(temp_lst);
-			return (0);
-		}
-	}
-	if ((*lst)->type == DOUBLE_PIPE)// CHANGE IT
-	{
+		ft_printsyntaxerror(lst);
 		free_args(node);
 		free_args(temp_lst);
 		return (0);
