@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:55:54 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 13:25:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 13:45:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,3 +77,13 @@ int	env_len_count(t_env *env_lst)
 	return (i);
 }
 
+int	add_env_entry(t_shell *shell, char *var_name, char *var_value)
+{
+	if (add_back_env(&shell->env_list, var_name, var_value) != EXIT_SUCCESS)
+	{
+		free(var_name);
+		return (EXIT_FAILURE);
+	}
+	free(var_name);
+	return (EXIT_SUCCESS);
+}

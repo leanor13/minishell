@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:31:59 by yioffe            #+#    #+#             */
-/*   Updated: 2024/06/23 13:31:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/06/23 13:44:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 	{
 		temp = NULL;
 		(*env_2d)[i] = NULL;
-		if (env_lst->var_name && env_lst->var_value)
+		if (env_lst->var_name)
 		{
 			if (ft_join_validator(&temp, env_lst->var_name, "=", env_2d) != 0)
 				return (EXIT_FAILURE);
@@ -50,13 +50,6 @@ int	convert_env_lst_to_2d(t_env *env_lst, char ***env_2d)
 		free(temp);
 		env_lst = env_lst->next;
 	}
-	return (EXIT_SUCCESS);
-}
-
-int	update_env_2d(t_shell *shell)
-{
-	if (convert_env_lst_to_2d(shell->env_list, &shell->env_2d) != EXIT_SUCCESS)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -89,7 +82,53 @@ int	add_back_env(t_env **head, char *var_name, char *var_value)
 	return (curr->next = node, EXIT_SUCCESS);
 }
 
+static int	split_env_entry(char *env_entry, char **var_name, char **var_value)
+{
+	char	*env_copy;
+	char	*equal;
+
+	*var_value = NULL;
+	env_copy = ft_strdup(env_entry);
+	if (!env_copy)
+		return (EXIT_FAILURE);
+	equal = ft_strchr(env_copy, '=');
+	if (equal != NULL)
+	{
+		*equal = '\0';
+		*var_value = equal + 1;
+	}
+	*var_name = env_copy;
+	return (EXIT_SUCCESS);
+}
+
 int	parse_env(t_shell *shell, char **env)
+{
+	int		i;
+	char	*var_name;
+	char	*var_value;
+	int		result;
+
+	i = 0;
+	shell->env_list = NULL;
+	while (env[i])
+	{
+		result = split_env_entry(env[i], &var_name, &var_value);
+		if (result == EXIT_FAILURE)
+		{
+			free_shell(shell);
+			exit(EXIT_FAILURE);
+		}
+		if (add_env_entry(shell, var_name, var_value) != EXIT_SUCCESS)
+		{
+			free_shell(shell);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+/* int	parse_env(t_shell *shell, char **env)
 {
 	int		i;
 	char	*var_name;
@@ -102,6 +141,7 @@ int	parse_env(t_shell *shell, char **env)
 	while (env[i])
 	{
 		env_copy = ft_strdup(env[i]);
+		var_value = NULL;
 		if (!env_copy)
 		{
 			free_shell(shell);
@@ -112,9 +152,7 @@ int	parse_env(t_shell *shell, char **env)
 		{
 			*equal = '\0';
 			var_value = equal + 1;
-		}
-		else
-			var_value = NULL;
+		}	
 		var_name = env_copy;
 		if (add_back_env(&shell->env_list, var_name, var_value) != EXIT_SUCCESS)
 		{
@@ -126,4 +164,4 @@ int	parse_env(t_shell *shell, char **env)
 		i++;
 	}
 	return (EXIT_SUCCESS);
-}
+} */
