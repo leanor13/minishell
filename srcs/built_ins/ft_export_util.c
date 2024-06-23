@@ -45,8 +45,6 @@ int	add_var(t_shell *shell, t_export info)
 	name = NULL;
 	info.name_len = info.equal_sign - info.args[info.i];
 	name = ft_strndup(info.args[info.i], info.name_len);
-	if (!name)
-		return (0);
 	if (info.equal_sign)
 	{
 		var_value = ft_strdup(info.equal_sign + 1);
