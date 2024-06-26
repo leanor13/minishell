@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ok/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   executor_main.c                                    :+:      :+:    :+:   */
@@ -27,7 +27,7 @@ int	executor_main(t_shell *shell)
 	}
 	status = exec_pipe(shell);
 	free_args(&shell->args_list);
-	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	if (WEXITSTATUS(status) == EXIT_FAILURE)
+		return (status);
 	return (EXIT_SUCCESS);
 }
